@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IEEPA Tariffs Visualization</title>
+    <link rel="stylesheet" href="styles-choropleth.css" />
+  </head>
+  <body>
+    <!-- Choropleth Map Section -->
+    <div class="container-choropleth">
+      <div class="scroll-content-choropleth">
+        <div class="card" data-step="0">
+          <h2>IEEPA Tariff Categories</h2>
+          <p>
+            Countries subject to IEEPA tariffs are categorized by the type of
+            tariff policy applied. This map shows the different categories of
+            reciprocal tariffs, exemptions, and special cases.
+          </p>
+        </div>
+
+        <div class="card" data-step="1">
+          <h2>Policy Categories</h2>
+          <p>
+            Five distinct categories emerge: reciprocal tariffs, exempt nations,
+            free speech limitations, fentanyl crisis responses, and Russian oil
+            secondary tariffs. Each represents a different US trade policy
+            approach.
+          </p>
+        </div>
+
+        <div class="card" data-step="2">
+          <h2>Tariff Rates</h2>
+          <p>
+            Now let's look at the actual tariff rates applied to each country.
+            The map transitions to show a continuous scale, revealing the range
+            of tariff percentages from lowest to highest.
+          </p>
+        </div>
+
+        <div class="card" data-step="3">
+          <h2>Rate Distribution</h2>
+          <p>
+            The continuous color scale highlights the variation in tariff rates,
+            from minimal rates (lighter colors) to substantial tariffs (darker
+            colors), showing the differentiated approach to trade policy.
+          </p>
+        </div>
+
+        <div class="card" data-step="4">
+          <h2>Global Impact</h2>
+          <p>
+            This dual view—categorical and continuous—reveals both the policy
+            framework and its quantitative implementation across different
+            nations under IEEPA authority.
+          </p>
+        </div>
+      </div>
+
+      <div class="sticky-container">
+        <div id="visualization-choropleth"></div>
+      </div>
+    </div>
+
+    <script type="module" src="main-choropleth.js"></script>
+  </body>
+</html>

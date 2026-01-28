@@ -1,0 +1,266 @@
+/* ============================================
+   SHARED STYLES FOR ALL VISUALIZATIONS
+   ============================================ */
+
+/* Scrollytelling Container - shared by dotmap and choropleth */
+.container-dotmap,
+.container-choropleth {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+}
+
+.container-dotmap {
+  margin-bottom: 100px;
+}
+
+.container-choropleth {
+  margin-top: 100px;
+}
+
+.container-peace {
+  display: flex;
+  max-width: 1200px;
+  margin: 100px auto;
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+}
+
+.scroll-content-peace {
+  width: 50%;
+  padding-right: 20px;
+  padding-left: 20px;
+  z-index: 3;
+  pointer-events: none;
+  position: relative;
+}
+
+.scroll-content-peace a {
+  pointer-events: auto;
+}
+
+/* Scroll Content - shared by dotmap and choropleth */
+.scroll-content-dotmap,
+.scroll-content-choropleth {
+  width: 50%;
+  padding-right: 20px;
+  padding-left: 20px;
+  z-index: 3;
+  pointer-events: none;
+  position: relative;
+}
+
+.scroll-content-dotmap a,
+.scroll-content-choropleth a {
+  pointer-events: auto;
+}
+
+/* Sticky Container - shared by dotmap and choropleth */
+.sticky-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+/* Visualization containers */
+#visualization-dotmap,
+#visualization-choropleth {
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Peace Map (non-scrollytelling) */
+#map-container {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+#visualization-peace {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ============================================
+   CARD STYLES (SCROLLYTELLING)
+   ============================================ */
+
+.card {
+  width: 80%;
+  left: 10%;
+  margin-bottom: 80vh;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0.6;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
+}
+
+.card.active {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.card[data-step="0"] {
+  margin-top: 40vh;
+}
+
+/* ============================================
+   SVG ELEMENT STYLES
+   ============================================ */
+
+/* Dots and circles */
+.strike-dot,
+.peace-dot {
+  cursor: pointer;
+}
+
+.strike-dot:hover {
+  stroke-width: 2 !important;
+  stroke: #fff !important;
+}
+
+.peace-dot:hover {
+  stroke-width: 2 !important;
+}
+
+/* Choropleth countries */
+.ieepa-country {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.ieepa-country:hover {
+  opacity: 0.8;
+  stroke-width: 1.5 !important;
+}
+
+/* Map elements */
+.land {
+  pointer-events: none;
+}
+
+.sphere {
+  fill: #e0f2ff;
+  stroke: #999;
+  stroke-width: 1;
+}
+
+/* Axes */
+.axis-label {
+  font-size: 14px;
+  fill: #333;
+}
+
+.x-axis text,
+.y-axis text {
+  font-size: 12px;
+  fill: #666;
+}
+
+.x-axis path,
+.y-axis path,
+.x-axis line,
+.y-axis line {
+  stroke: #999;
+  shape-rendering: crispEdges;
+}
+
+/* ============================================
+   TOOLTIP STYLES
+   ============================================ */
+
+.tooltip {
+  position: absolute;
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media screen and (max-width: 768px) {
+  .container-dotmap,
+  .container-peace,
+  .container-choropleth {
+    flex-direction: column;
+    padding-top: 40vh;
+    padding-bottom: 40vh;
+  }
+
+  .scroll-content-dotmap,
+  .scroll-content-peace,
+  .scroll-content-choropleth {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    order: 2;
+  }
+
+  .sticky-container {
+    position: sticky;
+    width: 100%;
+    top: 25vh;
+    height: 50vh;
+    order: 1;
+  }
+
+  .card {
+    margin-bottom: 60vh;
+  }
+
+  #map-container {
+    margin: 40px auto;
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sticky-container {
+    height: 40vh;
+    top: 30vh;
+  }
+
+  .card {
+    margin-bottom: 50vh;
+    padding: 15px;
+  }
+
+  .x-axis text {
+    font-size: 10px;
+  }
+
+  #map-container {
+    margin: 30px auto;
+    padding: 10px;
+  }
+}
