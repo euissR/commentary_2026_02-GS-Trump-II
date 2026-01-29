@@ -191,6 +191,16 @@
 }
 
 /* ============================================
+   FLOURISH
+   ============================================ */
+
+.flourish-half {
+  width: 50% !important;
+  float: right;
+  margin-left: 20px; /* Optional: adds spacing between text and div */
+}
+
+/* ============================================
    MOBILE RESPONSIVE
    ============================================ */
 
