@@ -154,25 +154,13 @@ export class PeaceMap {
   }
 
   setupLegend() {
-    const legendX = this.width / 24;
-    const legendY = this.height / 24;
-    const itemSpacing = this.width / 4;
+    const legendX = this.width - 150;
+    const legendY = this.height / 6;
 
     this.legend = this.svg
       .append("g")
       .attr("class", "legend")
       .attr("transform", `translate(${legendX}, ${legendY})`);
-
-    // Legend background
-    // this.legend
-    //   .append("rect")
-    //   .attr("x", -10)
-    //   .attr("y", -10)
-    //   .attr("width", 180)
-    //   .attr("height", itemSpacing * 4 + 20)
-    //   .attr("fill", "white")
-    //   .attr("stroke", "#ccc")
-    //   .attr("rx", 4);
 
     const legendItems = [
       { label: "Peace deal", color: "#309ebe", opacity: 1, type: "dot" },
@@ -184,10 +172,9 @@ export class PeaceMap {
     legendItems.forEach((item, i) => {
       const group = this.legend
         .append("g")
-        .attr("transform", `translate(${i * itemSpacing}, 0)`);
+        .attr("transform", `translate(0, ${i * 30})`); // Stack vertically
 
       if (item.type === "dot") {
-        // Regular dot
         group
           .append("circle")
           .attr("cx", 5)
@@ -198,7 +185,6 @@ export class PeaceMap {
           .attr("stroke-width", 1)
           .style("opacity", item.opacity);
       } else if (item.type === "circle") {
-        // Outer circle (minerals)
         group
           .append("circle")
           .attr("cx", 5)
@@ -209,7 +195,6 @@ export class PeaceMap {
           .attr("stroke-width", 1);
       }
 
-      // Label text
       group
         .append("text")
         .attr("x", 20)
@@ -310,9 +295,9 @@ export class PeaceMap {
       .attr("cx", (d) => this.projection(d.geometry.coordinates)[0])
       .attr("cy", (d) => this.projection(d.geometry.coordinates)[1]);
 
-    // Update legend position
-    const legendX = this.width - 200;
-    const legendY = this.height - 150;
+    // Update legend position to stay at bottom right
+    const legendX = this.width - 150;
+    const legendY = this.height - 140;
     this.legend.attr("transform", `translate(${legendX}, ${legendY})`);
   }
 }

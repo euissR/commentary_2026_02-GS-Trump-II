@@ -2,14 +2,15 @@
    SHARED STYLES FOR ALL VISUALIZATIONS
    ============================================ */
 
-/* Scrollytelling Container - shared by dotmap and choropleth */
+/* Container positioning - now with overlay layout */
 .container-dotmap,
-.container-choropleth {
-  display: flex;
+.container-peace,
+.container-choropleth,
+.container-trade {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
-  position: relative;
-  z-index: 2;
+  z-index: 1;
   min-height: 100vh;
 }
 
@@ -17,81 +18,56 @@
   margin-bottom: 100px;
 }
 
+.container-peace {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
 .container-choropleth {
   margin-top: 100px;
 }
 
-.container-peace {
-  display: flex;
-  max-width: 1200px;
-  margin: 100px auto;
-  position: relative;
-  z-index: 2;
-  min-height: 100vh;
-}
-
-.scroll-content-peace {
-  width: 50%;
-  padding-right: 20px;
-  padding-left: 20px;
-  z-index: 3;
-  pointer-events: none;
-  position: relative;
-}
-
-.scroll-content-peace a {
-  pointer-events: auto;
-}
-
-/* Scroll Content - shared by dotmap and choropleth */
+/* Scroll content - positioned on top */
 .scroll-content-dotmap,
-.scroll-content-choropleth {
+.scroll-content-peace,
+.scroll-content-choropleth,
+.scroll-content-trade {
+  position: relative;
   width: 50%;
   padding-right: 20px;
   padding-left: 20px;
   z-index: 3;
   pointer-events: none;
-  position: relative;
 }
 
 .scroll-content-dotmap a,
-.scroll-content-choropleth a {
+.scroll-content-peace a,
+.scroll-content-choropleth a,
+.scroll-content-trade a {
   pointer-events: auto;
 }
 
-/* Sticky Container - shared by dotmap and choropleth */
+/* Sticky containers - full width behind content */
 .sticky-container {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
+  margin-left: calc(-50vw + 50%); /* Center to viewport */
 }
 
-/* Visualization containers */
+/* Visualizations */
 #visualization-dotmap,
-#visualization-choropleth {
+#visualization-peace,
+#visualization-choropleth,
+#visualization-trade {
   width: 100%;
   height: 100%;
   max-width: 1200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Peace Map (non-scrollytelling) */
-#map-container {
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 20px;
-}
-
-#visualization-peace {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -211,7 +187,8 @@
 @media screen and (max-width: 768px) {
   .container-dotmap,
   .container-peace,
-  .container-choropleth {
+  .container-choropleth,
+  .container-trade {
     flex-direction: column;
     padding-top: 40vh;
     padding-bottom: 40vh;
@@ -219,7 +196,8 @@
 
   .scroll-content-dotmap,
   .scroll-content-peace,
-  .scroll-content-choropleth {
+  .scroll-content-choropleth,
+  .scroll-content-trade {
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;

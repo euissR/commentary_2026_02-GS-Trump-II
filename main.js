@@ -1,6 +1,7 @@
 import { DotMapPlot } from "./DotMapPlot.js";
 import { PeaceMap } from "./PeaceMap.js";
 import { ChoroplethMap } from "./ChoroplethMap.js";
+import { TradeChart } from "./TradeChart.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize all visualizations
@@ -9,10 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const choroplethMapElement = document.getElementById(
     "visualization-choropleth",
   );
+  const tradeMapElement = document.getElementById("visualization-trade");
 
   const dotMapPlot = new DotMapPlot(dotMapElement);
   const peaceMap = new PeaceMap(peaceMapElement);
   const choroplethMap = new ChoroplethMap(choroplethMapElement);
+  const tradeChart = new TradeChart(tradeMapElement);
 
   // Setup observers for dotmap scrollytelling
   const dotmapCards = document.querySelectorAll('.card[data-viz="dotmap"]');
@@ -113,36 +116,35 @@ document.addEventListener("DOMContentLoaded", () => {
   // Observe peace cards
   peaceCards.forEach((card) => peaceObserver.observe(card));
 
-  // Manage sticky container visibility
-  const stickyDotmap = document.getElementById("sticky-dotmap");
-  const stickyChoropleth = document.getElementById("sticky-choropleth");
-  const dotmapContainer = document.querySelector(".container-dotmap");
-  const choroplethContainer = document.querySelector(".container-choropleth");
-  const stickyPeace = document.getElementById("sticky-peace");
-  const peaceContainer = document.querySelector(".container-peace");
-
-  const sectionObserver = new IntersectionObserver(
+  const tradeCards = document.querySelectorAll('.card[data-viz="trade"]');
+  const tradeObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.target === dotmapContainer) {
-          stickyDotmap.style.display = entry.isIntersecting ? "flex" : "none";
-        } else if (entry.target === peaceContainer) {
-          stickyPeace.style.display = entry.isIntersecting ? "flex" : "none";
-        } else if (entry.target === choroplethContainer) {
-          stickyChoropleth.style.display = entry.isIntersecting
-            ? "flex"
-            : "none";
+        tradeCards.forEach((card) => card.classList.remove("active"));
+
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          const step = parseInt(entry.target.dataset.step);
+
+          console.log("Trade chart active step:", step);
+
+          // Transition to area chart at step 2 or later
+          if (step >= 2) {
+            tradeChart.toggleView(true, step);
+          } else {
+            if (tradeChart.currentView === "zoomed") {
+              tradeChart.toggleView(false, step);
+            }
+          }
         }
       });
     },
     {
-      threshold: 0,
+      threshold: 0.5,
       rootMargin: "0px",
     },
   );
 
-  // Observe the container sections
-  sectionObserver.observe(dotmapContainer);
-  sectionObserver.observe(peaceContainer);
-  sectionObserver.observe(choroplethContainer);
+  // Observe trade cards
+  tradeCards.forEach((card) => tradeObserver.observe(card));
 });

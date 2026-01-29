@@ -1,0 +1,857 @@
+date,name,value
+2017-01-15,"Food, drinks and tobacco",575.6
+2017-01-15,Raw materials,-440.3
+2017-01-15,"Mineral fuels, lubricants and related materials",-159.4
+2017-01-15,Manufactured goods,9254.9
+2017-01-15,"Chemicals and related products, n.e.s.",2016.8
+2017-01-15,Other manufactured goods,2070.3
+2017-01-15,Machinery and transport equipment,5167.8
+2017-01-15,Commodities and transactions not classified elsewhere in the SITC,368
+2017-02-15,"Food, drinks and tobacco",784.1
+2017-02-15,Raw materials,-467.4
+2017-02-15,"Mineral fuels, lubricants and related materials",-340.9
+2017-02-15,Manufactured goods,8926.2
+2017-02-15,"Chemicals and related products, n.e.s.",1658.2
+2017-02-15,Other manufactured goods,2425.9
+2017-02-15,Machinery and transport equipment,4842.1
+2017-02-15,Commodities and transactions not classified elsewhere in the SITC,175.5
+2017-03-15,"Food, drinks and tobacco",839.9
+2017-03-15,Raw materials,-347.3
+2017-03-15,"Mineral fuels, lubricants and related materials",-330.9
+2017-03-15,Manufactured goods,11668.9
+2017-03-15,"Chemicals and related products, n.e.s.",1945.2
+2017-03-15,Other manufactured goods,2859.9
+2017-03-15,Machinery and transport equipment,6863.8
+2017-03-15,Commodities and transactions not classified elsewhere in the SITC,324.7
+2017-04-15,"Food, drinks and tobacco",728
+2017-04-15,Raw materials,-220.5
+2017-04-15,"Mineral fuels, lubricants and related materials",-113.9
+2017-04-15,Manufactured goods,7667.4
+2017-04-15,"Chemicals and related products, n.e.s.",1488.2
+2017-04-15,Other manufactured goods,2395.6
+2017-04-15,Machinery and transport equipment,3783.6
+2017-04-15,Commodities and transactions not classified elsewhere in the SITC,178.1
+2017-05-15,"Food, drinks and tobacco",836.3
+2017-05-15,Raw materials,-260
+2017-05-15,"Mineral fuels, lubricants and related materials",-114.8
+2017-05-15,Manufactured goods,8638.5
+2017-05-15,"Chemicals and related products, n.e.s.",1388.3
+2017-05-15,Other manufactured goods,3073.8
+2017-05-15,Machinery and transport equipment,4176.5
+2017-05-15,Commodities and transactions not classified elsewhere in the SITC,206.4
+2017-06-15,"Food, drinks and tobacco",889.3
+2017-06-15,Raw materials,-181.5
+2017-06-15,"Mineral fuels, lubricants and related materials",-658.9
+2017-06-15,Manufactured goods,8383.3
+2017-06-15,"Chemicals and related products, n.e.s.",1560.8
+2017-06-15,Other manufactured goods,3009.8
+2017-06-15,Machinery and transport equipment,3812.7
+2017-06-15,Commodities and transactions not classified elsewhere in the SITC,237
+2017-07-15,"Food, drinks and tobacco",987.7
+2017-07-15,Raw materials,-178.4
+2017-07-15,"Mineral fuels, lubricants and related materials",-266
+2017-07-15,Manufactured goods,10317.7
+2017-07-15,"Chemicals and related products, n.e.s.",1651.3
+2017-07-15,Other manufactured goods,3208
+2017-07-15,Machinery and transport equipment,5458.5
+2017-07-15,Commodities and transactions not classified elsewhere in the SITC,231.3
+2017-08-15,"Food, drinks and tobacco",982.8
+2017-08-15,Raw materials,-210.4
+2017-08-15,"Mineral fuels, lubricants and related materials",-330.3
+2017-08-15,Manufactured goods,7401.7
+2017-08-15,"Chemicals and related products, n.e.s.",1068.1
+2017-08-15,Other manufactured goods,2498.3
+2017-08-15,Machinery and transport equipment,3835.4
+2017-08-15,Commodities and transactions not classified elsewhere in the SITC,16.8
+2017-09-15,"Food, drinks and tobacco",987.4
+2017-09-15,Raw materials,-230.5
+2017-09-15,"Mineral fuels, lubricants and related materials",347.6
+2017-09-15,Manufactured goods,10240.1
+2017-09-15,"Chemicals and related products, n.e.s.",2218.9
+2017-09-15,Other manufactured goods,2785.4
+2017-09-15,Machinery and transport equipment,5235.8
+2017-09-15,Commodities and transactions not classified elsewhere in the SITC,177.7
+2017-10-15,"Food, drinks and tobacco",1001.8
+2017-10-15,Raw materials,-316.9
+2017-10-15,"Mineral fuels, lubricants and related materials",-90.9
+2017-10-15,Manufactured goods,9138.2
+2017-10-15,"Chemicals and related products, n.e.s.",1599.8
+2017-10-15,Other manufactured goods,2890.1
+2017-10-15,Machinery and transport equipment,4648.3
+2017-10-15,Commodities and transactions not classified elsewhere in the SITC,196.8
+2017-11-15,"Food, drinks and tobacco",825.7
+2017-11-15,Raw materials,-384.2
+2017-11-15,"Mineral fuels, lubricants and related materials",-989.9
+2017-11-15,Manufactured goods,11669.5
+2017-11-15,"Chemicals and related products, n.e.s.",2977.9
+2017-11-15,Other manufactured goods,3131.1
+2017-11-15,Machinery and transport equipment,5560.6
+2017-11-15,Commodities and transactions not classified elsewhere in the SITC,111.6
+2017-12-15,"Food, drinks and tobacco",748.8
+2017-12-15,Raw materials,-328.9
+2017-12-15,"Mineral fuels, lubricants and related materials",-339
+2017-12-15,Manufactured goods,11715.6
+2017-12-15,"Chemicals and related products, n.e.s.",2896.7
+2017-12-15,Other manufactured goods,2650.7
+2017-12-15,Machinery and transport equipment,6168.1
+2017-12-15,Commodities and transactions not classified elsewhere in the SITC,129.3
+2018-01-15,"Food, drinks and tobacco",627.1
+2018-01-15,Raw materials,-362.4
+2018-01-15,"Mineral fuels, lubricants and related materials",-311.1
+2018-01-15,Manufactured goods,10076.4
+2018-01-15,"Chemicals and related products, n.e.s.",4073.9
+2018-01-15,Other manufactured goods,2538.1
+2018-01-15,Machinery and transport equipment,3464.4
+2018-01-15,Commodities and transactions not classified elsewhere in the SITC,307
+2018-02-15,"Food, drinks and tobacco",816.1
+2018-02-15,Raw materials,-395.6
+2018-02-15,"Mineral fuels, lubricants and related materials",-145.3
+2018-02-15,Manufactured goods,9970.1
+2018-02-15,"Chemicals and related products, n.e.s.",2703.7
+2018-02-15,Other manufactured goods,2610.4
+2018-02-15,Machinery and transport equipment,4656.1
+2018-02-15,Commodities and transactions not classified elsewhere in the SITC,226.5
+2018-03-15,"Food, drinks and tobacco",812.3
+2018-03-15,Raw materials,-244.4
+2018-03-15,"Mineral fuels, lubricants and related materials",-288.6
+2018-03-15,Manufactured goods,14205.9
+2018-03-15,"Chemicals and related products, n.e.s.",3704.6
+2018-03-15,Other manufactured goods,3090.4
+2018-03-15,Machinery and transport equipment,7410.9
+2018-03-15,Commodities and transactions not classified elsewhere in the SITC,253.8
+2018-04-15,"Food, drinks and tobacco",689.8
+2018-04-15,Raw materials,-327.1
+2018-04-15,"Mineral fuels, lubricants and related materials",-202.6
+2018-04-15,Manufactured goods,9604
+2018-04-15,"Chemicals and related products, n.e.s.",2569.5
+2018-04-15,Other manufactured goods,2693.4
+2018-04-15,Machinery and transport equipment,4341.2
+2018-04-15,Commodities and transactions not classified elsewhere in the SITC,167.3
+2018-05-15,"Food, drinks and tobacco",707.8
+2018-05-15,Raw materials,-266.4
+2018-05-15,"Mineral fuels, lubricants and related materials",-454.5
+2018-05-15,Manufactured goods,9160.8
+2018-05-15,"Chemicals and related products, n.e.s.",2534.1
+2018-05-15,Other manufactured goods,3210.8
+2018-05-15,Machinery and transport equipment,3415.8
+2018-05-15,Commodities and transactions not classified elsewhere in the SITC,25.1
+2018-06-15,"Food, drinks and tobacco",801.9
+2018-06-15,Raw materials,-285
+2018-06-15,"Mineral fuels, lubricants and related materials",-834.6
+2018-06-15,Manufactured goods,11950.8
+2018-06-15,"Chemicals and related products, n.e.s.",3297.2
+2018-06-15,Other manufactured goods,3357
+2018-06-15,Machinery and transport equipment,5296.6
+2018-06-15,Commodities and transactions not classified elsewhere in the SITC,150.9
+2018-07-15,"Food, drinks and tobacco",921.8
+2018-07-15,Raw materials,-321
+2018-07-15,"Mineral fuels, lubricants and related materials",-876.7
+2018-07-15,Manufactured goods,12632.9
+2018-07-15,"Chemicals and related products, n.e.s.",2966.6
+2018-07-15,Other manufactured goods,3570
+2018-07-15,Machinery and transport equipment,6096.3
+2018-07-15,Commodities and transactions not classified elsewhere in the SITC,347.3
+2018-08-15,"Food, drinks and tobacco",1013.1
+2018-08-15,Raw materials,-403.6
+2018-08-15,"Mineral fuels, lubricants and related materials",-230.5
+2018-08-15,Manufactured goods,10792.1
+2018-08-15,"Chemicals and related products, n.e.s.",3393.1
+2018-08-15,Other manufactured goods,2950.3
+2018-08-15,Machinery and transport equipment,4448.7
+2018-08-15,Commodities and transactions not classified elsewhere in the SITC,148.3
+2018-09-15,"Food, drinks and tobacco",1034.8
+2018-09-15,Raw materials,-442.7
+2018-09-15,"Mineral fuels, lubricants and related materials",-681
+2018-09-15,Manufactured goods,10489
+2018-09-15,"Chemicals and related products, n.e.s.",3225.5
+2018-09-15,Other manufactured goods,2930
+2018-09-15,Machinery and transport equipment,4333.5
+2018-09-15,Commodities and transactions not classified elsewhere in the SITC,178.6
+2018-10-15,"Food, drinks and tobacco",1036.8
+2018-10-15,Raw materials,-696.5
+2018-10-15,"Mineral fuels, lubricants and related materials",-748.6
+2018-10-15,Manufactured goods,14127.6
+2018-10-15,"Chemicals and related products, n.e.s.",4210.4
+2018-10-15,Other manufactured goods,3609.3
+2018-10-15,Machinery and transport equipment,6307.9
+2018-10-15,Commodities and transactions not classified elsewhere in the SITC,265.1
+2018-11-15,"Food, drinks and tobacco",803.5
+2018-11-15,Raw materials,-640
+2018-11-15,"Mineral fuels, lubricants and related materials",-1063.7
+2018-11-15,Manufactured goods,12550.6
+2018-11-15,"Chemicals and related products, n.e.s.",3201.7
+2018-11-15,Other manufactured goods,3541.3
+2018-11-15,Machinery and transport equipment,5807.6
+2018-11-15,Commodities and transactions not classified elsewhere in the SITC,301.2
+2018-12-15,"Food, drinks and tobacco",838.8
+2018-12-15,Raw materials,-579.2
+2018-12-15,"Mineral fuels, lubricants and related materials",-1142.1
+2018-12-15,Manufactured goods,9780.8
+2018-12-15,"Chemicals and related products, n.e.s.",2719
+2018-12-15,Other manufactured goods,3185.9
+2018-12-15,Machinery and transport equipment,3875.9
+2018-12-15,Commodities and transactions not classified elsewhere in the SITC,295.1
+2019-01-15,"Food, drinks and tobacco",788.1
+2019-01-15,Raw materials,-673.4
+2019-01-15,"Mineral fuels, lubricants and related materials",-899.8
+2019-01-15,Manufactured goods,12128.6
+2019-01-15,"Chemicals and related products, n.e.s.",4837.2
+2019-01-15,Other manufactured goods,3102.8
+2019-01-15,Machinery and transport equipment,4188.6
+2019-01-15,Commodities and transactions not classified elsewhere in the SITC,331.7
+2019-02-15,"Food, drinks and tobacco",914.6
+2019-02-15,Raw materials,-622.4
+2019-02-15,"Mineral fuels, lubricants and related materials",-981.2
+2019-02-15,Manufactured goods,10495
+2019-02-15,"Chemicals and related products, n.e.s.",2489.8
+2019-02-15,Other manufactured goods,3151.9
+2019-02-15,Machinery and transport equipment,4853.2
+2019-02-15,Commodities and transactions not classified elsewhere in the SITC,149.6
+2019-03-15,"Food, drinks and tobacco",859.5
+2019-03-15,Raw materials,-444.1
+2019-03-15,"Mineral fuels, lubricants and related materials",-1117.7
+2019-03-15,Manufactured goods,12921.6
+2019-03-15,"Chemicals and related products, n.e.s.",3638.6
+2019-03-15,Other manufactured goods,3089.9
+2019-03-15,Machinery and transport equipment,6193.1
+2019-03-15,Commodities and transactions not classified elsewhere in the SITC,196.8
+2019-04-15,"Food, drinks and tobacco",931.8
+2019-04-15,Raw materials,-394.4
+2019-04-15,"Mineral fuels, lubricants and related materials",-216.2
+2019-04-15,Manufactured goods,12440.4
+2019-04-15,"Chemicals and related products, n.e.s.",4561.4
+2019-04-15,Other manufactured goods,3019
+2019-04-15,Machinery and transport equipment,4859.9
+2019-04-15,Commodities and transactions not classified elsewhere in the SITC,167.1
+2019-05-15,"Food, drinks and tobacco",934.2
+2019-05-15,Raw materials,-314.4
+2019-05-15,"Mineral fuels, lubricants and related materials",-709.5
+2019-05-15,Manufactured goods,12728.5
+2019-05-15,"Chemicals and related products, n.e.s.",3710.8
+2019-05-15,Other manufactured goods,3677.1
+2019-05-15,Machinery and transport equipment,5340.6
+2019-05-15,Commodities and transactions not classified elsewhere in the SITC,439.4
+2019-06-15,"Food, drinks and tobacco",1009.3
+2019-06-15,Raw materials,-306.1
+2019-06-15,"Mineral fuels, lubricants and related materials",-618.8
+2019-06-15,Manufactured goods,11393.9
+2019-06-15,"Chemicals and related products, n.e.s.",4138.5
+2019-06-15,Other manufactured goods,3107.4
+2019-06-15,Machinery and transport equipment,4147.9
+2019-06-15,Commodities and transactions not classified elsewhere in the SITC,189.1
+2019-07-15,"Food, drinks and tobacco",1321.4
+2019-07-15,Raw materials,-270.9
+2019-07-15,"Mineral fuels, lubricants and related materials",-724.4
+2019-07-15,Manufactured goods,15543.2
+2019-07-15,"Chemicals and related products, n.e.s.",4365.7
+2019-07-15,Other manufactured goods,3876.1
+2019-07-15,Machinery and transport equipment,7301.3
+2019-07-15,Commodities and transactions not classified elsewhere in the SITC,275.6
+2019-08-15,"Food, drinks and tobacco",1194.7
+2019-08-15,Raw materials,-404.2
+2019-08-15,"Mineral fuels, lubricants and related materials",-844.2
+2019-08-15,Manufactured goods,12429.1
+2019-08-15,"Chemicals and related products, n.e.s.",4613.5
+2019-08-15,Other manufactured goods,3005.9
+2019-08-15,Machinery and transport equipment,4809.7
+2019-08-15,Commodities and transactions not classified elsewhere in the SITC,244.6
+2019-09-15,"Food, drinks and tobacco",1288.9
+2019-09-15,Raw materials,-333
+2019-09-15,"Mineral fuels, lubricants and related materials",-1023.3
+2019-09-15,Manufactured goods,12686
+2019-09-15,"Chemicals and related products, n.e.s.",4531.7
+2019-09-15,Other manufactured goods,3033.1
+2019-09-15,Machinery and transport equipment,5121.2
+2019-09-15,Commodities and transactions not classified elsewhere in the SITC,265
+2019-10-15,"Food, drinks and tobacco",1071.6
+2019-10-15,Raw materials,-752.3
+2019-10-15,"Mineral fuels, lubricants and related materials",-1111
+2019-10-15,Manufactured goods,13811.4
+2019-10-15,"Chemicals and related products, n.e.s.",4182.4
+2019-10-15,Other manufactured goods,3405.5
+2019-10-15,Machinery and transport equipment,6223.5
+2019-10-15,Commodities and transactions not classified elsewhere in the SITC,597.4
+2019-11-15,"Food, drinks and tobacco",861.4
+2019-11-15,Raw materials,-495.4
+2019-11-15,"Mineral fuels, lubricants and related materials",-1274.2
+2019-11-15,Manufactured goods,12193
+2019-11-15,"Chemicals and related products, n.e.s.",4362.6
+2019-11-15,Other manufactured goods,3425.7
+2019-11-15,Machinery and transport equipment,4404.7
+2019-11-15,Commodities and transactions not classified elsewhere in the SITC,489.3
+2019-12-15,"Food, drinks and tobacco",947.8
+2019-12-15,Raw materials,-350.2
+2019-12-15,"Mineral fuels, lubricants and related materials",-1532.4
+2019-12-15,Manufactured goods,11226.7
+2019-12-15,"Chemicals and related products, n.e.s.",4158
+2019-12-15,Other manufactured goods,3104.3
+2019-12-15,Machinery and transport equipment,3964.4
+2019-12-15,Commodities and transactions not classified elsewhere in the SITC,380.6
+2020-01-15,"Food, drinks and tobacco",877.2
+2020-01-15,Raw materials,-423.8
+2020-01-15,"Mineral fuels, lubricants and related materials",-1967.3
+2020-01-15,Manufactured goods,12472.7
+2020-01-15,"Chemicals and related products, n.e.s.",5684.9
+2020-01-15,Other manufactured goods,2548.3
+2020-01-15,Machinery and transport equipment,4239.6
+2020-01-15,Commodities and transactions not classified elsewhere in the SITC,366.8
+2020-02-15,"Food, drinks and tobacco",840.2
+2020-02-15,Raw materials,-502.4
+2020-02-15,"Mineral fuels, lubricants and related materials",-1449.1
+2020-02-15,Manufactured goods,13013.6
+2020-02-15,"Chemicals and related products, n.e.s.",4473.2
+2020-02-15,Other manufactured goods,3075.2
+2020-02-15,Machinery and transport equipment,5465.3
+2020-02-15,Commodities and transactions not classified elsewhere in the SITC,529.2
+2020-03-15,"Food, drinks and tobacco",909.5
+2020-03-15,Raw materials,-343.3
+2020-03-15,"Mineral fuels, lubricants and related materials",-1275.2
+2020-03-15,Manufactured goods,14603.1
+2020-03-15,"Chemicals and related products, n.e.s.",7209.5
+2020-03-15,Other manufactured goods,2834.9
+2020-03-15,Machinery and transport equipment,4558.7
+2020-03-15,Commodities and transactions not classified elsewhere in the SITC,561.9
+2020-04-15,"Food, drinks and tobacco",670.3
+2020-04-15,Raw materials,-281.9
+2020-04-15,"Mineral fuels, lubricants and related materials",-1141.6
+2020-04-15,Manufactured goods,6723.1
+2020-04-15,"Chemicals and related products, n.e.s.",4470.9
+2020-04-15,Other manufactured goods,1520.3
+2020-04-15,Machinery and transport equipment,732
+2020-04-15,Commodities and transactions not classified elsewhere in the SITC,362.3
+2020-05-15,"Food, drinks and tobacco",662.1
+2020-05-15,Raw materials,-179.2
+2020-05-15,"Mineral fuels, lubricants and related materials",-649.1
+2020-05-15,Manufactured goods,10225.6
+2020-05-15,"Chemicals and related products, n.e.s.",5112.1
+2020-05-15,Other manufactured goods,1918.2
+2020-05-15,Machinery and transport equipment,3195.4
+2020-05-15,Commodities and transactions not classified elsewhere in the SITC,498.1
+2020-06-15,"Food, drinks and tobacco",805.4
+2020-06-15,Raw materials,-264.6
+2020-06-15,"Mineral fuels, lubricants and related materials",-562.7
+2020-06-15,Manufactured goods,11264.4
+2020-06-15,"Chemicals and related products, n.e.s.",3612.4
+2020-06-15,Other manufactured goods,2719.4
+2020-06-15,Machinery and transport equipment,4932.7
+2020-06-15,Commodities and transactions not classified elsewhere in the SITC,585.2
+2020-07-15,"Food, drinks and tobacco",1359.1
+2020-07-15,Raw materials,-231.7
+2020-07-15,"Mineral fuels, lubricants and related materials",-972.2
+2020-07-15,Manufactured goods,15357.3
+2020-07-15,"Chemicals and related products, n.e.s.",5946.7
+2020-07-15,Other manufactured goods,3582.1
+2020-07-15,Machinery and transport equipment,5828.5
+2020-07-15,Commodities and transactions not classified elsewhere in the SITC,524.4
+2020-08-15,"Food, drinks and tobacco",1021.9
+2020-08-15,Raw materials,-202.7
+2020-08-15,"Mineral fuels, lubricants and related materials",-1342.3
+2020-08-15,Manufactured goods,10665.9
+2020-08-15,"Chemicals and related products, n.e.s.",4759.6
+2020-08-15,Other manufactured goods,2479.8
+2020-08-15,Machinery and transport equipment,3426.5
+2020-08-15,Commodities and transactions not classified elsewhere in the SITC,210.9
+2020-09-15,"Food, drinks and tobacco",1174
+2020-09-15,Raw materials,-364
+2020-09-15,"Mineral fuels, lubricants and related materials",-1107.8
+2020-09-15,Manufactured goods,14189.5
+2020-09-15,"Chemicals and related products, n.e.s.",5768.7
+2020-09-15,Other manufactured goods,2571
+2020-09-15,Machinery and transport equipment,5849.9
+2020-09-15,Commodities and transactions not classified elsewhere in the SITC,685.7
+2020-10-15,"Food, drinks and tobacco",1312.2
+2020-10-15,Raw materials,-410.3
+2020-10-15,"Mineral fuels, lubricants and related materials",-1310.3
+2020-10-15,Manufactured goods,14671.6
+2020-10-15,"Chemicals and related products, n.e.s.",4140.3
+2020-10-15,Other manufactured goods,3696.6
+2020-10-15,Machinery and transport equipment,6834.6
+2020-10-15,Commodities and transactions not classified elsewhere in the SITC,151.2
+2020-11-15,"Food, drinks and tobacco",1082.5
+2020-11-15,Raw materials,-413.3
+2020-11-15,"Mineral fuels, lubricants and related materials",-666
+2020-11-15,Manufactured goods,14389.2
+2020-11-15,"Chemicals and related products, n.e.s.",5141.5
+2020-11-15,Other manufactured goods,3637.5
+2020-11-15,Machinery and transport equipment,5610.3
+2020-11-15,Commodities and transactions not classified elsewhere in the SITC,522.1
+2020-12-15,"Food, drinks and tobacco",1009.6
+2020-12-15,Raw materials,-503
+2020-12-15,"Mineral fuels, lubricants and related materials",-937.8
+2020-12-15,Manufactured goods,14608.8
+2020-12-15,"Chemicals and related products, n.e.s.",4420.6
+2020-12-15,Other manufactured goods,3425.5
+2020-12-15,Machinery and transport equipment,6762.7
+2020-12-15,Commodities and transactions not classified elsewhere in the SITC,526.3
+2021-01-15,"Food, drinks and tobacco",840.8
+2021-01-15,Raw materials,-589.8
+2021-01-15,"Mineral fuels, lubricants and related materials",-994.7
+2021-01-15,Manufactured goods,13806.6
+2021-01-15,"Chemicals and related products, n.e.s.",6928.7
+2021-01-15,Other manufactured goods,2796.9
+2021-01-15,Machinery and transport equipment,4081
+2021-01-15,Commodities and transactions not classified elsewhere in the SITC,277.3
+2021-02-15,"Food, drinks and tobacco",886.9
+2021-02-15,Raw materials,-444.6
+2021-02-15,"Mineral fuels, lubricants and related materials",-573.7
+2021-02-15,Manufactured goods,13892.5
+2021-02-15,"Chemicals and related products, n.e.s.",4629
+2021-02-15,Other manufactured goods,3184.5
+2021-02-15,Machinery and transport equipment,6079.1
+2021-02-15,Commodities and transactions not classified elsewhere in the SITC,203.5
+2021-03-15,"Food, drinks and tobacco",1286.5
+2021-03-15,Raw materials,-518.4
+2021-03-15,"Mineral fuels, lubricants and related materials",-1096.8
+2021-03-15,Manufactured goods,14301.5
+2021-03-15,"Chemicals and related products, n.e.s.",4893.6
+2021-03-15,Other manufactured goods,3946.7
+2021-03-15,Machinery and transport equipment,5461.2
+2021-03-15,Commodities and transactions not classified elsewhere in the SITC,143.2
+2021-04-15,"Food, drinks and tobacco",1298.1
+2021-04-15,Raw materials,-366.3
+2021-04-15,"Mineral fuels, lubricants and related materials",-1237.7
+2021-04-15,Manufactured goods,13538.3
+2021-04-15,"Chemicals and related products, n.e.s.",3551.1
+2021-04-15,Other manufactured goods,3693.1
+2021-04-15,Machinery and transport equipment,6294.2
+2021-04-15,Commodities and transactions not classified elsewhere in the SITC,481.5
+2021-05-15,"Food, drinks and tobacco",1327.6
+2021-05-15,Raw materials,-227.1
+2021-05-15,"Mineral fuels, lubricants and related materials",-869.1
+2021-05-15,Manufactured goods,11724.9
+2021-05-15,"Chemicals and related products, n.e.s.",3142.7
+2021-05-15,Other manufactured goods,3843.7
+2021-05-15,Machinery and transport equipment,4738.5
+2021-05-15,Commodities and transactions not classified elsewhere in the SITC,465.8
+2021-06-15,"Food, drinks and tobacco",1404.9
+2021-06-15,Raw materials,-209.7
+2021-06-15,"Mineral fuels, lubricants and related materials",-1291.4
+2021-06-15,Manufactured goods,13998.2
+2021-06-15,"Chemicals and related products, n.e.s.",4950
+2021-06-15,Other manufactured goods,4113
+2021-06-15,Machinery and transport equipment,4935.2
+2021-06-15,Commodities and transactions not classified elsewhere in the SITC,572.7
+2021-07-15,"Food, drinks and tobacco",1419
+2021-07-15,Raw materials,-203.1
+2021-07-15,"Mineral fuels, lubricants and related materials",-1832.1
+2021-07-15,Manufactured goods,16559.7
+2021-07-15,"Chemicals and related products, n.e.s.",4406.6
+2021-07-15,Other manufactured goods,4508.4
+2021-07-15,Machinery and transport equipment,7644.7
+2021-07-15,Commodities and transactions not classified elsewhere in the SITC,364.9
+2021-08-15,"Food, drinks and tobacco",1296.9
+2021-08-15,Raw materials,-360.4
+2021-08-15,"Mineral fuels, lubricants and related materials",-1491.1
+2021-08-15,Manufactured goods,12127.3
+2021-08-15,"Chemicals and related products, n.e.s.",4845.5
+2021-08-15,Other manufactured goods,3730.4
+2021-08-15,Machinery and transport equipment,3551.4
+2021-08-15,Commodities and transactions not classified elsewhere in the SITC,27
+2021-09-15,"Food, drinks and tobacco",1416.1
+2021-09-15,Raw materials,-316.3
+2021-09-15,"Mineral fuels, lubricants and related materials",-1866.6
+2021-09-15,Manufactured goods,14394.3
+2021-09-15,"Chemicals and related products, n.e.s.",4314.3
+2021-09-15,Other manufactured goods,4436.1
+2021-09-15,Machinery and transport equipment,5643.9
+2021-09-15,Commodities and transactions not classified elsewhere in the SITC,221
+2021-10-15,"Food, drinks and tobacco",1290.1
+2021-10-15,Raw materials,-501.4
+2021-10-15,"Mineral fuels, lubricants and related materials",-2443.7
+2021-10-15,Manufactured goods,16799.2
+2021-10-15,"Chemicals and related products, n.e.s.",5907.4
+2021-10-15,Other manufactured goods,4544
+2021-10-15,Machinery and transport equipment,6347.7
+2021-10-15,Commodities and transactions not classified elsewhere in the SITC,364.7
+2021-11-15,"Food, drinks and tobacco",1311.5
+2021-11-15,Raw materials,-613.6
+2021-11-15,"Mineral fuels, lubricants and related materials",-2771.1
+2021-11-15,Manufactured goods,16639.9
+2021-11-15,"Chemicals and related products, n.e.s.",5065
+2021-11-15,Other manufactured goods,4852.3
+2021-11-15,Machinery and transport equipment,6722.7
+2021-11-15,Commodities and transactions not classified elsewhere in the SITC,510.2
+2021-12-15,"Food, drinks and tobacco",1189.7
+2021-12-15,Raw materials,-518.2
+2021-12-15,"Mineral fuels, lubricants and related materials",-3863.6
+2021-12-15,Manufactured goods,15449
+2021-12-15,"Chemicals and related products, n.e.s.",4982.2
+2021-12-15,Other manufactured goods,4808.4
+2021-12-15,Machinery and transport equipment,5658.4
+2021-12-15,Commodities and transactions not classified elsewhere in the SITC,230.5
+2022-01-15,"Food, drinks and tobacco",1017.6
+2022-01-15,Raw materials,-764.3
+2022-01-15,"Mineral fuels, lubricants and related materials",-4399.7
+2022-01-15,Manufactured goods,16356.7
+2022-01-15,"Chemicals and related products, n.e.s.",5173.2
+2022-01-15,Other manufactured goods,3696
+2022-01-15,Machinery and transport equipment,7487.5
+2022-01-15,Commodities and transactions not classified elsewhere in the SITC,167.8
+2022-02-15,"Food, drinks and tobacco",1236.8
+2022-02-15,Raw materials,-487.7
+2022-02-15,"Mineral fuels, lubricants and related materials",-5180
+2022-02-15,Manufactured goods,15692.8
+2022-02-15,"Chemicals and related products, n.e.s.",4031.4
+2022-02-15,Other manufactured goods,4637.7
+2022-02-15,Machinery and transport equipment,7023.7
+2022-02-15,Commodities and transactions not classified elsewhere in the SITC,109
+2022-03-15,"Food, drinks and tobacco",1496.7
+2022-03-15,Raw materials,-442.9
+2022-03-15,"Mineral fuels, lubricants and related materials",-6993.1
+2022-03-15,Manufactured goods,22109.6
+2022-03-15,"Chemicals and related products, n.e.s.",9030.6
+2022-03-15,Other manufactured goods,5244.7
+2022-03-15,Machinery and transport equipment,7834.4
+2022-03-15,Commodities and transactions not classified elsewhere in the SITC,192.1
+2022-04-15,"Food, drinks and tobacco",1459
+2022-04-15,Raw materials,-363.2
+2022-04-15,"Mineral fuels, lubricants and related materials",-8006.6
+2022-04-15,Manufactured goods,18705.9
+2022-04-15,"Chemicals and related products, n.e.s.",6338.8
+2022-04-15,Other manufactured goods,5446.3
+2022-04-15,Machinery and transport equipment,6920.7
+2022-04-15,Commodities and transactions not classified elsewhere in the SITC,-94.4
+2022-05-15,"Food, drinks and tobacco",1495.2
+2022-05-15,Raw materials,-268.3
+2022-05-15,"Mineral fuels, lubricants and related materials",-5787.1
+2022-05-15,Manufactured goods,19246.1
+2022-05-15,"Chemicals and related products, n.e.s.",6490.8
+2022-05-15,Other manufactured goods,5736.4
+2022-05-15,Machinery and transport equipment,7018.9
+2022-05-15,Commodities and transactions not classified elsewhere in the SITC,-40.2
+2022-06-15,"Food, drinks and tobacco",1623.7
+2022-06-15,Raw materials,-383.6
+2022-06-15,"Mineral fuels, lubricants and related materials",-7208.3
+2022-06-15,Manufactured goods,18370.4
+2022-06-15,"Chemicals and related products, n.e.s.",6119.5
+2022-06-15,Other manufactured goods,5854.9
+2022-06-15,Machinery and transport equipment,6395.9
+2022-06-15,Commodities and transactions not classified elsewhere in the SITC,-307.6
+2022-07-15,"Food, drinks and tobacco",1515.6
+2022-07-15,Raw materials,-712.3
+2022-07-15,"Mineral fuels, lubricants and related materials",-7899.9
+2022-07-15,Manufactured goods,18548.1
+2022-07-15,"Chemicals and related products, n.e.s.",3615.6
+2022-07-15,Other manufactured goods,5884.2
+2022-07-15,Machinery and transport equipment,9048.3
+2022-07-15,Commodities and transactions not classified elsewhere in the SITC,-515.5
+2022-08-15,"Food, drinks and tobacco",1486.8
+2022-08-15,Raw materials,-515.2
+2022-08-15,"Mineral fuels, lubricants and related materials",-9069.5
+2022-08-15,Manufactured goods,16802.4
+2022-08-15,"Chemicals and related products, n.e.s.",6282.8
+2022-08-15,Other manufactured goods,4690
+2022-08-15,Machinery and transport equipment,5829.6
+2022-08-15,Commodities and transactions not classified elsewhere in the SITC,-62.3
+2022-09-15,"Food, drinks and tobacco",1690.3
+2022-09-15,Raw materials,-546.5
+2022-09-15,"Mineral fuels, lubricants and related materials",-8507.3
+2022-09-15,Manufactured goods,20355.9
+2022-09-15,"Chemicals and related products, n.e.s.",7278.9
+2022-09-15,Other manufactured goods,5760.4
+2022-09-15,Machinery and transport equipment,7316.6
+2022-09-15,Commodities and transactions not classified elsewhere in the SITC,51.6
+2022-10-15,"Food, drinks and tobacco",1398
+2022-10-15,Raw materials,-831.4
+2022-10-15,"Mineral fuels, lubricants and related materials",-8246.5
+2022-10-15,Manufactured goods,19592
+2022-10-15,"Chemicals and related products, n.e.s.",6475.7
+2022-10-15,Other manufactured goods,5622.3
+2022-10-15,Machinery and transport equipment,7494
+2022-10-15,Commodities and transactions not classified elsewhere in the SITC,-185.6
+2022-11-15,"Food, drinks and tobacco",1368.7
+2022-11-15,Raw materials,-555
+2022-11-15,"Mineral fuels, lubricants and related materials",-6703.1
+2022-11-15,Manufactured goods,20254.7
+2022-11-15,"Chemicals and related products, n.e.s.",5044.9
+2022-11-15,Other manufactured goods,5427.8
+2022-11-15,Machinery and transport equipment,9782
+2022-11-15,Commodities and transactions not classified elsewhere in the SITC,193.1
+2022-12-15,"Food, drinks and tobacco",1306.9
+2022-12-15,Raw materials,-661.9
+2022-12-15,"Mineral fuels, lubricants and related materials",-6572.1
+2022-12-15,Manufactured goods,18645.5
+2022-12-15,"Chemicals and related products, n.e.s.",5051.1
+2022-12-15,Other manufactured goods,5435
+2022-12-15,Machinery and transport equipment,8159.4
+2022-12-15,Commodities and transactions not classified elsewhere in the SITC,50
+2023-01-15,"Food, drinks and tobacco",1111.9
+2023-01-15,Raw materials,-832
+2023-01-15,"Mineral fuels, lubricants and related materials",-7035.8
+2023-01-15,Manufactured goods,12485.3
+2023-01-15,"Chemicals and related products, n.e.s.",3331
+2023-01-15,Other manufactured goods,4158.1
+2023-01-15,Machinery and transport equipment,4996.2
+2023-01-15,Commodities and transactions not classified elsewhere in the SITC,342.6
+2023-02-15,"Food, drinks and tobacco",1273.9
+2023-02-15,Raw materials,-756.8
+2023-02-15,"Mineral fuels, lubricants and related materials",-5300.9
+2023-02-15,Manufactured goods,17840
+2023-02-15,"Chemicals and related products, n.e.s.",4396.9
+2023-02-15,Other manufactured goods,4556.9
+2023-02-15,Machinery and transport equipment,8886.2
+2023-02-15,Commodities and transactions not classified elsewhere in the SITC,121.5
+2023-03-15,"Food, drinks and tobacco",1490.3
+2023-03-15,Raw materials,-425.1
+2023-03-15,"Mineral fuels, lubricants and related materials",-5575.8
+2023-03-15,Manufactured goods,19626.7
+2023-03-15,"Chemicals and related products, n.e.s.",5788.7
+2023-03-15,Other manufactured goods,5197.9
+2023-03-15,Machinery and transport equipment,8640
+2023-03-15,Commodities and transactions not classified elsewhere in the SITC,241.1
+2023-04-15,"Food, drinks and tobacco",1183.4
+2023-04-15,Raw materials,-488.1
+2023-04-15,"Mineral fuels, lubricants and related materials",-5442.7
+2023-04-15,Manufactured goods,14592.6
+2023-04-15,"Chemicals and related products, n.e.s.",4174
+2023-04-15,Other manufactured goods,4009.2
+2023-04-15,Machinery and transport equipment,6409.4
+2023-04-15,Commodities and transactions not classified elsewhere in the SITC,279.4
+2023-05-15,"Food, drinks and tobacco",1275.2
+2023-05-15,Raw materials,-587.2
+2023-05-15,"Mineral fuels, lubricants and related materials",-5030.7
+2023-05-15,Manufactured goods,17793
+2023-05-15,"Chemicals and related products, n.e.s.",4357.2
+2023-05-15,Other manufactured goods,4837.8
+2023-05-15,Machinery and transport equipment,8598.1
+2023-05-15,Commodities and transactions not classified elsewhere in the SITC,487.9
+2023-06-15,"Food, drinks and tobacco",1463.2
+2023-06-15,Raw materials,-287.7
+2023-06-15,"Mineral fuels, lubricants and related materials",-4762.9
+2023-06-15,Manufactured goods,19044.7
+2023-06-15,"Chemicals and related products, n.e.s.",5700.5
+2023-06-15,Other manufactured goods,4836.4
+2023-06-15,Machinery and transport equipment,8507.8
+2023-06-15,Commodities and transactions not classified elsewhere in the SITC,28.3
+2023-07-15,"Food, drinks and tobacco",1378.7
+2023-07-15,Raw materials,-382.1
+2023-07-15,"Mineral fuels, lubricants and related materials",-5815.9
+2023-07-15,Manufactured goods,18698.7
+2023-07-15,"Chemicals and related products, n.e.s.",5857.3
+2023-07-15,Other manufactured goods,4546.2
+2023-07-15,Machinery and transport equipment,8295.2
+2023-07-15,Commodities and transactions not classified elsewhere in the SITC,137.8
+2023-08-15,"Food, drinks and tobacco",1350.4
+2023-08-15,Raw materials,-486.9
+2023-08-15,"Mineral fuels, lubricants and related materials",-5865.3
+2023-08-15,Manufactured goods,17816.8
+2023-08-15,"Chemicals and related products, n.e.s.",5385.1
+2023-08-15,Other manufactured goods,3960.6
+2023-08-15,Machinery and transport equipment,8471.2
+2023-08-15,Commodities and transactions not classified elsewhere in the SITC,225.2
+2023-09-15,"Food, drinks and tobacco",1501.6
+2023-09-15,Raw materials,-300.5
+2023-09-15,"Mineral fuels, lubricants and related materials",-5714.4
+2023-09-15,Manufactured goods,18064.7
+2023-09-15,"Chemicals and related products, n.e.s.",5212.1
+2023-09-15,Other manufactured goods,4547.8
+2023-09-15,Machinery and transport equipment,8304.8
+2023-09-15,Commodities and transactions not classified elsewhere in the SITC,-145.6
+2023-10-15,"Food, drinks and tobacco",1446.2
+2023-10-15,Raw materials,-484.1
+2023-10-15,"Mineral fuels, lubricants and related materials",-6119.7
+2023-10-15,Manufactured goods,22201.2
+2023-10-15,"Chemicals and related products, n.e.s.",5679.5
+2023-10-15,Other manufactured goods,4878.2
+2023-10-15,Machinery and transport equipment,11643.5
+2023-10-15,Commodities and transactions not classified elsewhere in the SITC,-48.8
+2023-11-15,"Food, drinks and tobacco",1399.8
+2023-11-15,Raw materials,-519.9
+2023-11-15,"Mineral fuels, lubricants and related materials",-6467.4
+2023-11-15,Manufactured goods,21676.9
+2023-11-15,"Chemicals and related products, n.e.s.",4645.9
+2023-11-15,Other manufactured goods,5150
+2023-11-15,Machinery and transport equipment,11881.1
+2023-11-15,Commodities and transactions not classified elsewhere in the SITC,-68.7
+2023-12-15,"Food, drinks and tobacco",1377.3
+2023-12-15,Raw materials,-409.7
+2023-12-15,"Mineral fuels, lubricants and related materials",-6722.2
+2023-12-15,Manufactured goods,16004.1
+2023-12-15,"Chemicals and related products, n.e.s.",4861.9
+2023-12-15,Other manufactured goods,4257.8
+2023-12-15,Machinery and transport equipment,6884.4
+2023-12-15,Commodities and transactions not classified elsewhere in the SITC,-144.1
+2024-01-15,"Food, drinks and tobacco",1278.4
+2024-01-15,Raw materials,-525.2
+2024-01-15,"Mineral fuels, lubricants and related materials",-6352.1
+2024-01-15,Manufactured goods,17749.2
+2024-01-15,"Chemicals and related products, n.e.s.",6910.7
+2024-01-15,Other manufactured goods,3915.6
+2024-01-15,Machinery and transport equipment,6922.9
+2024-01-15,Commodities and transactions not classified elsewhere in the SITC,-121.2
+2024-02-15,"Food, drinks and tobacco",1258
+2024-02-15,Raw materials,-413.7
+2024-02-15,"Mineral fuels, lubricants and related materials",-6103.4
+2024-02-15,Manufactured goods,20016.5
+2024-02-15,"Chemicals and related products, n.e.s.",5599.4
+2024-02-15,Other manufactured goods,4376.2
+2024-02-15,Machinery and transport equipment,10040.9
+2024-02-15,Commodities and transactions not classified elsewhere in the SITC,-183
+2024-03-15,"Food, drinks and tobacco",1425.3
+2024-03-15,Raw materials,-298.1
+2024-03-15,"Mineral fuels, lubricants and related materials",-5298
+2024-03-15,Manufactured goods,20516.9
+2024-03-15,"Chemicals and related products, n.e.s.",7526.9
+2024-03-15,Other manufactured goods,4875.9
+2024-03-15,Machinery and transport equipment,8114
+2024-03-15,Commodities and transactions not classified elsewhere in the SITC,122.7
+2024-04-15,"Food, drinks and tobacco",1204.1
+2024-04-15,Raw materials,-97.4
+2024-04-15,"Mineral fuels, lubricants and related materials",-5372.1
+2024-04-15,Manufactured goods,20867.7
+2024-04-15,"Chemicals and related products, n.e.s.",7696.3
+2024-04-15,Other manufactured goods,4228.3
+2024-04-15,Machinery and transport equipment,8943.1
+2024-04-15,Commodities and transactions not classified elsewhere in the SITC,-96.4
+2024-05-15,"Food, drinks and tobacco",1322.7
+2024-05-15,Raw materials,-19.1
+2024-05-15,"Mineral fuels, lubricants and related materials",-6109.8
+2024-05-15,Manufactured goods,19244.6
+2024-05-15,"Chemicals and related products, n.e.s.",6270
+2024-05-15,Other manufactured goods,5133.8
+2024-05-15,Machinery and transport equipment,7840.8
+2024-05-15,Commodities and transactions not classified elsewhere in the SITC,-197.8
+2024-06-15,"Food, drinks and tobacco",1402.4
+2024-06-15,Raw materials,-203.7
+2024-06-15,"Mineral fuels, lubricants and related materials",-3904.3
+2024-06-15,Manufactured goods,21411.3
+2024-06-15,"Chemicals and related products, n.e.s.",6946.7
+2024-06-15,Other manufactured goods,4924.5
+2024-06-15,Machinery and transport equipment,9540.1
+2024-06-15,Commodities and transactions not classified elsewhere in the SITC,-73.5
+2024-07-15,"Food, drinks and tobacco",1588.8
+2024-07-15,Raw materials,-211.5
+2024-07-15,"Mineral fuels, lubricants and related materials",-4393.1
+2024-07-15,Manufactured goods,21639.7
+2024-07-15,"Chemicals and related products, n.e.s.",7829.2
+2024-07-15,Other manufactured goods,5504.5
+2024-07-15,Machinery and transport equipment,8306.1
+2024-07-15,Commodities and transactions not classified elsewhere in the SITC,-139.4
+2024-08-15,"Food, drinks and tobacco",1575
+2024-08-15,Raw materials,-373.5
+2024-08-15,"Mineral fuels, lubricants and related materials",-4752.1
+2024-08-15,Manufactured goods,18962.1
+2024-08-15,"Chemicals and related products, n.e.s.",8819.4
+2024-08-15,Other manufactured goods,3658.2
+2024-08-15,Machinery and transport equipment,6484.5
+2024-08-15,Commodities and transactions not classified elsewhere in the SITC,-163.4
+2024-09-15,"Food, drinks and tobacco",1492.7
+2024-09-15,Raw materials,-317.8
+2024-09-15,"Mineral fuels, lubricants and related materials",-5328.7
+2024-09-15,Manufactured goods,22758.9
+2024-09-15,"Chemicals and related products, n.e.s.",8719.4
+2024-09-15,Other manufactured goods,4330.7
+2024-09-15,Machinery and transport equipment,9708.9
+2024-09-15,Commodities and transactions not classified elsewhere in the SITC,-83.4
+2024-10-15,"Food, drinks and tobacco",1672.5
+2024-10-15,Raw materials,-412.6
+2024-10-15,"Mineral fuels, lubricants and related materials",-6124.5
+2024-10-15,Manufactured goods,24663.8
+2024-10-15,"Chemicals and related products, n.e.s.",8859.1
+2024-10-15,Other manufactured goods,5212.4
+2024-10-15,Machinery and transport equipment,10592.3
+2024-10-15,Commodities and transactions not classified elsewhere in the SITC,-286.5
+2024-11-15,"Food, drinks and tobacco",1592.7
+2024-11-15,Raw materials,-459
+2024-11-15,"Mineral fuels, lubricants and related materials",-5464.2
+2024-11-15,Manufactured goods,22587.1
+2024-11-15,"Chemicals and related products, n.e.s.",9328.5
+2024-11-15,Other manufactured goods,5144.2
+2024-11-15,Machinery and transport equipment,8114.4
+2024-11-15,Commodities and transactions not classified elsewhere in the SITC,-40.2
+2024-12-15,"Food, drinks and tobacco",1721.8
+2024-12-15,Raw materials,-554.6
+2024-12-15,"Mineral fuels, lubricants and related materials",-5377.2
+2024-12-15,Manufactured goods,19445.8
+2024-12-15,"Chemicals and related products, n.e.s.",7871.1
+2024-12-15,Other manufactured goods,5127.1
+2024-12-15,Machinery and transport equipment,6447.6
+2024-12-15,Commodities and transactions not classified elsewhere in the SITC,-180.6
+2025-01-15,"Food, drinks and tobacco",1193.1
+2025-01-15,Raw materials,-354.5
+2025-01-15,"Mineral fuels, lubricants and related materials",-6190.5
+2025-01-15,Manufactured goods,24241.2
+2025-01-15,"Chemicals and related products, n.e.s.",12893.6
+2025-01-15,Other manufactured goods,4267.7
+2025-01-15,Machinery and transport equipment,7079.9
+2025-01-15,Commodities and transactions not classified elsewhere in the SITC,-796.5
+2025-02-15,"Food, drinks and tobacco",1228.7
+2025-02-15,Raw materials,-134.8
+2025-02-15,"Mineral fuels, lubricants and related materials",-5958.1
+2025-02-15,Manufactured goods,28441.1
+2025-02-15,"Chemicals and related products, n.e.s.",14909.1
+2025-02-15,Other manufactured goods,5241.8
+2025-02-15,Machinery and transport equipment,8290.3
+2025-02-15,Commodities and transactions not classified elsewhere in the SITC,-191.8
+2025-03-15,"Food, drinks and tobacco",1360.3
+2025-03-15,Raw materials,-311.4
+2025-03-15,"Mineral fuels, lubricants and related materials",-5373.3
+2025-03-15,Manufactured goods,44807.1
+2025-03-15,"Chemicals and related products, n.e.s.",29111.2
+2025-03-15,Other manufactured goods,5326.2
+2025-03-15,Machinery and transport equipment,10369.8
+2025-03-15,Commodities and transactions not classified elsewhere in the SITC,-117.5
+2025-04-15,"Food, drinks and tobacco",1292.1
+2025-04-15,Raw materials,-206.5
+2025-04-15,"Mineral fuels, lubricants and related materials",-5494.2
+2025-04-15,Manufactured goods,21766.8
+2025-04-15,"Chemicals and related products, n.e.s.",10254.5
+2025-04-15,Other manufactured goods,4870.7
+2025-04-15,Machinery and transport equipment,6641.6
+2025-04-15,Commodities and transactions not classified elsewhere in the SITC,-266.9
+2025-05-15,"Food, drinks and tobacco",1265.5
+2025-05-15,Raw materials,-137.7
+2025-05-15,"Mineral fuels, lubricants and related materials",-4026.9
+2025-05-15,Manufactured goods,21763.5
+2025-05-15,"Chemicals and related products, n.e.s.",10442.5
+2025-05-15,Other manufactured goods,4700.7
+2025-05-15,Machinery and transport equipment,6620.3
+2025-05-15,Commodities and transactions not classified elsewhere in the SITC,-354
+2025-06-15,"Food, drinks and tobacco",1280.7
+2025-06-15,Raw materials,-455.7
+2025-06-15,"Mineral fuels, lubricants and related materials",-4452.4
+2025-06-15,Manufactured goods,14449.5
+2025-06-15,"Chemicals and related products, n.e.s.",3326.4
+2025-06-15,Other manufactured goods,4608.8
+2025-06-15,Machinery and transport equipment,6514.3
+2025-06-15,Commodities and transactions not classified elsewhere in the SITC,-372.9
+2025-07-15,"Food, drinks and tobacco",1304
+2025-07-15,Raw materials,-371.7
+2025-07-15,"Mineral fuels, lubricants and related materials",-5090.6
+2025-07-15,Manufactured goods,17424.1
+2025-07-15,"Chemicals and related products, n.e.s.",3127.6
+2025-07-15,Other manufactured goods,5250.6
+2025-07-15,Machinery and transport equipment,9046
+2025-07-15,Commodities and transactions not classified elsewhere in the SITC,-570.4
+2025-08-15,"Food, drinks and tobacco",1019.3
+2025-08-15,Raw materials,-408.5
+2025-08-15,"Mineral fuels, lubricants and related materials",-4966.9
+2025-08-15,Manufactured goods,10917.3
+2025-08-15,"Chemicals and related products, n.e.s.",4672.6
+2025-08-15,Other manufactured goods,3081.1
+2025-08-15,Machinery and transport equipment,3163.5
+2025-08-15,Commodities and transactions not classified elsewhere in the SITC,-510.3
+2025-09-15,"Food, drinks and tobacco",1279.3
+2025-09-15,Raw materials,-416.2
+2025-09-15,"Mineral fuels, lubricants and related materials",-5068.5
+2025-09-15,Manufactured goods,26315
+2025-09-15,"Chemicals and related products, n.e.s.",14651.6
+2025-09-15,Other manufactured goods,3758.5
+2025-09-15,Machinery and transport equipment,7904.9
+2025-09-15,Commodities and transactions not classified elsewhere in the SITC,-519
+2025-10-15,"Food, drinks and tobacco",1392.3
+2025-10-15,Raw materials,-521.5
+2025-10-15,"Mineral fuels, lubricants and related materials",-5050.8
+2025-10-15,Manufactured goods,15624.4
+2025-10-15,"Chemicals and related products, n.e.s.",4062.6
+2025-10-15,Other manufactured goods,4765.1
+2025-10-15,Machinery and transport equipment,6796.7
+2025-10-15,Commodities and transactions not classified elsewhere in the SITC,-319.5
+2025-11-15,"Food, drinks and tobacco",1124.8
+2025-11-15,Raw materials,-641.1
+2025-11-15,"Mineral fuels, lubricants and related materials",-4132
+2025-11-15,Manufactured goods,14941.3
+2025-11-15,"Chemicals and related products, n.e.s.",4001.5
+2025-11-15,Other manufactured goods,4159.6
+2025-11-15,Machinery and transport equipment,6780.3
+2025-11-15,Commodities and transactions not classified elsewhere in the SITC,-561.6
