@@ -128,13 +128,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
           console.log("Trade chart active step:", step);
 
-          // Transition to area chart at step 2 or later
-          if (step >= 2) {
+          // Transition to area chart at step 2 or later - guards against repeated calls
+          if (step >= 2 && tradeChart.currentView !== "zoomed") {
             tradeChart.toggleView(true, step);
-          } else {
-            if (tradeChart.currentView === "zoomed") {
-              tradeChart.toggleView(false, step);
-            }
+          }
+
+          if (step < 2 && tradeChart.currentView === "zoomed") {
+            tradeChart.toggleView(false, step);
           }
         }
       });

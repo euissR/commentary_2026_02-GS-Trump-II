@@ -403,7 +403,8 @@ export class TradeChart {
         // Use the date from the current data point
         return yScale2025(d.data.date) - 4;
       })
-      .attr("height", 8) // Make bars slightly taller in zoomed view
+      .attr("height", 80) // Make bars slightly taller in zoomed view
+      .attr("dy", 40) // Make bars slightly taller in zoomed view
       .style("opacity", function () {
         const barId = d3.select(this).attr("data-id");
         return bars2025Ids.has(barId) ? 1 : 0;
@@ -413,13 +414,6 @@ export class TradeChart {
     setTimeout(() => {
       this.drawAnnotations();
     }, 1000);
-
-    // Make container non-sticky and scrollable
-    const stickyContainer = this.container.closest(".sticky-container");
-    if (stickyContainer) {
-      stickyContainer.style.position = "relative";
-      stickyContainer.style.height = `${this.areaHeight}px`;
-    }
   }
 
   transitionToAllYears() {
