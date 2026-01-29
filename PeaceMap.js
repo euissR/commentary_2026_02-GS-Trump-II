@@ -249,27 +249,37 @@ export class PeaceMap {
 
   // for step highlights
   highlightStep(step) {
-    // Get list of unique names
-    const names = this.getUniqueNames();
-    const highlightedName = names[step];
+    // Define which peace agreements to highlight at each step
+    const stepMapping = {
+      1: ["Israel-Hamas"],
+      2: ["DRC - Rwanda", "Armenia - Azerbaijan"],
+      3: ["Cambodia-Thailand"],
+      4: ["Israel-Iran (12 Day War)"],
+      5: ["India-Pakistan"],
+      6: ["Egypt-Ethiopia Renaissance Dam dispute", "Serbia-Kosovo"],
+    };
+
+    const highlightedNames = stepMapping[step] || [];
 
     // Update all dots
     this.dots
       .transition()
       .duration(500)
-      .attr("r", (d) => (d.properties.name === highlightedName ? 10 : 5))
+      .attr("r", (d) => (highlightedNames.includes(d.properties.name) ? 10 : 5))
       .style("opacity", (d) => {
         if (d.properties.war) return 0.5;
-        return d.properties.name === highlightedName ? 1 : 0.7;
+        return highlightedNames.includes(d.properties.name) ? 1 : 0.7;
       });
 
     // Update outer circles
     this.outerCircles
       .transition()
       .duration(500)
-      .attr("r", (d) => (d.properties.name === highlightedName ? 20 : 10))
+      .attr("r", (d) =>
+        highlightedNames.includes(d.properties.name) ? 20 : 10,
+      )
       .attr("stroke-width", (d) =>
-        d.properties.name === highlightedName ? 2 : 1,
+        highlightedNames.includes(d.properties.name) ? 2 : 1,
       );
   }
 

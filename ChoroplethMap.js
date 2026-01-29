@@ -133,10 +133,10 @@ export class ChoroplethMap {
   }
 
   setupLegends() {
-    const legendX = 20;
-    const legendY = this.height - 150;
+    const legendX = this.width / 24;
+    const legendY = this.height / 24;
 
-    // Categorical Legend
+    // Categorical Legend (horizontal)
     this.categoricalLegend = this.svg
       .append("g")
       .attr("class", "categorical-legend")
@@ -157,42 +157,78 @@ export class ChoroplethMap {
       .text("Tariff Category");
 
     const categoricalItems = [
-      { label: "Reciprocal", color: "#309ebe" },
-      { label: "Exempt", color: "#C6C6C6" },
+      { label: "Reciprocal", color: "#309ebe", short: true },
+      { label: "Exempt", color: "#C6C6C6", short: true },
+      { label: "Fentanyl crisis", color: "#df3144", short: true },
       {
         label: "Reciprocal and limitations on 'free speech'",
         color: "#376882",
+        short: false,
       },
-      { label: "Fentanyl crisis", color: "#df3144" },
       {
         label: "Reciprocal and secondary tariffs for Russian oil",
         color: "#1d3956",
+        short: false,
       },
     ];
 
-    categoricalItems.forEach((item, i) => {
-      const group = this.categoricalLegend
-        .append("g")
-        .attr("transform", `translate(0, ${i * 25 + 10})`);
+    // First row: short labels
+    let xOffset = 0;
+    categoricalItems
+      .filter((item) => item.short)
+      .forEach((item, i) => {
+        const group = this.categoricalLegend
+          .append("g")
+          .attr("transform", `translate(${xOffset}, 0)`);
 
-      group
-        .append("rect")
-        .attr("width", 20)
-        .attr("height", 15)
-        .attr("fill", item.color)
-        .attr("stroke", "#fff")
-        .attr("stroke-width", 0.5);
+        group
+          .append("rect")
+          .attr("width", 15)
+          .attr("height", 15)
+          .attr("fill", item.color)
+          .attr("stroke", "#fff")
+          .attr("stroke-width", 0.5);
 
-      group
-        .append("text")
-        .attr("x", 25)
-        .attr("y", 12)
-        .style("font-size", "12px")
-        .style("fill", "#333")
-        .text(item.label);
-    });
+        group
+          .append("text")
+          .attr("x", 20)
+          .attr("y", 12)
+          .style("font-size", "11px")
+          .style("fill", "#333")
+          .text(item.label);
 
-    // Continuous Legend (gradient)
+        xOffset += this.width / 6;
+      });
+
+    // Second row: long labels
+    xOffset = 0;
+    categoricalItems
+      .filter((item) => !item.short)
+      .forEach((item, i) => {
+        const group = this.categoricalLegend
+          .append("g")
+          .attr("transform", `translate(${xOffset}, 20)`);
+
+        group
+          .append("rect")
+          .attr("width", 15)
+          .attr("height", 15)
+          .attr("fill", item.color)
+          .attr("stroke", "#fff")
+          .attr("stroke-width", 0.5);
+
+        group
+          .append("text")
+          .attr("x", 20)
+          .attr("y", 12)
+          .style("font-size", "11px")
+          .style("fill", "#333")
+          .text(item.label);
+
+        xOffset += this.width / 2.5;
+      });
+
+    // Continuous Legend (horizontal gradient)
     this.continuousLegend = this.svg
       .append("g")
       .attr("class", "continuous-legend")
@@ -209,69 +245,71 @@ export class ChoroplethMap {
       .style("fill", "#333")
       .text("Tariff Rate (%)");
 
-    // Gradient definition
+    // Gradient definition (horizontal)
     const defs = this.svg.append("defs");
     const gradient = defs
       .append("linearGradient")
       .attr("id", "rate-gradient")
       .attr("x1", "0%")
       .attr("y1", "0%")
-      .attr("x2", "0%")
-      .attr("y2", "100%");
+      .attr("x2", "100%")
+      .attr("y2", "0%");
 
-    // Add color stops
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#33163A");
-
-    gradient.append("stop").attr("offset", "25%").attr("stop-color", "#376882");
-
+    // Add color stops (reversed for horizontal left-to-right)
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#fff");
+    gradient.append("stop").attr("offset", "25%").attr("stop-color", "#FFDE75");
     gradient.append("stop").attr("offset", "50%").attr("stop-color", "#64C2C7");
+    gradient.append("stop").attr("offset", "75%").attr("stop-color", "#376882");
+    gradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#33163A");
 
-    gradient.append("stop").attr("offset", "75%").attr("stop-color", "#FFDE75");
-
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#fff");
-
-    // Draw gradient rectangle
+    // Draw gradient rectangle (horizontal)
+    const gradientWidth = this.width / 3;
     this.continuousLegend
       .append("rect")
-      .attr("width", 20)
-      .attr("height", 120)
-      .attr("y", 10)
+      .attr("width", gradientWidth)
+      .attr("height", 10)
+      .attr("y", 0)
       .style("fill", "url(#rate-gradient)")
       .attr("stroke", "#999")
       .attr("stroke-width", 0.5);
 
-    // Add labels (get extent from data)
+    // Add labels
     const rateExtent = d3.extent(
       this.ieepaSf.features,
       (d) => d.properties.rate,
     );
 
-    // High value (top)
+    // Low value (left)
     this.continuousLegend
       .append("text")
-      .attr("x", 25)
-      .attr("y", 15)
+      .attr("x", 0)
+      .attr("y", 20)
       .style("font-size", "11px")
       .style("fill", "#333")
-      .text(`${Math.round(rateExtent[1])}%`);
+      .text(`${Math.round(rateExtent[0])}%`);
 
     // Mid value
     this.continuousLegend
       .append("text")
-      .attr("x", 25)
-      .attr("y", 70)
+      .attr("x", gradientWidth / 2)
+      .attr("y", 20)
+      .attr("text-anchor", "middle")
       .style("font-size", "11px")
       .style("fill", "#333")
       .text(`${Math.round((rateExtent[0] + rateExtent[1]) / 2)}%`);
 
-    // Low value (bottom)
+    // High value (right)
     this.continuousLegend
       .append("text")
-      .attr("x", 25)
-      .attr("y", 125)
+      .attr("x", gradientWidth)
+      .attr("y", 20)
+      .attr("text-anchor", "end")
       .style("font-size", "11px")
       .style("fill", "#333")
-      .text(`${Math.round(rateExtent[0])}%`);
+      .text(`${Math.round(rateExtent[1])}%`);
   }
 
   setupTooltip() {
