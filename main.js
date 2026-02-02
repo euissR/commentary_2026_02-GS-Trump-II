@@ -23,93 +23,85 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup observers for dotmap scrollytelling
   const dotmapCards = document.querySelectorAll('.card[data-viz="dotmap"]');
 
-  // Track current active step to prevent flickering
-  let currentDotmapStep = 0;
-
   const dotmapObserver = new IntersectionObserver(
     (entries) => {
-      // Find the most visible intersecting card
-      let mostVisible = null;
-      let maxRatio = 0;
-
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-          mostVisible = entry.target;
-          maxRatio = entry.intersectionRatio;
-        }
-      });
+        // Only act when card enters viewport and crosses threshold
+        if (!entry.isIntersecting) return;
 
-      // Only update if we found a visible card AND it's significantly more visible (hysteresis)
-      // This prevents constant switching between adjacent cards
-      if (mostVisible) {
-        const newStep = parseInt(mostVisible.dataset.step);
+        const step = parseInt(entry.target.dataset.step);
 
-        // Only switch steps if:
-        // 1. It's a different step, AND
-        // 2. The new card is at least 30% visible (prevents premature switching)
-        if (newStep !== currentDotmapStep && maxRatio > 0.3) {
-          currentDotmapStep = newStep;
+        // Make this card active
+        dotmapCards.forEach((card) => card.classList.remove("active"));
+        entry.target.classList.add("active");
 
-          dotmapCards.forEach((card) => card.classList.remove("active"));
-          mostVisible.classList.add("active");
+        console.log("Dotmap active step:", step);
 
-          console.log("Dotmap active step:", newStep);
+        // Update title
+        dotMapPlot.updateTitle(step);
 
-          // Update title
-          dotMapPlot.updateTitle(newStep);
+        if (step < 4) {
+          // Steps 0-3: Dot plot view with color changes, no scroll animation
+          dotMapPlot.stopScrollAnimation();
+          dotMapPlot.updateColors(step);
 
-          if (newStep < 4) {
-            // Steps 0-3: Dot plot view with color changes, no scroll animation
-            dotMapPlot.stopScrollAnimation();
-            dotMapPlot.updateColors(newStep);
+          // Hide labels if coming back from map view
+          if (dotMapPlot.labelsVisible) {
+            dotMapPlot.hideCountryLabels();
+          }
 
-            // Hide labels if coming back from map view
-            if (dotMapPlot.labelsVisible) {
-              dotMapPlot.hideCountryLabels();
-            }
+          // Ensure we're in dot plot view (use instant transition if needed)
+          if (dotMapPlot.isMapView) {
+            dotMapPlot.setTransitionProgress(true, 0);
+            dotMapPlot.isMapView = false;
+          }
+        } else if (step === 4) {
+          // Step 4: The transition card - animate from dot plot to map
+          dotMapPlot.updateColors(step); // Set colors for map view
 
-            // Ensure we're in dot plot view (use instant transition if needed)
-            if (dotMapPlot.isMapView) {
-              dotMapPlot.setTransitionProgress(true, 0);
-              dotMapPlot.isMapView = false;
-            }
-          } else if (newStep === 4) {
-            // Step 4: The transition card - animate from dot plot to map
-            dotMapPlot.updateColors(newStep); // Set colors for map view
+          // Hide labels during transition
+          if (dotMapPlot.labelsVisible) {
+            dotMapPlot.hideCountryLabels();
+          }
 
-            // Hide labels during transition
-            if (dotMapPlot.labelsVisible) {
-              dotMapPlot.hideCountryLabels();
-            }
+          dotMapPlot.startScrollAnimation(entry.target, "toMap");
+        } else {
+          // Steps 5+: Stay in map view, no scroll animation
+          dotMapPlot.stopScrollAnimation();
+          dotMapPlot.updateColors(step);
 
-            dotMapPlot.startScrollAnimation(mostVisible, "toMap");
-          } else {
-            // Steps 5+: Stay in map view, no scroll animation
-            dotMapPlot.stopScrollAnimation();
-            dotMapPlot.updateColors(newStep);
+          // Ensure we're in map view (use instant transition if needed)
+          if (!dotMapPlot.isMapView) {
+            dotMapPlot.setTransitionProgress(true, 1);
+            dotMapPlot.isMapView = true;
+          }
 
-            // Ensure we're in map view (use instant transition if needed)
-            if (!dotMapPlot.isMapView) {
-              dotMapPlot.setTransitionProgress(true, 1);
-              dotMapPlot.isMapView = true;
-            }
-
-            // Handle labels
-            if (newStep === 5) {
-              dotMapPlot.showCountryLabels(newStep);
-            } else if (newStep >= 6) {
-              dotMapPlot.showCountryLabels(newStep);
-            }
+          // Handle labels
+          if (step === 5) {
+            dotMapPlot.showCountryLabels(step);
+          } else if (step >= 6) {
+            dotMapPlot.showCountryLabels(step);
           }
         }
-      }
+      });
+    },
+    {
+      threshold: 0.5,
+      rootMargin: "0px",
+    },
+  );
 
-      // Handle cards leaving viewport (for step 4 animation cleanup)
+  // Observe dotmap cards
+  dotmapCards.forEach((card) => dotmapObserver.observe(card));
+
+  // Separate observer for step 4 animation cleanup when it leaves
+  const dotmapStep4Observer = new IntersectionObserver(
+    (entries) => {
       entries.forEach((entry) => {
         const step = parseInt(entry.target.dataset.step);
         if (
-          !entry.isIntersecting &&
           step === 4 &&
+          !entry.isIntersecting &&
           dotMapPlot.currentTransitionCard === entry.target
         ) {
           // Step 4 is leaving - stop the animation
@@ -132,61 +124,47 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     },
     {
-      threshold: [0, 0.25, 0.5, 0.75, 1],
+      threshold: 0,
       rootMargin: "0px",
     },
   );
 
-  // Observe dotmap cards
-  dotmapCards.forEach((card) => dotmapObserver.observe(card));
+  // Only observe step 4 for cleanup
+  dotmapCards.forEach((card) => {
+    if (parseInt(card.dataset.step) === 4) {
+      dotmapStep4Observer.observe(card);
+    }
+  });
 
   // Setup observers for choropleth scrollytelling
   const choroplethCards = document.querySelectorAll(
     '.card[data-viz="choropleth"]',
   );
 
-  // Track current active step to prevent flickering
-  let currentChoroplethStep = 0;
-
   const choroplethObserver = new IntersectionObserver(
     (entries) => {
-      // Find the most visible intersecting card
-      let mostVisible = null;
-      let maxRatio = 0;
-
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-          mostVisible = entry.target;
-          maxRatio = entry.intersectionRatio;
-        }
-      });
+        if (!entry.isIntersecting) return;
 
-      // Only update if we found a visible card AND it's significantly more visible
-      if (mostVisible) {
-        const newStep = parseInt(mostVisible.dataset.step);
+        const step = parseInt(entry.target.dataset.step);
 
-        // Only switch steps if it's different AND new card is at least 30% visible
-        if (newStep !== currentChoroplethStep && maxRatio > 0.3) {
-          currentChoroplethStep = newStep;
+        choroplethCards.forEach((card) => card.classList.remove("active"));
+        entry.target.classList.add("active");
 
-          choroplethCards.forEach((card) => card.classList.remove("active"));
-          mostVisible.classList.add("active");
+        console.log("Choropleth active step:", step);
 
-          console.log("Choropleth active step:", newStep);
-
-          // Handle choropleth transitions
-          if (newStep >= 2) {
-            choroplethMap.toggleView(true, newStep);
-          } else {
-            if (choroplethMap.currentView === "continuous") {
-              choroplethMap.toggleView(false, newStep);
-            }
+        // Handle choropleth transitions
+        if (step >= 2) {
+          choroplethMap.toggleView(true, step);
+        } else {
+          if (choroplethMap.currentView === "continuous") {
+            choroplethMap.toggleView(false, step);
           }
         }
-      }
+      });
     },
     {
-      threshold: [0, 0.25, 0.5, 0.75, 1],
+      threshold: 0.5,
       rootMargin: "0px",
     },
   );
@@ -196,40 +174,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const peaceCards = document.querySelectorAll('.card[data-viz="peace"]');
 
-  // Track current active step to prevent flickering
-  let currentPeaceStep = 0;
-
   const peaceObserver = new IntersectionObserver(
     (entries) => {
-      // Find the most visible intersecting card
-      let mostVisible = null;
-      let maxRatio = 0;
-
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-          mostVisible = entry.target;
-          maxRatio = entry.intersectionRatio;
-        }
+        if (!entry.isIntersecting) return;
+
+        const step = parseInt(entry.target.dataset.step);
+
+        peaceCards.forEach((card) => card.classList.remove("active"));
+        entry.target.classList.add("active");
+
+        console.log("Peace map active step:", step);
+        peaceMap.highlightStep(step);
       });
-
-      // Only update if we found a visible card AND it's significantly more visible
-      if (mostVisible) {
-        const newStep = parseInt(mostVisible.dataset.step);
-
-        // Only switch steps if it's different AND new card is at least 30% visible
-        if (newStep !== currentPeaceStep && maxRatio > 0.3) {
-          currentPeaceStep = newStep;
-
-          peaceCards.forEach((card) => card.classList.remove("active"));
-          mostVisible.classList.add("active");
-
-          console.log("Peace map active step:", newStep);
-          peaceMap.highlightStep(newStep);
-        }
-      }
     },
     {
-      threshold: [0, 0.25, 0.5, 0.75, 1],
+      threshold: 0.5,
       rootMargin: "0px",
     },
   );
@@ -239,40 +199,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const tradeCards = document.querySelectorAll('.card[data-viz="trade"]');
 
-  // Track current active step to prevent flickering
-  let currentTradeStep = 0;
-
   const tradeObserver = new IntersectionObserver(
     (entries) => {
-      // Find the most visible intersecting card
-      let mostVisible = null;
-      let maxRatio = 0;
-
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-          mostVisible = entry.target;
-          maxRatio = entry.intersectionRatio;
-        }
+        if (!entry.isIntersecting) return;
+
+        const step = parseInt(entry.target.dataset.step);
+
+        tradeCards.forEach((card) => card.classList.remove("active"));
+        entry.target.classList.add("active");
+
+        console.log("Trade chart active step:", step);
+        // No transitions - chart is static
       });
-
-      // Only update if we found a visible card AND it's significantly more visible
-      if (mostVisible) {
-        const newStep = parseInt(mostVisible.dataset.step);
-
-        // Only switch steps if it's different AND new card is at least 30% visible
-        if (newStep !== currentTradeStep && maxRatio > 0.3) {
-          currentTradeStep = newStep;
-
-          tradeCards.forEach((card) => card.classList.remove("active"));
-          mostVisible.classList.add("active");
-
-          console.log("Trade chart active step:", newStep);
-          // No transitions - chart is static
-        }
-      }
     },
     {
-      threshold: [0, 0.25, 0.5, 0.75, 1],
+      threshold: 0.5,
       rootMargin: "0px",
     },
   );
@@ -283,64 +225,57 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup observers for mapdot scrollytelling with scroll-bound animations
   const mapdotCards = document.querySelectorAll('.card[data-viz="mapdot"]');
 
-  // Track current active step to prevent flickering
-  let currentMapdotStep = 0;
-
   const mapdotObserver = new IntersectionObserver(
     (entries) => {
-      // Find the most visible intersecting card
-      let mostVisible = null;
-      let maxRatio = 0;
-
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-          mostVisible = entry.target;
-          maxRatio = entry.intersectionRatio;
-        }
-      });
+        if (!entry.isIntersecting) return;
 
-      // Only update if we found a visible card AND it's significantly more visible
-      if (mostVisible) {
-        const newStep = parseInt(mostVisible.dataset.step);
+        const step = parseInt(entry.target.dataset.step);
 
-        // Only switch steps if it's different AND new card is at least 30% visible
-        if (newStep !== currentMapdotStep && maxRatio > 0.3) {
-          currentMapdotStep = newStep;
+        mapdotCards.forEach((card) => card.classList.remove("active"));
+        entry.target.classList.add("active");
 
-          mapdotCards.forEach((card) => card.classList.remove("active"));
-          mostVisible.classList.add("active");
+        console.log("Mapdot active step:", step);
 
-          console.log("Mapdot active step:", newStep);
-
-          if (newStep < 2) {
-            // Steps 0-1: Stay in map view, no scroll animation
-            mapDotPlot.stopScrollAnimation();
-            // Set to map view instantly (progress = 0 means full map view)
-            if (mapDotPlot.isScatterView) {
-              mapDotPlot.setTransitionProgress(true, 0);
-              mapDotPlot.isScatterView = false;
-            }
-          } else if (newStep === 2) {
-            // Step 2: The transition card - animate from map to scatter
-            mapDotPlot.startScrollAnimation(mostVisible, "toScatter");
-          } else {
-            // Steps 3+: Stay in scatter view, no scroll animation
-            mapDotPlot.stopScrollAnimation();
-            // Set to scatter view instantly (progress = 1 means full scatter view)
-            if (!mapDotPlot.isScatterView) {
-              mapDotPlot.setTransitionProgress(true, 1);
-              mapDotPlot.isScatterView = true;
-            }
+        if (step < 2) {
+          // Steps 0-1: Stay in map view, no scroll animation
+          mapDotPlot.stopScrollAnimation();
+          // Set to map view instantly (progress = 0 means full map view)
+          if (mapDotPlot.isScatterView) {
+            mapDotPlot.setTransitionProgress(true, 0);
+            mapDotPlot.isScatterView = false;
+          }
+        } else if (step === 2) {
+          // Step 2: The transition card - animate from map to scatter
+          mapDotPlot.startScrollAnimation(entry.target, "toScatter");
+        } else {
+          // Steps 3+: Stay in scatter view, no scroll animation
+          mapDotPlot.stopScrollAnimation();
+          // Set to scatter view instantly (progress = 1 means full scatter view)
+          if (!mapDotPlot.isScatterView) {
+            mapDotPlot.setTransitionProgress(true, 1);
+            mapDotPlot.isScatterView = true;
           }
         }
-      }
+      });
+    },
+    {
+      threshold: 0.5,
+      rootMargin: "0px",
+    },
+  );
 
-      // Handle cards leaving viewport (for step 2 animation cleanup)
+  // Observe mapdot cards
+  mapdotCards.forEach((card) => mapdotObserver.observe(card));
+
+  // Separate observer for step 2 animation cleanup when it leaves
+  const mapdotStep2Observer = new IntersectionObserver(
+    (entries) => {
       entries.forEach((entry) => {
         const step = parseInt(entry.target.dataset.step);
         if (
-          !entry.isIntersecting &&
           step === 2 &&
+          !entry.isIntersecting &&
           mapDotPlot.currentTransitionCard === entry.target
         ) {
           // Step 2 is leaving - stop the animation
@@ -363,11 +298,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     },
     {
-      threshold: [0, 0.25, 0.5, 0.75, 1],
+      threshold: 0,
       rootMargin: "0px",
     },
   );
 
-  // Observe mapdot cards
-  mapdotCards.forEach((card) => mapdotObserver.observe(card));
+  // Only observe step 2 for cleanup
+  mapdotCards.forEach((card) => {
+    if (parseInt(card.dataset.step) === 2) {
+      mapdotStep2Observer.observe(card);
+    }
+  });
 });
