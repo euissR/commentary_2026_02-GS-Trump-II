@@ -17,6 +17,13 @@ export class DotMapPlot {
     this.dotOffsetY = (this.height - this.dotHeight) / 2;
 
     this.isMapView = false;
+    this.labelsVisible = false;
+
+    // Scroll-bound animation state
+    this.scrollAnimationActive = false;
+    this.currentTransitionCard = null;
+    this.transitionDirection = null; // 'toMap' or 'toDotPlot'
+    this.rafId = null;
 
     this.init();
 
@@ -47,7 +54,7 @@ export class DotMapPlot {
         await Promise.all([
           d3.csv("./strikes_week_stack.csv", (d) => ({
             id: +d.id,
-            event_date: d.event_date,
+            event_date: new Date(d.event_date),
             year: +d.year,
             President: d.President,
             country: d.country,
@@ -102,10 +109,9 @@ export class DotMapPlot {
   setupScales() {
     // Dot plot scales
     this.xScale = d3
-      .scalePoint()
-      .domain(this.weeks)
-      .range([this.dotOffsetX, this.dotOffsetX + this.dotWidth])
-      .padding(0.5);
+      .scaleTime()
+      .domain(d3.extent(this.csvData, (d) => d.event_date))
+      .range([this.dotOffsetX, this.dotOffsetX + this.dotWidth]);
 
     this.yScale = d3
       .scaleLinear()
@@ -117,7 +123,7 @@ export class DotMapPlot {
     this.colorScale = d3
       .scaleOrdinal()
       .domain(countries)
-      .range(["#1d3956", "#df3144", "#1d3956"]);
+      .range(["#df3144", "#1d3956", "#df3144"]);
   }
 
   createSVG() {
@@ -192,9 +198,9 @@ export class DotMapPlot {
       .append("circle")
       .attr("class", "strike-dot")
       .attr("r", 2.5)
-      .attr("cx", (d) => this.xScale(d.week))
+      .attr("cx", (d) => this.xScale(d.event_date))
       .attr("cy", (d) => this.yScale(d.stack))
-      .attr("fill", (d) => this.colorScale(d.President))
+      .attr("fill", "#c6c6c6") // Start with all dots gray
       .attr("stroke", "#fff")
       .attr("stroke-width", 0.25)
       .style("opacity", 1)
@@ -245,6 +251,309 @@ export class DotMapPlot {
       .style("opacity", 0);
   }
 
+  updateColors(step) {
+    this.dots
+      .transition()
+      .duration(1000)
+      .attr("fill", (d) => {
+        if (step === 0) {
+          // Step 0: All gray
+          return "#c6c6c6";
+        } else if (step === 1) {
+          // Step 1: Biden blue, others gray
+          return d.President === "Biden" ? "#1d3956" : "#c6c6c6";
+        } else if (step === 2) {
+          // Step 2: Trump I red, others gray
+          return d.President === "Trump I" ? "#df3144" : "#c6c6c6";
+        } else if (step === 3) {
+          // Step 3: Trump II red, others gray
+          return d.President === "Trump II" ? "#df3144" : "#c6c6c6";
+        } else if (step === 4 || step === 5) {
+          // Steps 4-5: All dots colored by president (for map view)
+          return this.colorScale(d.President);
+        } else if (step >= 6) {
+          // Step 6+: Yemen/Somalia only
+          if (d.country === "Yemen" || d.country === "Somalia") {
+            return this.colorScale(d.President);
+          } else {
+            return "#c6c6c6";
+          }
+        }
+      });
+  }
+
+  updateStep(step) {
+    // Update title
+    this.updateTitle(step);
+
+    // Update colors first
+    this.updateColors(step);
+
+    // Handle view transitions
+    if (step >= 4) {
+      // Steps 4+: Map view
+      if (!this.isMapView) {
+        this.toggleView(true, step);
+      } else {
+        // Already in map view, just update labels if needed
+        if (step === 5) {
+          this.showCountryLabels(step);
+        } else if (step >= 6) {
+          // Redraw labels with filter for Yemen/Somalia
+          this.showCountryLabels(step);
+        } else if (step < 5 && this.labelsVisible) {
+          this.hideCountryLabels();
+        }
+      }
+    } else {
+      // Steps 0-3: Dot plot view
+      if (this.isMapView) {
+        this.toggleView(false, step);
+      }
+    }
+  }
+
+  updateTitle(step) {
+    const titleElement =
+      this.container.parentElement.querySelector(".sticky-title");
+    if (!titleElement) return;
+
+    if (step >= 4) {
+      // Map view title
+      titleElement.textContent = "US strikes in 2025";
+    } else {
+      // Dot plot view title
+      titleElement.textContent = "Timeline of US strikes worldwide, 2017-25";
+    }
+  }
+
+  showCountryLabels(step) {
+    this.countryLabels.selectAll("*").remove();
+
+    // Filter data based on step
+    let labelData = this.geoAggregate.features;
+    if (step >= 6) {
+      // Only show Yemen and Somalia labels
+      labelData = this.geoAggregate.features.filter(
+        (d) =>
+          d.properties.country === "Yemen" ||
+          d.properties.country === "Somalia",
+      );
+    }
+
+    this.countryLabels
+      .selectAll(".country-label")
+      .data(labelData)
+      .enter()
+      .append("text")
+      .attr("class", "country-label")
+      .attr("x", (d) => {
+        const baseX = this.projection(d.geometry.coordinates)[0];
+        if (d.properties.country === "Somalia") return baseX - 40;
+        if (d.properties.country === "Venezuela") return baseX + 40;
+        if (d.properties.country === "Caribbean") return baseX + 40;
+        return baseX;
+      })
+      .attr("y", (d) => {
+        const baseY = this.projection(d.geometry.coordinates)[1];
+        if (d.properties.country === "Somalia") return baseY;
+        if (d.properties.country === "Venezuela") return baseY;
+        if (d.properties.country === "Caribbean") return baseY - 20;
+        return baseY - 30;
+      })
+      .attr("text-anchor", "middle")
+      .style("font-size", "12px")
+      .style("opacity", 0)
+      .each(function (d) {
+        const text = d3.select(this);
+        text
+          .append("tspan")
+          .attr("x", text.attr("x"))
+          .attr("dy", "0")
+          .style("font-weight", "700")
+          .style("fill", "#333")
+          .style("stroke", "#fff")
+          .style("stroke-width", "3")
+          .style("paint-order", "stroke")
+          .text(d.properties.country);
+
+        text
+          .append("tspan")
+          .attr("x", text.attr("x"))
+          .attr("dy", "1.2em")
+          .style("font-weight", "400")
+          .style("fill", "#666")
+          .style("stroke", "#fff")
+          .style("stroke-width", "3")
+          .style("paint-order", "stroke")
+          .text(`${d.properties.n} strikes`);
+      })
+      .transition()
+      .delay(500)
+      .duration(500)
+      .style("opacity", 1);
+
+    this.countryLabels
+      .transition()
+      .duration(500)
+      .delay(500)
+      .style("opacity", 1);
+
+    this.labelsVisible = true;
+  }
+
+  hideCountryLabels() {
+    this.countryLabels.transition().duration(500).style("opacity", 0);
+    this.labelsVisible = false;
+  }
+
+  // Scroll-based transition with progress value (0-1)
+  setTransitionProgress(toMap, progress) {
+    // Clamp progress between 0 and 1
+    progress = Math.max(0, Math.min(1, progress));
+
+    if (toMap) {
+      // Interpolate from dot plot to map view
+      this.dots
+        .attr("cx", (d) => {
+          const startX = this.xScale(d.event_date);
+          const geoFeature = this.geoData.features.find(
+            (f) => f.properties.id === d.id,
+          );
+          if (geoFeature) {
+            const endX = this.projection(geoFeature.geometry.coordinates)[0];
+            return d3.interpolate(startX, endX)(progress);
+          }
+          return startX;
+        })
+        .attr("cy", (d) => {
+          const startY = this.yScale(d.stack);
+          const geoFeature = this.geoData.features.find(
+            (f) => f.properties.id === d.id,
+          );
+          if (geoFeature) {
+            const endY = this.projection(geoFeature.geometry.coordinates)[1];
+            return d3.interpolate(startY, endY)(progress);
+          }
+          return startY;
+        })
+        .attr("r", 2.5)
+        .attr("stroke-width", 0)
+        .style("opacity", (d) => {
+          const geoFeature = this.geoData.features.find(
+            (f) => f.properties.id === d.id,
+          );
+          if (geoFeature) {
+            return d3.interpolate(1, 0.33)(progress);
+          }
+          return d3.interpolate(1, 0)(progress);
+        });
+
+      // Fade out axes, fade in map
+      this.axesGroup.style("opacity", 1 - progress);
+      this.mapGroup.style("opacity", progress);
+    } else {
+      // Interpolate from map to dot plot view
+      this.dots
+        .attr("cx", (d) => {
+          const geoFeature = this.geoData.features.find(
+            (f) => f.properties.id === d.id,
+          );
+          const endX = this.xScale(d.event_date);
+          if (geoFeature) {
+            const startX = this.projection(geoFeature.geometry.coordinates)[0];
+            return d3.interpolate(startX, endX)(progress);
+          }
+          return endX;
+        })
+        .attr("cy", (d) => {
+          const geoFeature = this.geoData.features.find(
+            (f) => f.properties.id === d.id,
+          );
+          const endY = this.yScale(d.stack);
+          if (geoFeature) {
+            const startY = this.projection(geoFeature.geometry.coordinates)[1];
+            return d3.interpolate(startY, endY)(progress);
+          }
+          return endY;
+        })
+        .attr("r", 2.5)
+        .style("opacity", (d) => {
+          const geoFeature = this.geoData.features.find(
+            (f) => f.properties.id === d.id,
+          );
+          if (geoFeature) {
+            return d3.interpolate(0.33, 1)(progress);
+          }
+          return d3.interpolate(0, 1)(progress);
+        });
+
+      // Fade in axes, fade out map
+      this.axesGroup.style("opacity", progress);
+      this.mapGroup.style("opacity", 1 - progress);
+    }
+  }
+
+  // Calculate scroll progress for a card (0 = entering viewport, 1 = leaving viewport)
+  calculateScrollProgress(card) {
+    const rect = card.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+
+    const cardTop = rect.top;
+
+    // Start transition when card is 80vh from top, complete when it reaches 20vh from top
+    const startY = viewportHeight * 0.8;
+    const endY = viewportHeight * 0.2;
+
+    let progress = (startY - cardTop) / (startY - endY);
+
+    // Clamp between 0 and 1
+    return Math.max(0, Math.min(1, progress));
+  }
+
+  // Update animation based on current scroll position
+  updateScrollAnimation() {
+    if (!this.scrollAnimationActive || !this.currentTransitionCard) {
+      return;
+    }
+
+    const progress = this.calculateScrollProgress(this.currentTransitionCard);
+
+    if (this.transitionDirection === "toMap") {
+      this.setTransitionProgress(true, progress);
+    } else if (this.transitionDirection === "toDotPlot") {
+      this.setTransitionProgress(false, progress);
+    }
+
+    // Continue animating
+    this.rafId = requestAnimationFrame(() => this.updateScrollAnimation());
+  }
+
+  // Start scroll-bound animation
+  startScrollAnimation(card, direction) {
+    // Stop any existing animation
+    this.stopScrollAnimation();
+
+    this.scrollAnimationActive = true;
+    this.currentTransitionCard = card;
+    this.transitionDirection = direction; // 'toMap' or 'toDotPlot'
+
+    // Start animation loop
+    this.updateScrollAnimation();
+  }
+
+  // Stop scroll-bound animation
+  stopScrollAnimation() {
+    this.scrollAnimationActive = false;
+    this.currentTransitionCard = null;
+    this.transitionDirection = null;
+
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+  }
+
   resize() {
     // Update SVG size
     this.svg.attr("width", this.width).attr("height", this.height);
@@ -287,7 +596,7 @@ export class DotMapPlot {
       });
     } else {
       this.dots
-        .attr("cx", (d) => this.xScale(d.week))
+        .attr("cx", (d) => this.xScale(d.event_date))
         .attr("cy", (d) => this.yScale(d.stack));
     }
   }
@@ -308,7 +617,7 @@ export class DotMapPlot {
             const [x] = this.projection(geoFeature.geometry.coordinates);
             return x;
           }
-          return this.xScale(d.week); // Keep position but will fade out
+          return this.xScale(d.week);
         })
         .attr("cy", (d) => {
           const geoFeature = this.geoData.features.find(
@@ -318,12 +627,11 @@ export class DotMapPlot {
             const [, y] = this.projection(geoFeature.geometry.coordinates);
             return y;
           }
-          return this.yScale(d.stack); // Keep position but will fade out
+          return this.yScale(d.stack);
         })
         .attr("r", 2.5)
         .attr("stroke-width", 0)
         .style("opacity", (d) => {
-          // Fade out dots that don't have a corresponding geo feature
           const geoFeature = this.geoData.features.find(
             (f) => f.properties.id === d.id,
           );
@@ -334,89 +642,28 @@ export class DotMapPlot {
       this.axesGroup.transition().duration(1000).style("opacity", 0);
       this.mapGroup.transition().duration(1000).style("opacity", 1);
 
-      // Add country labels - ONLY on step 3
-      if (step === 3) {
-        this.countryLabels.selectAll("*").remove();
-
-        this.countryLabels
-          .selectAll(".country-label")
-          .data(this.geoAggregate.features)
-          .enter()
-          .append("text")
-          .attr("class", "country-label")
-          .attr("x", (d) => {
-            const baseX = this.projection(d.geometry.coordinates)[0];
-            if (d.properties.country === "Somalia") return baseX - 40;
-            if (d.properties.country === "Venezuela") return baseX + 40;
-            if (d.properties.country === "Caribbean") return baseX + 40;
-            return baseX;
-          })
-          .attr("y", (d) => {
-            const baseY = this.projection(d.geometry.coordinates)[1];
-            if (d.properties.country === "Somalia") return baseY;
-            if (d.properties.country === "Venezuela") return baseY;
-            if (d.properties.country === "Caribbean") return baseY - 20;
-            return baseY - 30; // Everything else
-          })
-          .attr("text-anchor", "middle")
-          .style("font-size", "12px")
-          .style("opacity", 0)
-          .each(function (d) {
-            const text = d3.select(this);
-            // First line: bold country name
-            text
-              .append("tspan")
-              .attr("x", text.attr("x"))
-              .attr("dy", "0")
-              .style("font-weight", "700")
-              .style("fill", "#333")
-              .style("stroke", "#fff")
-              .style("stroke-width", "3")
-              .style("paint-order", "stroke")
-              .text(d.properties.country);
-
-            // Second line: strike count
-            text
-              .append("tspan")
-              .attr("x", text.attr("x"))
-              .attr("dy", "1.2em")
-              .style("font-weight", "400")
-              .style("fill", "#666")
-              .style("stroke", "#fff")
-              .style("stroke-width", "3")
-              .style("paint-order", "stroke")
-              .text(`${d.properties.n} strikes`);
-          })
-          .transition()
-          .delay(500)
-          .duration(500)
-          .style("opacity", 1);
-
-        this.countryLabels
-          .transition()
-          .duration(500)
-          .delay(500)
-          .style("opacity", 1);
-      } else if (step > 3) {
-        // Keep labels visible but don't redraw them
-        // Do nothing - they stay as is
+      // Handle country labels based on step
+      if (step === 5) {
+        this.showCountryLabels(step);
+      } else if (step > 5) {
+        // Redraw labels with filter
+        this.showCountryLabels(step);
       } else {
-        // Hide labels for steps 0-2
-        this.countryLabels.transition().duration(500).style("opacity", 0);
+        // Hide labels for steps < 5
+        this.hideCountryLabels();
       }
     } else {
       // Transition back to dot plot view
       this.dots
         .transition()
         .duration(1000)
-        .attr("cx", (d) => this.xScale(d.week))
+        .attr("cx", (d) => this.xScale(d.event_date))
         .attr("cy", (d) => this.yScale(d.stack))
         .attr("r", 2.5)
-        // .attr("stroke-width", 0.25)
         .style("opacity", 1);
 
       // Hide country labels
-      this.countryLabels.transition().duration(500).style("opacity", 0);
+      this.hideCountryLabels();
 
       // Fade in axes, fade out map
       this.axesGroup.transition().duration(1000).style("opacity", 1);

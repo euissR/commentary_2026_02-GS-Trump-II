@@ -154,7 +154,7 @@ export class ChoroplethMap {
       .style("stroke", "#fff")
       .style("stroke-width", "3")
       .style("paint-order", "stroke")
-      .text("Tariff Category");
+      .text("Tariff category");
 
     const categoricalItems = [
       { label: "Reciprocal", color: "#309ebe", short: true },
@@ -225,7 +225,7 @@ export class ChoroplethMap {
           .style("fill", "#333")
           .text(item.label);
 
-        xOffset += this.width / 2.5;
+        xOffset += this.width / 5;
       });
 
     // Continuous Legend (horizontal gradient)
@@ -243,7 +243,7 @@ export class ChoroplethMap {
       .style("font-size", "14px")
       .style("font-weight", "700")
       .style("fill", "#333")
-      .text("Tariff Rate (%)");
+      .text("Tariff rate (%)");
 
     // Gradient definition (horizontal)
     const defs = this.svg.append("defs");

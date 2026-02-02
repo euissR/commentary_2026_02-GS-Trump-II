@@ -9,7 +9,7 @@ export class TradeChart {
     this.width = containerRect.width;
     this.height = window.innerHeight; // 80vh
 
-    this.margin = { top: 20, right: 180, bottom: 50, left: 80 };
+    this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
 
     this.init();
 
@@ -143,7 +143,7 @@ export class TradeChart {
       .attr("class", "legend")
       .attr(
         "transform",
-        `translate(${this.width - this.width / 2}, ${this.margin.top})`,
+        `translate(${this.width - this.margin.right}, ${this.height * 0.33})`,
       );
 
     this.categories.forEach((category, i) => {
@@ -151,20 +151,54 @@ export class TradeChart {
         .append("g")
         .attr("transform", `translate(0, ${i * 22})`);
 
+      // Rectangle at the right (x=0)
       group
         .append("rect")
         .attr("width", 15)
         .attr("height", 15)
         .attr("fill", this.colorScale(category));
 
+      // Text to the left of rectangle, right-aligned
       group
         .append("text")
-        .attr("x", 20)
+        .attr("x", -5) // 5px to the left of the rectangle
         .attr("y", 12)
+        .attr("text-anchor", "end") // Right-align text
         .style("font-size", "11px")
         .style("fill", "#333")
         .text(category);
     });
+
+    // Add explanatory text below the legend
+    const explanationY = this.categories.length * 22 + 15; // Position below all legend items
+
+    legendGroup
+      .append("text")
+      .attr("x", 0)
+      .attr("y", explanationY)
+      .attr("text-anchor", "end") // Right-align with legend
+      .style("font-size", "10px")
+      .style("fill", "#666")
+      .style("font-style", "italic")
+      .style("max-width", "200px")
+      .each(function () {
+        // Split text into multiple lines for better readability
+        const text = d3.select(this);
+        const lines = [
+          "Positive values indicate net EU exports to the US;",
+          "negative values indicate net imports from",
+          "the US to the EU.",
+        ];
+
+        lines.forEach((line, i) => {
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", i === 0 ? 0 : "1.2em")
+            .attr("text-anchor", "end")
+            .text(line);
+        });
+      });
   }
 
   setupAxes() {
@@ -172,10 +206,25 @@ export class TradeChart {
     this.xAxisGroup = this.svg
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${this.height - this.margin.bottom})`)
+      .attr(
+        "transform",
+        `translate(0, ${this.height - this.margin.bottom + 20})`,
+      )
       .call(d3.axisBottom(this.xScale).ticks(6));
 
     // Y axis (vertical - dates)
+    // Generate regular yearly ticks
+    const yearTicks = d3.timeYear.range(
+      d3.timeYear.floor(this.yScale.domain()[0]),
+      d3.timeYear.ceil(this.yScale.domain()[1]),
+    );
+
+    // Add custom ticks for Jan 2022 and Nov 2025
+    const customTicks = [new Date("2022-01-01"), new Date("2025-11-01")];
+
+    // Combine all ticks and sort them
+    const allTicks = [...yearTicks, ...customTicks].sort((a, b) => a - b);
+
     this.yAxisGroup = this.svg
       .append("g")
       .attr("class", "y-axis")
@@ -183,8 +232,18 @@ export class TradeChart {
       .call(
         d3
           .axisLeft(this.yScale)
-          .ticks(d3.timeYear.every(1))
-          .tickFormat(d3.timeFormat("%Y")),
+          .tickValues(allTicks)
+          .tickFormat((d) => {
+            // Custom format for Jan 2022 and Nov 2025
+            if (d.getTime() === new Date("2022-01-01").getTime()) {
+              return "Jan 2022";
+            }
+            if (d.getTime() === new Date("2025-11-01").getTime()) {
+              return "Nov 2025";
+            }
+            // Default format for year ticks
+            return d3.timeFormat("%Y")(d);
+          }),
       );
 
     // Remove axis domain lines
@@ -289,11 +348,30 @@ export class TradeChart {
       .attr("transform", `translate(0, ${this.height - this.margin.bottom})`)
       .call(d3.axisBottom(this.xScale).ticks(6).tickFormat(d3.format(".2s")));
 
+    // Generate regular yearly ticks
+    const yearTicks = d3.timeYear.range(
+      d3.timeYear.floor(this.yScale.domain()[0]),
+      d3.timeYear.ceil(this.yScale.domain()[1]),
+    );
+
+    // Add custom ticks
+    const customTicks = [new Date("2022-01-01"), new Date("2025-11-01")];
+
+    const allTicks = [...yearTicks, ...customTicks].sort((a, b) => a - b);
+
     this.yAxisGroup.call(
       d3
         .axisLeft(this.yScale)
-        .ticks(d3.timeYear.every(1))
-        .tickFormat(d3.timeFormat("%Y")),
+        .tickValues(allTicks)
+        .tickFormat((d) => {
+          if (d.getTime() === new Date("2022-01-01").getTime()) {
+            return "Jan 2022";
+          }
+          if (d.getTime() === new Date("2025-11-01").getTime()) {
+            return "Nov 2025";
+          }
+          return d3.timeFormat("%Y")(d);
+        }),
     );
 
     // Update legend position
@@ -301,7 +379,7 @@ export class TradeChart {
       .select(".legend")
       .attr(
         "transform",
-        `translate(${this.width - this.margin.right + 20}, ${this.margin.top})`,
+        `translate(${this.width - this.margin.right}, ${this.height / 2})`,
       );
 
     // Update bar positions and heights

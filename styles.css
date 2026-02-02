@@ -32,6 +32,24 @@
   margin-top: 100px;
 }
 
+/* Sticky title */
+.sticky-title {
+  position: absolute;
+  top: 20px;
+  right: 0%;
+  /* transform: translateX(-50%); */
+  font-size: 18px;
+  font-weight: 700;
+  color: #595959;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 10px 20px;
+  border-radius: 4px;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+  z-index: 10;
+  max-width: 90%;
+  text-align: center;
+}
+
 /* Scroll content - positioned on top */
 .scroll-content-dotmap,
 .scroll-content-peace,
@@ -94,7 +112,7 @@
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  opacity: 0.6;
+  opacity: 1;
   pointer-events: auto;
   transition: opacity 0.3s ease;
 }
@@ -199,6 +217,24 @@
   float: right;
   margin-left: 20px; /* Optional: adds spacing between text and div */
 }
+
+/* ============================================
+   TEXT HIGHLIGHTS
+   ============================================ */
+
+   .highlight-fuchsia {
+    color: #fff;
+    background-color: #df3144;
+    padding: 0 4px;
+    border-radius: 2px;
+  }
+  
+  .highlight-teal3 {
+     color: #fff;
+    background-color: #1d3956;
+    padding: 0 4px;
+    border-radius: 2px;
+  }
 
 /* ============================================
    MOBILE RESPONSIVE

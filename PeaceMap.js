@@ -10,6 +10,8 @@ export class PeaceMap {
     this.width = containerRect.width;
     this.height = containerRect.width;
 
+    this.currentStep = 0; // Track current step
+
     this.init();
 
     window.addEventListener("resize", () => {
@@ -127,7 +129,8 @@ export class PeaceMap {
       .attr("r", 10)
       .attr("fill", "none")
       .attr("stroke", "#000")
-      .attr("stroke-width", 1);
+      .attr("stroke-width", 1)
+      .style("opacity", 0); // Initially hidden until step 7
 
     // Add main dots (radius 5, filled by res)
     this.dots = this.svg
@@ -154,8 +157,8 @@ export class PeaceMap {
   }
 
   setupLegend() {
-    const legendX = this.width - 150;
-    const legendY = this.height / 6;
+    const legendX = this.width * 0.66;
+    const legendY = this.height * 0.75;
 
     this.legend = this.svg
       .append("g")
@@ -163,16 +166,31 @@ export class PeaceMap {
       .attr("transform", `translate(${legendX}, ${legendY})`);
 
     const legendItems = [
-      { label: "Peace deal", color: "#309ebe", opacity: 1, type: "dot" },
-      { label: "No peace deal", color: "#df3144", opacity: 1, type: "dot" },
-      { label: "No war in 2025", color: "#df3144", opacity: 0.5, type: "dot" },
+      {
+        label: "Peace deal/ceasefire reached in 2025",
+        color: "#309ebe",
+        opacity: 1,
+        type: "dot",
+      },
+      {
+        label: "No peace deal/ceasefire reached in 2025",
+        color: "#df3144",
+        opacity: 1,
+        type: "dot",
+      },
+      {
+        label: "No open conflict in 2025",
+        color: "#df3144",
+        opacity: 0.5,
+        type: "dot",
+      },
       { label: "Minerals deal", color: "#000", opacity: 1, type: "circle" },
     ];
 
     legendItems.forEach((item, i) => {
       const group = this.legend
         .append("g")
-        .attr("transform", `translate(0, ${i * 30})`); // Stack vertically
+        .attr("transform", `translate(0, ${i * 15})`); // Stack vertically
 
       if (item.type === "dot") {
         group
@@ -203,6 +221,12 @@ export class PeaceMap {
         .style("font-size", "12px")
         .style("fill", "#333")
         .text(item.label);
+
+      // Store reference to minerals legend item (last item) and hide it initially
+      if (i === legendItems.length - 1) {
+        this.mineralsLegendItem = group;
+        group.style("opacity", 0); // Initially hidden until step 7
+      }
     });
   }
 
@@ -225,9 +249,19 @@ export class PeaceMap {
     const props = d.properties;
     let html = `<strong>${props.name}</strong><br/>`;
     html += `Resolution: ${props.res}<br/>`;
-    if (props.min) {
-      html += `<br/><em>Minerals component:</em><br/>${props.min}`;
+
+    if (this.currentStep < 7) {
+      // Before step 7: show Trump's role
+      if (props.role) {
+        html += `<br/><em>Trump's role:</em><br/>${props.role}`;
+      }
+    } else {
+      // Step 7 onwards: show minerals component
+      if (props.min) {
+        html += `<br/><em>Minerals component:</em><br/>${props.min}`;
+      }
     }
+
     if (props.war) {
       html += `<em>${props.war}</em>`;
     }
@@ -249,6 +283,9 @@ export class PeaceMap {
 
   // for step highlights
   highlightStep(step) {
+    // Save current step for tooltip
+    this.currentStep = step;
+
     // Define which peace agreements to highlight at each step
     const stepMapping = {
       1: ["Israel-Hamas"],
@@ -271,7 +308,7 @@ export class PeaceMap {
         return highlightedNames.includes(d.properties.name) ? 1 : 0.7;
       });
 
-    // Update outer circles
+    // Update outer circles - show from step 7 onwards
     this.outerCircles
       .transition()
       .duration(500)
@@ -280,7 +317,16 @@ export class PeaceMap {
       )
       .attr("stroke-width", (d) =>
         highlightedNames.includes(d.properties.name) ? 2 : 1,
-      );
+      )
+      .style("opacity", step >= 7 ? 1 : 0); // Show only from step 7
+
+    // Show/hide minerals legend item from step 7 onwards
+    if (this.mineralsLegendItem) {
+      this.mineralsLegendItem
+        .transition()
+        .duration(500)
+        .style("opacity", step >= 7 ? 1 : 0);
+    }
   }
 
   resize() {

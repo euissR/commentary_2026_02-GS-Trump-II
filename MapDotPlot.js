@@ -18,6 +18,12 @@ export class MapDotPlot {
 
     this.isScatterView = false;
 
+    // Scroll-bound animation state
+    this.scrollAnimationActive = false;
+    this.currentTransitionCard = null;
+    this.transitionDirection = null; // 'toScatter' or 'toMap'
+    this.rafId = null;
+
     this.init();
 
     window.addEventListener("resize", () => {
@@ -113,14 +119,7 @@ export class MapDotPlot {
     this.colorScale = d3
       .scaleOrdinal()
       .domain(this.types)
-      .range([
-        "#1d3956",
-        "#df3144",
-        "#64C2C7",
-        "#FFDE75",
-        "#309ebe",
-        "#C6C6C6",
-      ]);
+      .range(["#1d3956", "#df3144", "#309ebe", "#a41e26", "#33163a"]);
   }
 
   createSVG() {
@@ -216,7 +215,7 @@ export class MapDotPlot {
     this.yAxisGroup
       .selectAll(".tick text")
       .attr("x", 5) // Move onto chart
-      .attr("dy", "-0.75em") // Move up half a line
+      .attr("dy", "-1.5em") // Move up half a line
       .style("text-anchor", "start") // Left-align
       .style("font-size", "11px")
       .style("fill", "#666");
@@ -224,21 +223,21 @@ export class MapDotPlot {
 
   setupDataPoints() {
     // Create dots from geojson features
-    // Calculate centroids for each feature on the map
+    // Use lon/lat from properties instead of calculating centroids
     this.dots = this.svg
       .selectAll(".trade-dot")
       .data(this.geoData.features)
       .enter()
       .append("circle")
       .attr("class", "trade-dot")
-      .attr("r", 5)
+      .attr("r", 6)
       .attr("cx", (d) => {
-        const centroid = this.path.centroid(d);
-        return centroid[0];
+        const [x, y] = this.projection([d.properties.lon, d.properties.lat]);
+        return x;
       })
       .attr("cy", (d) => {
-        const centroid = this.path.centroid(d);
-        return centroid[1];
+        const [x, y] = this.projection([d.properties.lon, d.properties.lat]);
+        return y;
       })
       .attr("fill", "#595959")
       .attr("stroke", "#fff")
@@ -352,12 +351,12 @@ export class MapDotPlot {
     } else {
       this.dots
         .attr("cx", (d) => {
-          const centroid = this.path.centroid(d);
-          return centroid[0];
+          const [x, y] = this.projection([d.properties.lon, d.properties.lat]);
+          return x;
         })
         .attr("cy", (d) => {
-          const centroid = this.path.centroid(d);
-          return centroid[1];
+          const [x, y] = this.projection([d.properties.lon, d.properties.lat]);
+          return y;
         });
     }
   }
@@ -372,7 +371,7 @@ export class MapDotPlot {
         .duration(1000)
         .attr("cx", (d) => this.xScale(d.properties.country))
         .attr("cy", (d) => this.yScale(d.properties.name))
-        .attr("r", 5)
+        .attr("r", 8)
         .attr("fill", (d) => this.colorScale(d.properties.type))
         .style("opacity", 1);
 
@@ -385,20 +384,153 @@ export class MapDotPlot {
         .transition()
         .duration(1000)
         .attr("cx", (d) => {
-          const centroid = this.path.centroid(d);
-          return centroid[0];
+          const [x, y] = this.projection([d.properties.lon, d.properties.lat]);
+          return x;
         })
         .attr("cy", (d) => {
-          const centroid = this.path.centroid(d);
-          return centroid[1];
+          const [x, y] = this.projection([d.properties.lon, d.properties.lat]);
+          return y;
         })
-        .attr("r", 3)
+        .attr("r", 6)
         .attr("fill", "#595959")
         .style("opacity", 1);
 
       // Fade in map, fade out axes
       this.mapGroup.transition().duration(1000).style("opacity", 1);
       this.axesGroup.transition().duration(1000).style("opacity", 0);
+    }
+  }
+
+  // Scroll-based transition with progress value (0-1)
+  setTransitionProgress(isScatter, progress) {
+    // Clamp progress between 0 and 1
+    progress = Math.max(0, Math.min(1, progress));
+
+    this.isScatterView = isScatter;
+
+    if (isScatter) {
+      // Interpolate from map to scatter view
+      this.dots
+        .attr("cx", (d) => {
+          const startX = this.projection([
+            d.properties.lon,
+            d.properties.lat,
+          ])[0];
+          const endX = this.xScale(d.properties.country);
+          return d3.interpolate(startX, endX)(progress);
+        })
+        .attr("cy", (d) => {
+          const startY = this.projection([
+            d.properties.lon,
+            d.properties.lat,
+          ])[1];
+          const endY = this.yScale(d.properties.name);
+          return d3.interpolate(startY, endY)(progress);
+        })
+        .attr("r", (d) => {
+          return d3.interpolate(6, 8)(progress);
+        })
+        .attr("fill", (d) => {
+          const startColor = "#595959";
+          const endColor = this.colorScale(d.properties.type);
+          return d3.interpolate(startColor, endColor)(progress);
+        })
+        .style("opacity", 1);
+
+      // Fade out map, fade in axes
+      this.mapGroup.style("opacity", 1 - progress);
+      this.axesGroup.style("opacity", progress);
+    } else {
+      // Interpolate from scatter to map view
+      this.dots
+        .attr("cx", (d) => {
+          const startX = this.xScale(d.properties.country);
+          const endX = this.projection([d.properties.lon, d.properties.lat])[0];
+          return d3.interpolate(startX, endX)(progress);
+        })
+        .attr("cy", (d) => {
+          const startY = this.yScale(d.properties.name);
+          const endY = this.projection([d.properties.lon, d.properties.lat])[1];
+          return d3.interpolate(startY, endY)(progress);
+        })
+        .attr("r", (d) => {
+          return d3.interpolate(8, 6)(progress);
+        })
+        .attr("fill", (d) => {
+          const startColor = this.colorScale(d.properties.type);
+          const endColor = "#595959";
+          return d3.interpolate(startColor, endColor)(progress);
+        })
+        .style("opacity", 1);
+
+      // Fade in map, fade out axes
+      this.mapGroup.style("opacity", progress);
+      this.axesGroup.style("opacity", 1 - progress);
+    }
+  }
+
+  // Calculate scroll progress for a card (0 = entering viewport, 1 = leaving viewport)
+  calculateScrollProgress(card) {
+    const rect = card.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+
+    // Card enters at bottom of viewport (progress = 0)
+    // Card exits at top of viewport (progress = 1)
+    // We want the transition to happen as the card scrolls through the viewport
+
+    const cardTop = rect.top;
+    const cardHeight = rect.height;
+
+    // Start transition when card is 80vh from top, complete when it reaches 20vh from top
+    const startY = viewportHeight * 0.8;
+    const endY = viewportHeight * 0.2;
+
+    let progress = (startY - cardTop) / (startY - endY);
+
+    // Clamp between 0 and 1
+    return Math.max(0, Math.min(1, progress));
+  }
+
+  // Update animation based on current scroll position
+  updateScrollAnimation() {
+    if (!this.scrollAnimationActive || !this.currentTransitionCard) {
+      return;
+    }
+
+    const progress = this.calculateScrollProgress(this.currentTransitionCard);
+
+    if (this.transitionDirection === "toScatter") {
+      this.setTransitionProgress(true, progress);
+    } else if (this.transitionDirection === "toMap") {
+      this.setTransitionProgress(false, progress);
+    }
+
+    // Continue animating
+    this.rafId = requestAnimationFrame(() => this.updateScrollAnimation());
+  }
+
+  // Start scroll-bound animation
+  startScrollAnimation(card, direction) {
+    // Stop any existing animation
+    this.stopScrollAnimation();
+
+    this.scrollAnimationActive = true;
+    this.currentTransitionCard = card;
+    this.transitionDirection = direction; // 'toScatter' or 'toMap'
+
+    // Start animation loop
+    this.updateScrollAnimation();
+  }
+
+  // Stop scroll-bound animation
+  stopScrollAnimation() {
+    this.scrollAnimationActive = false;
+    this.currentTransitionCard = null;
+    this.transitionDirection = null;
+
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
     }
   }
 }
