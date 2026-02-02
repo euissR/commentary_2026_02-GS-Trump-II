@@ -40,7 +40,9 @@ export class ChoroplethMap {
   async loadData() {
     try {
       const [ieepaSf, worldData] = await Promise.all([
-        d3.json("./ieepa_sf.geojson"),
+        d3.json(
+          "https://euissr.github.io/commentary_2026_02-GS-Trump-II/ieepa_sf.geojson",
+        ),
         d3.json("https://unpkg.com/world-atlas@2/land-110m.json"),
       ]);
 

@@ -34,11 +34,14 @@ export class TradeChart {
 
   async loadData() {
     try {
-      const volumeData = await d3.csv("./trade_vol_long.csv", (d) => ({
-        date: d3.timeParse("%Y-%m-%d")(d.date),
-        name: d.name,
-        value: +d.value,
-      }));
+      const volumeData = await d3.csv(
+        "https://euissr.github.io/commentary_2026_02-GS-Trump-II/trade_vol_long.csv",
+        (d) => ({
+          date: d3.timeParse("%Y-%m-%d")(d.date),
+          name: d.name,
+          value: +d.value,
+        }),
+      );
 
       this.volumeData = volumeData;
 

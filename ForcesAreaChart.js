@@ -40,11 +40,14 @@ export class ForcesAreaChart {
 
   async loadData() {
     try {
-      const data = await d3.csv("./forces_total.csv", (d) => ({
-        date: d3.timeParse("%Y-%m-%d")(d.date),
-        name: d.name,
-        value: +d.value,
-      }));
+      const data = await d3.csv(
+        "https://euissr.github.io/commentary_2026_02-GS-Trump-II/forces_total.csv",
+        (d) => ({
+          date: d3.timeParse("%Y-%m-%d")(d.date),
+          name: d.name,
+          value: +d.value,
+        }),
+      );
 
       this.data = data;
 

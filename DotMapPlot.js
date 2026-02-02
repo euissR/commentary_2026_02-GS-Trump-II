@@ -52,20 +52,29 @@ export class DotMapPlot {
       // Load strikes data
       const [csvData, geoData, geoAggregate, strikeCountries, worldData] =
         await Promise.all([
-          d3.csv("./strikes_week_stack.csv", (d) => ({
-            id: +d.id,
-            event_date: new Date(d.event_date),
-            year: +d.year,
-            President: d.President,
-            country: d.country,
-            latitude: +d.latitude,
-            longitude: +d.longitude,
-            week: d.week,
-            stack: +d.stack,
-          })),
-          d3.json("./strikes_week_stack_sf.geojson"),
-          d3.json("./strikes_country.geojson"),
-          d3.json("./strikes_countries.geojson"),
+          d3.csv(
+            "https://euissr.github.io/commentary_2026_02-GS-Trump-II/strikes_week_stack.csv",
+            (d) => ({
+              id: +d.id,
+              event_date: new Date(d.event_date),
+              year: +d.year,
+              President: d.President,
+              country: d.country,
+              latitude: +d.latitude,
+              longitude: +d.longitude,
+              week: d.week,
+              stack: +d.stack,
+            }),
+          ),
+          d3.json(
+            "https://euissr.github.io/commentary_2026_02-GS-Trump-II/strikes_week_stack_sf.geojson",
+          ),
+          d3.json(
+            "https://euissr.github.io/commentary_2026_02-GS-Trump-II/strikes_country.geojson",
+          ),
+          d3.json(
+            "https://euissr.github.io/commentary_2026_02-GS-Trump-II/strikes_countries.geojson",
+          ),
           d3.json("https://unpkg.com/world-atlas@2/land-110m.json"),
         ]);
 

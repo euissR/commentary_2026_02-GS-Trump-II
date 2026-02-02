@@ -40,11 +40,14 @@ export class FMSRegionChart {
 
   async loadData() {
     try {
-      const data = await d3.csv("./fms_region_long.csv", (d) => ({
-        region: d.region,
-        date: +d.date, // Numeric year
-        value: +d.value,
-      }));
+      const data = await d3.csv(
+        "https://euissr.github.io/commentary_2026_02-GS-Trump-II/fms_region_long.csv",
+        (d) => ({
+          region: d.region,
+          date: +d.date, // Numeric year
+          value: +d.value,
+        }),
+      );
 
       this.data = data;
 

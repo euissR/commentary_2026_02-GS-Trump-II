@@ -33,8 +33,12 @@ export class PeaceMap {
   async loadData() {
     try {
       const [peaceSf, peaceCountries, worldData] = await Promise.all([
-        d3.json("./peace_sf.geojson"),
-        d3.json("./peace_countries.geojson"),
+        d3.json(
+          "https://euissr.github.io/commentary_2026_02-GS-Trump-II/peace_sf.geojson",
+        ),
+        d3.json(
+          "https://euissr.github.io/commentary_2026_02-GS-Trump-II/peace_countries.geojson",
+        ),
         d3.json("https://unpkg.com/world-atlas@2/land-110m.json"),
       ]);
 
