@@ -36,7 +36,7 @@ export class TradeChart {
   async loadData() {
     try {
       const volumeData = await d3.csv(
-        `${CONFIG.BASE_URL}trade_vol_long.csv`,
+        `${CONFIG.BASE_URL}/trade_vol_long.csv`,
         (d) => ({
           date: d3.timeParse("%Y-%m-%d")(d.date),
           name: d.name,

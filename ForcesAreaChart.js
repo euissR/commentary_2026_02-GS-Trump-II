@@ -41,7 +41,7 @@ export class ForcesAreaChart {
 
   async loadData() {
     try {
-      const data = await d3.csv(`${CONFIG.BASE_URL}forces_total.csv`, (d) => ({
+      const data = await d3.csv(`${CONFIG.BASE_URL}/forces_total.csv`, (d) => ({
         date: d3.timeParse("%Y-%m-%d")(d.date),
         name: d.name,
         value: +d.value,

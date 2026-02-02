@@ -48,7 +48,7 @@ export class FMSCategoryScatter {
 
   async loadData() {
     try {
-      const data = await d3.csv(`${CONFIG.BASE_URL}fms_cat_eu.csv`, (d) => ({
+      const data = await d3.csv(`${CONFIG.BASE_URL}/fms_cat_eu.csv`, (d) => ({
         country: d.country,
         name: d.name,
         value: +d.value,

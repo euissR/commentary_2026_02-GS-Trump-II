@@ -42,7 +42,7 @@ export class FMSRegionChart {
   async loadData() {
     try {
       const data = await d3.csv(
-        `${CONFIG.BASE_URL}fms_region_long.csv`,
+        `${CONFIG.BASE_URL}/fms_region_long.csv`,
         (d) => ({
           region: d.region,
           date: +d.date, // Numeric year
