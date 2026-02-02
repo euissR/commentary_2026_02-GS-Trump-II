@@ -1,20 +1,11 @@
-import { CONFIG } from "./config.js";
-// import { DotMapPlot } from "./DotMapPlot.js";
-// import { PeaceMap } from "./PeaceMap.js";
-// import { ChoroplethMap } from "./ChoroplethMap.js";
-// import { TradeChart } from "./TradeChart.js";
-// import { MapDotPlot } from "./MapDotPlot.js";
-// import { ForcesAreaChart } from "./ForcesAreaChart.js";
-// import { FMSCategoryScatter } from "./FMSCategoryScatter.js";
-// import { FMSRegionChart } from "./FMSRegionChart.js";
-import { DotMapPlot } from `${CONFIG.BASE_URL}/DotMapPlot.js`;
-import { PeaceMap } from `${CONFIG.BASE_URL}/PeaceMap.js`;
-import { ChoroplethMap } from `${CONFIG.BASE_URL}/ChoroplethMap.js`;
-import { TradeChart } from `${CONFIG.BASE_URL}/TradeChart.js`;
-import { MapDotPlot } from `${CONFIG.BASE_URL}/MapDotPlot.js`;
-import { ForcesAreaChart } from `${CONFIG.BASE_URL}/ForcesAreaChart.js`;
-import { FMSCategoryScatter } from `${CONFIG.BASE_URL}/FMSCategoryScatter.js`;
-import { FMSRegionChart } from `${CONFIG.BASE_URL}/FMSRegionChart.js`;
+import { DotMapPlot } from "./DotMapPlot.js";
+import { PeaceMap } from "./PeaceMap.js";
+import { ChoroplethMap } from "./ChoroplethMap.js";
+import { TradeChart } from "./TradeChart.js";
+import { MapDotPlot } from "./MapDotPlot.js";
+import { ForcesAreaChart } from "./ForcesAreaChart.js";
+import { FMSCategoryScatter } from "./FMSCategoryScatter.js";
+import { FMSRegionChart } from "./FMSRegionChart.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize all visualizations
