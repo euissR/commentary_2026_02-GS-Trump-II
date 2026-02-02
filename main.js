@@ -3,6 +3,9 @@ import { PeaceMap } from "./PeaceMap.js";
 import { ChoroplethMap } from "./ChoroplethMap.js";
 import { TradeChart } from "./TradeChart.js";
 import { MapDotPlot } from "./MapDotPlot.js";
+import { ForcesAreaChart } from "./ForcesAreaChart.js";
+import { FMSCategoryScatter } from "./FMSCategoryScatter.js";
+import { FMSRegionChart } from "./FMSRegionChart.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize all visualizations
@@ -13,12 +16,24 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const tradeMapElement = document.getElementById("visualization-trade");
   const mapDotElement = document.getElementById("visualization-mapdot");
+  const forcesAreaChartElement = document.getElementById(
+    "visualization-forces-area",
+  );
+  const fmsCategoryScatterElement = document.getElementById(
+    "visualization-fms-category",
+  );
+  const fmsRegionChartElement = document.getElementById(
+    "visualization-fms-region",
+  );
 
   const dotMapPlot = new DotMapPlot(dotMapElement);
   const peaceMap = new PeaceMap(peaceMapElement);
   const choroplethMap = new ChoroplethMap(choroplethMapElement);
   const tradeChart = new TradeChart(tradeMapElement);
   const mapDotPlot = new MapDotPlot(mapDotElement);
+  const forcesAreaChart = new ForcesAreaChart(forcesAreaChartElement);
+  const fmsCategoryScatter = new FMSCategoryScatter(fmsCategoryScatterElement);
+  const fmsRegionChart = new FMSRegionChart(fmsRegionChartElement);
 
   // Setup observers for dotmap scrollytelling
   const dotmapCards = document.querySelectorAll('.card[data-viz="dotmap"]');
@@ -210,7 +225,9 @@ document.addEventListener("DOMContentLoaded", () => {
         entry.target.classList.add("active");
 
         console.log("Trade chart active step:", step);
-        // No transitions - chart is static
+
+        // Highlight specific dates based on step
+        tradeChart.highlightDate(step);
       });
     },
     {
@@ -245,17 +262,21 @@ document.addEventListener("DOMContentLoaded", () => {
             mapDotPlot.setTransitionProgress(true, 0);
             mapDotPlot.isScatterView = false;
           }
+          mapDotPlot.highlightTypeByStep(null);
         } else if (step === 2) {
           // Step 2: The transition card - animate from map to scatter
           mapDotPlot.startScrollAnimation(entry.target, "toScatter");
         } else {
           // Steps 3+: Stay in scatter view, no scroll animation
           mapDotPlot.stopScrollAnimation();
-          // Set to scatter view instantly (progress = 1 means full scatter view)
+
           if (!mapDotPlot.isScatterView) {
             mapDotPlot.setTransitionProgress(true, 1);
             mapDotPlot.isScatterView = true;
           }
+
+          // 🔥 Highlight groups by step
+          mapDotPlot.highlightTypeByStep(step);
         }
       });
     },
@@ -309,4 +330,71 @@ document.addEventListener("DOMContentLoaded", () => {
       mapdotStep2Observer.observe(card);
     }
   });
+
+  // Setup observers for forces area scrollytelling
+  const forcesCards = document.querySelectorAll(
+    '.card[data-viz="forces-area"]',
+  );
+
+  const forcesObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const step = parseInt(entry.target.dataset.step);
+        forcesCards.forEach((c) => c.classList.remove("active"));
+        entry.target.classList.add("active");
+
+        console.log("Forces area active step:", step);
+        // hook for future step-based behavior if needed
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  forcesCards.forEach((card) => forcesObserver.observe(card));
+
+  // Setup observers for FMS category scrollytelling
+  const fmsCategoryCards = document.querySelectorAll(
+    '.card[data-viz="fms-category"]',
+  );
+
+  const fmsCategoryObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const step = parseInt(entry.target.dataset.step);
+        fmsCategoryCards.forEach((c) => c.classList.remove("active"));
+        entry.target.classList.add("active");
+
+        console.log("FMS category active step:", step);
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  fmsCategoryCards.forEach((card) => fmsCategoryObserver.observe(card));
+
+  // Setup observers for FMS region scrollytelling
+  const fmsRegionCards = document.querySelectorAll(
+    '.card[data-viz="fms-region"]',
+  );
+
+  const fmsRegionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const step = parseInt(entry.target.dataset.step);
+        fmsRegionCards.forEach((c) => c.classList.remove("active"));
+        entry.target.classList.add("active");
+
+        console.log("FMS region active step:", step);
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  fmsRegionCards.forEach((card) => fmsRegionObserver.observe(card));
 });

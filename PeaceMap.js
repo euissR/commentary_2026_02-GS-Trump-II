@@ -154,6 +154,14 @@ export class PeaceMap {
 
     // Setup tooltip
     this.setupTooltip();
+
+    // Add title
+    this.titleText = this.svg
+      .append("text")
+      .attr("class", "viz-title")
+      .attr("x", this.width)
+      .attr("y", 20) // Distance from top of SVG
+      .text("The wars Trump claims to have solved");
   }
 
   setupLegend() {

@@ -10,6 +10,8 @@ export class MapDotPlot {
     this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
     this.height = Math.min(this.width, window.innerHeight * 0.95);
 
+    this.margin = { top: 200, right: 300, bottom: 0, left: 0 };
+
     // Scatter plot dimensions
     this.scatterWidth = this.width * 0.9;
     this.scatterHeight = this.height * 0.75;
@@ -36,6 +38,13 @@ export class MapDotPlot {
       this.scatterOffsetY = (this.height - this.scatterHeight) / 2;
       this.resize();
     });
+
+    // Define a step → type mapping
+    this.stepTypeMap = {
+      3: "Tariff and market access",
+      4: "Economic security",
+      5: "Buy/invest American",
+    };
   }
 
   async init() {
@@ -106,13 +115,13 @@ export class MapDotPlot {
     this.xScale = d3
       .scalePoint()
       .domain(this.countries)
-      .range([this.scatterOffsetX, this.scatterOffsetX + this.scatterWidth])
+      .range([this.margin.left, this.width - this.margin.right])
       .padding(0.5);
 
     this.yScale = d3
       .scalePoint()
       .domain(this.names)
-      .range([this.scatterOffsetY, this.scatterOffsetY + this.scatterHeight])
+      .range([this.margin.top, this.scatterOffsetY + this.scatterHeight])
       .padding(0.5);
 
     // Color scale by type
@@ -137,11 +146,22 @@ export class MapDotPlot {
     // Setup axes (initially hidden)
     this.setupAxes();
 
+    // Setup legend
+    this.setupLegend();
+
     // Setup data points
     this.setupDataPoints();
 
     // Setup tooltip
     this.setupTooltip();
+
+    // Add title
+    this.titleText = this.svg
+      .append("text")
+      .attr("class", "viz-title")
+      .attr("x", this.width)
+      .attr("y", 20) // Distance from top of SVG
+      .text("US trade deals under Trump 2.0");
   }
 
   setupMap() {
@@ -178,18 +198,22 @@ export class MapDotPlot {
         .attr("fill", "#c6c6c6")
         .attr("opacity", 0.33)
         .attr("stroke", "#999")
-        .attr("stroke-width", 0.5);
+        .attr("stroke-width", 0.5)
+        .style("pointer-events", "auto") // Enabled in map view
+        .style("cursor", "pointer")
+        .on("mouseover", (event, d) => this.showTooltip(event, d))
+        .on("mouseout", () => this.hideTooltip());
     });
   }
 
   setupAxes() {
     this.axesGroup = this.svg.append("g").style("opacity", 0);
 
-    // X-axis (countries) - positioned at TOP
+    // X-axis (countries) - positioned at TOP with margin
     this.xAxisGroup = this.axesGroup
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${this.scatterOffsetY})`)
+      .attr("transform", `translate(0, ${this.margin.top})`)
       .call(d3.axisTop(this.xScale));
 
     // Rotate x-axis labels
@@ -197,28 +221,107 @@ export class MapDotPlot {
       .selectAll("text")
       .attr("transform", "rotate(-45)")
       .style("text-anchor", "start")
-      .attr("dx", "-0.5em")
-      .attr("dy", "-0.5em");
+      // .attr("dx", "-.5em")
+      .attr("dy", "1em")
+      .style("font-size", "11px")
+      .style("fill", "#666");
 
-    // Y-axis (names) - labels inside chart
+    // Y-axis (names) - labels inside chart on the right
     this.yAxisGroup = this.axesGroup
       .append("g")
       .attr("class", "y-axis")
-      .attr("transform", `translate(${this.scatterOffsetX}, 0)`)
       .call(d3.axisLeft(this.yScale));
 
-    // Remove all axis lines and tick marks
+    // Remove all axis lines and tick marks (we'll add gridlines separately)
     this.axesGroup.selectAll(".domain").remove();
     this.axesGroup.selectAll(".tick line").remove();
 
-    // Style y-axis text (left-aligned, shifted up and onto chart)
+    // Style y-axis text (right-aligned on the chart)
     this.yAxisGroup
       .selectAll(".tick text")
-      .attr("x", 5) // Move onto chart
-      .attr("dy", "-1.5em") // Move up half a line
-      .style("text-anchor", "start") // Left-align
+      .attr("x", this.width - this.margin.right)
+      .style("text-anchor", "start")
       .style("font-size", "11px")
       .style("fill", "#666");
+
+    // Add gridlines
+    this.gridlinesGroup = this.axesGroup.append("g").attr("class", "gridlines");
+
+    // Vertical gridlines (from x-axis labels down)
+    this.gridlinesGroup
+      .selectAll(".grid-vertical")
+      .data(this.countries)
+      .enter()
+      .append("line")
+      .attr("class", "grid-vertical")
+      .attr("x1", (d) => this.xScale(d))
+      .attr("x2", (d) => this.xScale(d))
+      .attr("y1", this.margin.top)
+      .attr("y2", this.scatterOffsetY + this.scatterHeight)
+      .attr("stroke", "#c6c6c6")
+      .attr("stroke-width", 0.5);
+
+    // Horizontal gridlines (from y-axis labels across)
+    this.gridlinesGroup
+      .selectAll(".grid-horizontal")
+      .data(this.names)
+      .enter()
+      .append("line")
+      .attr("class", "grid-horizontal")
+      .attr("x1", this.margin.left)
+      .attr("x2", this.width - this.margin.right)
+      .attr("y1", (d) => this.yScale(d))
+      .attr("y2", (d) => this.yScale(d))
+      .attr("stroke", "#c6c6c6")
+      .attr("stroke-width", 0.5);
+  }
+
+  setupLegend() {
+    // Legend positioned in top-left corner with margin
+    const legendX = 10;
+    const legendY = this.margin.top / 3;
+
+    this.legendGroup = this.svg
+      .append("g")
+      .attr("class", "color-legend")
+      .attr("transform", `translate(${legendX}, ${legendY})`)
+      .style("opacity", 0); // Initially hidden, shows with scatter view
+
+    // Legend title
+    this.legendGroup
+      .append("text")
+      .attr("x", 0)
+      .attr("y", -5)
+      .style("font-size", "14px")
+      .style("font-weight", "700")
+      .style("fill", "#333")
+      .text("Deal type");
+
+    // Legend items
+    this.types.forEach((type, i) => {
+      const group = this.legendGroup
+        .append("g")
+        .attr("transform", `translate(0, ${i * 20})`);
+
+      // Circle
+      group
+        .append("circle")
+        .attr("cx", 6)
+        .attr("cy", 8)
+        .attr("r", 6)
+        .attr("fill", this.colorScale(type))
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 0.5);
+
+      // Label
+      group
+        .append("text")
+        .attr("x", 18)
+        .attr("y", 12)
+        .style("font-size", "11px")
+        .style("fill", "#333")
+        .text(type);
+    });
   }
 
   setupDataPoints() {
@@ -243,6 +346,8 @@ export class MapDotPlot {
       .attr("stroke", "#fff")
       .attr("stroke-width", 0.5)
       .style("opacity", 1)
+      .style("pointer-events", "none") // Start disabled, enable in scatter view
+      .style("cursor", "pointer")
       .on("mouseover", (event, d) => this.showTooltip(event, d))
       .on("mouseout", () => this.hideTooltip());
   }
@@ -301,12 +406,9 @@ export class MapDotPlot {
       .translate([this.width / 2, this.height / 2]);
 
     // Update scales
-    this.xScale.range([
-      this.scatterOffsetX,
-      this.scatterOffsetX + this.scatterWidth,
-    ]);
+    this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([
-      this.scatterOffsetY,
+      this.margin.top,
       this.scatterOffsetY + this.scatterHeight,
     ]);
 
@@ -316,7 +418,7 @@ export class MapDotPlot {
 
     // Update axes
     this.xAxisGroup
-      .attr("transform", `translate(0, ${this.scatterOffsetY})`)
+      .attr("transform", `translate(0, ${this.margin.top})`)
       .call(d3.axisTop(this.xScale));
 
     this.xAxisGroup
@@ -324,11 +426,11 @@ export class MapDotPlot {
       .attr("transform", "rotate(-45)")
       .style("text-anchor", "end")
       .attr("dx", "-0.5em")
-      .attr("dy", "-0.75em");
+      .attr("dy", "-0.5em")
+      .style("font-size", "11px")
+      .style("fill", "#666");
 
-    this.yAxisGroup
-      .attr("transform", `translate(${this.scatterOffsetX}, 0)`)
-      .call(d3.axisLeft(this.yScale));
+    this.yAxisGroup.call(d3.axisLeft(this.yScale));
 
     // Remove all axis lines and tick marks
     this.axesGroup.selectAll(".domain").remove();
@@ -337,11 +439,25 @@ export class MapDotPlot {
     // Re-style y-axis text
     this.yAxisGroup
       .selectAll(".tick text")
-      .attr("x", 5)
-      .attr("dy", "-0.5em")
+      .attr("x", this.width - this.margin.right)
       .style("text-anchor", "start")
       .style("font-size", "11px")
       .style("fill", "#666");
+
+    // Update gridlines
+    this.gridlinesGroup
+      .selectAll(".grid-vertical")
+      .attr("x1", (d) => this.xScale(d))
+      .attr("x2", (d) => this.xScale(d))
+      .attr("y1", this.margin.top)
+      .attr("y2", this.scatterOffsetY + this.scatterHeight);
+
+    this.gridlinesGroup
+      .selectAll(".grid-horizontal")
+      .attr("x1", this.margin.left)
+      .attr("x2", this.width - this.margin.right)
+      .attr("y1", (d) => this.yScale(d))
+      .attr("y2", (d) => this.yScale(d));
 
     // Update dot positions based on current view
     if (this.isScatterView) {
@@ -401,6 +517,24 @@ export class MapDotPlot {
     }
   }
 
+  // highlight method
+  highlightTypeByStep(step) {
+    const activeType = this.stepTypeMap[step];
+
+    if (!activeType) {
+      // Reset: show all dots equally
+      this.dots.transition().duration(400).style("opacity", 1).attr("r", 8);
+
+      return;
+    }
+
+    this.dots
+      .transition()
+      .duration(400)
+      .style("opacity", (d) => (d.properties.type === activeType ? 1 : 0.15))
+      .attr("r", (d) => (d.properties.type === activeType ? 10 : 6));
+  }
+
   // Scroll-based transition with progress value (0-1)
   setTransitionProgress(isScatter, progress) {
     // Clamp progress between 0 and 1
@@ -437,9 +571,18 @@ export class MapDotPlot {
         })
         .style("opacity", 1);
 
-      // Fade out map, fade in axes
+      // Fade out map, fade in axes and legend
       this.mapGroup.style("opacity", 1 - progress);
       this.axesGroup.style("opacity", progress);
+      this.legendGroup.style("opacity", progress);
+
+      // Toggle pointer events: enable dots, disable country features
+      if (progress > 0.5) {
+        this.dots.style("pointer-events", "auto");
+        this.countriesGroup
+          .selectAll(".trade-country")
+          .style("pointer-events", "none");
+      }
     } else {
       // Interpolate from scatter to map view
       this.dots
@@ -463,9 +606,18 @@ export class MapDotPlot {
         })
         .style("opacity", 1);
 
-      // Fade in map, fade out axes
+      // Fade in map, fade out axes and legend
       this.mapGroup.style("opacity", progress);
       this.axesGroup.style("opacity", 1 - progress);
+      this.legendGroup.style("opacity", 1 - progress);
+
+      // Toggle pointer events: enable country features, disable dots
+      if (progress > 0.5) {
+        this.dots.style("pointer-events", "none");
+        this.countriesGroup
+          .selectAll(".trade-country")
+          .style("pointer-events", "auto");
+      }
     }
   }
 

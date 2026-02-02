@@ -8,7 +8,13 @@ export class ChoroplethMap {
     // Get container dimensions
     const containerRect = container.getBoundingClientRect();
     this.width = containerRect.width;
-    this.height = containerRect.width * 0.6; // Robinson aspect ratio
+
+    // Legend margin at top
+    this.legendMargin = 30;
+
+    // Map height (Robinson aspect ratio) + margin for legend
+    this.mapHeight = containerRect.width * 0.6;
+    this.height = this.mapHeight + this.legendMargin;
 
     this.currentView = "categorical"; // Track current fill type
 
@@ -17,7 +23,8 @@ export class ChoroplethMap {
     window.addEventListener("resize", () => {
       const containerRect = container.getBoundingClientRect();
       this.width = containerRect.width;
-      this.height = containerRect.width * 0.6;
+      this.mapHeight = containerRect.width * 0.6;
+      this.height = this.mapHeight + this.legendMargin;
       this.resize();
     });
   }
@@ -53,7 +60,7 @@ export class ChoroplethMap {
     this.projection = d3
       .geoEqualEarth()
       .scale(150) // Add a fixed scale
-      .translate([this.width / 2, this.height / 2]);
+      .translate([this.width / 2, this.mapHeight / 2 + this.legendMargin]);
 
     this.path = d3.geoPath().projection(this.projection);
   }
@@ -130,11 +137,19 @@ export class ChoroplethMap {
 
     // Setup tooltip
     this.setupTooltip();
+
+    // Add title
+    this.titleText = this.svg
+      .append("text")
+      .attr("class", "viz-title")
+      .attr("x", this.width)
+      .attr("y", 20) // Distance from top of SVG
+      .text("Countries targeted by Trump tariffs");
   }
 
   setupLegends() {
-    const legendX = this.width / 24;
-    const legendY = this.height / 24;
+    const legendX = 5;
+    const legendY = 15; // Position in top margin
 
     // Categorical Legend (horizontal)
     this.categoricalLegend = this.svg
@@ -147,7 +162,7 @@ export class ChoroplethMap {
     this.categoricalLegend
       .append("text")
       .attr("x", 0)
-      .attr("y", -10)
+      .attr("y", -5)
       .style("font-size", "14px")
       .style("font-weight", "700")
       .style("fill", "#333")
@@ -181,23 +196,23 @@ export class ChoroplethMap {
           .append("g")
           .attr("transform", `translate(${xOffset}, 0)`);
 
-        group
-          .append("rect")
-          .attr("width", 15)
-          .attr("height", 15)
+        (group
+          .append("circle")
+          .attr("cx", 6)
+          .attr("cy", 8)
+          .attr("r", 6)
           .attr("fill", item.color)
           .attr("stroke", "#fff")
-          .attr("stroke-width", 0.5);
+          .attr("stroke-width", 0.5),
+          group
+            .append("text")
+            .attr("x", 16)
+            .attr("y", 12)
+            .style("font-size", "11px")
+            .style("fill", "#333")
+            .text(item.label));
 
-        group
-          .append("text")
-          .attr("x", 20)
-          .attr("y", 12)
-          .style("font-size", "11px")
-          .style("fill", "#333")
-          .text(item.label);
-
-        xOffset += this.width / 6;
+        xOffset += this.width / 9 < 100 ? this.width / 9 : 100;
       });
 
     // Second row: long labels
@@ -210,22 +225,23 @@ export class ChoroplethMap {
           .attr("transform", `translate(${xOffset}, 20)`);
 
         group
-          .append("rect")
-          .attr("width", 15)
-          .attr("height", 15)
+          .append("circle")
+          .attr("cx", 6)
+          .attr("cy", 8)
+          .attr("r", 6)
           .attr("fill", item.color)
           .attr("stroke", "#fff")
           .attr("stroke-width", 0.5);
 
         group
           .append("text")
-          .attr("x", 20)
+          .attr("x", 16)
           .attr("y", 12)
           .style("font-size", "11px")
           .style("fill", "#333")
           .text(item.label);
 
-        xOffset += this.width / 5;
+        xOffset += this.width / 9 < 100 ? this.width / 3.5 : 250;
       });
 
     // Continuous Legend (horizontal gradient)
@@ -239,7 +255,7 @@ export class ChoroplethMap {
     this.continuousLegend
       .append("text")
       .attr("x", 0)
-      .attr("y", -10)
+      .attr("y", -5)
       .style("font-size", "14px")
       .style("font-weight", "700")
       .style("fill", "#333")
@@ -274,7 +290,8 @@ export class ChoroplethMap {
       .attr("y", 0)
       .style("fill", "url(#rate-gradient)")
       .attr("stroke", "#999")
-      .attr("stroke-width", 0.5);
+      .attr("stroke-width", 0.5)
+      .attr("rx", 5);
 
     // Add labels
     const rateExtent = d3.extent(
@@ -354,7 +371,7 @@ export class ChoroplethMap {
     // Update projection
     this.projection
       .scale(this.width / 6) // Adjust this ratio as needed
-      .translate([this.width / 2, this.height / 2]);
+      .translate([this.width / 2, this.mapHeight / 2 + this.legendMargin]);
 
     // Update all paths
     this.land.attr("d", this.path);

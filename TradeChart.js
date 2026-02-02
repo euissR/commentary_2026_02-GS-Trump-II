@@ -11,6 +11,8 @@ export class TradeChart {
 
     this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
 
+    this.currentStep = 0; // Track current step for highlighting
+
     this.init();
 
     window.addEventListener("resize", () => {
@@ -79,11 +81,12 @@ export class TradeChart {
   }
 
   setupScales() {
-    // Y scales (time) - vertical axis
+    // Y scales (dates) - vertical axis - using scaleBand for equal spacing
     this.yScale = d3
-      .scaleTime()
-      .domain(d3.extent(this.dates))
-      .range([this.margin.top, this.height - this.margin.bottom]);
+      .scaleBand()
+      .domain(this.dates) // Array of dates
+      .range([this.margin.top, this.height - this.margin.bottom])
+      .paddingInner(0.05); // Small padding between bars (~2px)
 
     // X scales (values) - horizontal axis
     const maxValue = d3.max(this.stackedData, (layer) =>
@@ -135,6 +138,14 @@ export class TradeChart {
 
     // Draw bar chart
     this.drawBars();
+
+    // Add title
+    this.titleText = this.svg
+      .append("text")
+      .attr("class", "viz-title")
+      .attr("x", this.width)
+      .attr("y", 20) // Distance from top of SVG
+      .text("US-EU trade balance over time");
   }
 
   setupLegend() {
@@ -153,9 +164,10 @@ export class TradeChart {
 
       // Rectangle at the right (x=0)
       group
-        .append("rect")
-        .attr("width", 15)
-        .attr("height", 15)
+        .append("circle")
+        .attr("cx", 6)
+        .attr("cy", 8)
+        .attr("r", 6)
         .attr("fill", this.colorScale(category));
 
       // Text to the left of rectangle, right-aligned
@@ -213,17 +225,13 @@ export class TradeChart {
       .call(d3.axisBottom(this.xScale).ticks(6));
 
     // Y axis (vertical - dates)
-    // Generate regular yearly ticks
-    const yearTicks = d3.timeYear.range(
-      d3.timeYear.floor(this.yScale.domain()[0]),
-      d3.timeYear.ceil(this.yScale.domain()[1]),
-    );
+    // With scaleBand, we can only show ticks for dates that exist in the domain
+    // Create a lookup for quick checking
+    const domainDates = new Set(this.yScale.domain().map((d) => d.getTime()));
 
-    // Add custom ticks for Jan 2022 and Nov 2025
-    const customTicks = [new Date("2022-01-01"), new Date("2025-11-01")];
-
-    // Combine all ticks and sort them
-    const allTicks = [...yearTicks, ...customTicks].sort((a, b) => a - b);
+    // Filter to only dates that exist in our data
+    // Show every 6th month (twice per year) for better readability
+    const tickDates = this.dates.filter((d, i) => i % 6 === 0);
 
     this.yAxisGroup = this.svg
       .append("g")
@@ -232,18 +240,8 @@ export class TradeChart {
       .call(
         d3
           .axisLeft(this.yScale)
-          .tickValues(allTicks)
-          .tickFormat((d) => {
-            // Custom format for Jan 2022 and Nov 2025
-            if (d.getTime() === new Date("2022-01-01").getTime()) {
-              return "Jan 2022";
-            }
-            if (d.getTime() === new Date("2025-11-01").getTime()) {
-              return "Nov 2025";
-            }
-            // Default format for year ticks
-            return d3.timeFormat("%Y")(d);
-          }),
+          .tickValues(tickDates)
+          .tickFormat(d3.timeFormat("%b %Y")),
       );
 
     // Remove axis domain lines
@@ -262,10 +260,7 @@ export class TradeChart {
   }
 
   drawBars() {
-    // Calculate bar height to fill vertical space with no gaps
-    const availableHeight = this.height - this.margin.top - this.margin.bottom;
-    const barHeight = availableHeight / this.dates.length;
-
+    // Use bandwidth from scaleBand for bar height
     this.barsGroup = this.chartGroup
       .selectAll(".layer")
       .data(this.stackedData)
@@ -281,9 +276,9 @@ export class TradeChart {
       .append("rect")
       .attr("class", "trade-bar")
       .attr("x", (d) => this.xScale(d[0]))
-      .attr("y", (d) => this.yScale(d.data.date) - barHeight / 2)
+      .attr("y", (d) => this.yScale(d.data.date))
       .attr("width", (d) => this.xScale(d[1]) - this.xScale(d[0]))
-      .attr("height", barHeight)
+      .attr("height", this.yScale.bandwidth())
       .style("opacity", 1)
       .style("cursor", "pointer")
       .on("mouseover", (event, d) => {
@@ -331,6 +326,40 @@ export class TradeChart {
     this.tooltip.style("opacity", 0);
   }
 
+  highlightDate(step) {
+    this.currentStep = step;
+
+    // Define target dates for each step
+    const targetDates = {
+      1: new Date("2025-03-01"), // March 2025
+      2: new Date("2025-09-01"), // September 2025
+    };
+
+    const targetDate = targetDates[step];
+
+    // If there's a target date for this step, dim non-matching bars
+    if (targetDate) {
+      this.chartGroup
+        .selectAll(".trade-bar")
+        .transition()
+        .duration(500)
+        .style("opacity", (d) => {
+          const barDate = d.data.date;
+          const isMatch =
+            barDate.getFullYear() === targetDate.getFullYear() &&
+            barDate.getMonth() === targetDate.getMonth();
+          return isMatch ? 1 : 0.5;
+        });
+    } else {
+      // No highlighting - all bars at full opacity
+      this.chartGroup
+        .selectAll(".trade-bar")
+        .transition()
+        .duration(500)
+        .style("opacity", 1);
+    }
+  }
+
   resize() {
     // Update SVG size
     this.svg.attr("width", this.width).attr("height", this.height);
@@ -339,39 +368,19 @@ export class TradeChart {
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([this.margin.top, this.height - this.margin.bottom]);
 
-    // Calculate bar height to fill vertical space with no gaps
-    const availableHeight = this.height - this.margin.top - this.margin.bottom;
-    const barHeight = availableHeight / this.dates.length;
-
     // Update axes
     this.xAxisGroup
       .attr("transform", `translate(0, ${this.height - this.margin.bottom})`)
       .call(d3.axisBottom(this.xScale).ticks(6).tickFormat(d3.format(".2s")));
 
-    // Generate regular yearly ticks
-    const yearTicks = d3.timeYear.range(
-      d3.timeYear.floor(this.yScale.domain()[0]),
-      d3.timeYear.ceil(this.yScale.domain()[1]),
-    );
-
-    // Add custom ticks
-    const customTicks = [new Date("2022-01-01"), new Date("2025-11-01")];
-
-    const allTicks = [...yearTicks, ...customTicks].sort((a, b) => a - b);
+    // Update y-axis with dates that exist in the domain
+    const tickDates = this.dates.filter((d, i) => i % 6 === 0);
 
     this.yAxisGroup.call(
       d3
         .axisLeft(this.yScale)
-        .tickValues(allTicks)
-        .tickFormat((d) => {
-          if (d.getTime() === new Date("2022-01-01").getTime()) {
-            return "Jan 2022";
-          }
-          if (d.getTime() === new Date("2025-11-01").getTime()) {
-            return "Nov 2025";
-          }
-          return d3.timeFormat("%Y")(d);
-        }),
+        .tickValues(tickDates)
+        .tickFormat(d3.timeFormat("%b %Y")),
     );
 
     // Update legend position
@@ -382,13 +391,13 @@ export class TradeChart {
         `translate(${this.width - this.margin.right}, ${this.height / 2})`,
       );
 
-    // Update bar positions and heights
+    // Update bar positions and heights using bandwidth
     this.chartGroup
       .selectAll(".trade-bar")
       .attr("x", (d) => this.xScale(d[0]))
-      .attr("y", (d) => this.yScale(d.data.date) - barHeight / 2)
+      .attr("y", (d) => this.yScale(d.data.date))
       .attr("width", (d) => this.xScale(d[1]) - this.xScale(d[0]))
-      .attr("height", barHeight);
+      .attr("height", this.yScale.bandwidth());
   }
 }
 

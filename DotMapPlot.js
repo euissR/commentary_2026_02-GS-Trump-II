@@ -149,6 +149,14 @@ export class DotMapPlot {
 
     // add aggregate labels
     this.setupCountryLabels();
+
+    // Add title
+    this.titleText = this.svg
+      .append("text")
+      .attr("class", "viz-title")
+      .attr("x", this.width)
+      .attr("y", 20) // Distance from top of SVG
+      .text("Timeline of US strikes worldwide, 2017-25");
   }
 
   setupAxes() {
@@ -271,9 +279,34 @@ export class DotMapPlot {
         } else if (step === 4 || step === 5) {
           // Steps 4-5: All dots colored by president (for map view)
           return this.colorScale(d.President);
-        } else if (step >= 6) {
+        } else if (step === 6) {
           // Step 6+: Yemen/Somalia only
           if (d.country === "Yemen" || d.country === "Somalia") {
+            return this.colorScale(d.President);
+          } else {
+            return "#c6c6c6";
+          }
+        } else if (step === 7) {
+          // Step 7: Iran only
+          if (d.country === "Iran") {
+            return this.colorScale(d.President);
+          } else {
+            return "#c6c6c6";
+          }
+        } else if (step === 8) {
+          // Step 8: Nigeria only
+          if (d.country === "Nigeria") {
+            return this.colorScale(d.President);
+          } else {
+            return "#c6c6c6";
+          }
+        } else if (step === 9) {
+          // Step 9: Venezuela only
+          if (
+            d.country === "Venezuela" ||
+            d.country === "Caribbean" ||
+            d.country === "Eastern Pacific"
+          ) {
             return this.colorScale(d.President);
           } else {
             return "#c6c6c6";
@@ -315,7 +348,7 @@ export class DotMapPlot {
 
   updateTitle(step) {
     const titleElement =
-      this.container.parentElement.querySelector(".sticky-title");
+      this.container.parentElement.querySelector(".viz-title");
     if (!titleElement) return;
 
     if (step >= 4) {
@@ -332,12 +365,30 @@ export class DotMapPlot {
 
     // Filter data based on step
     let labelData = this.geoAggregate.features;
-    if (step >= 6) {
+    if (step === 6) {
       // Only show Yemen and Somalia labels
       labelData = this.geoAggregate.features.filter(
         (d) =>
           d.properties.country === "Yemen" ||
           d.properties.country === "Somalia",
+      );
+    } else if (step === 7) {
+      // Only show Iran labels
+      labelData = this.geoAggregate.features.filter(
+        (d) => d.properties.country === "Iran",
+      );
+    } else if (step === 8) {
+      // Only show Nigeria labels
+      labelData = this.geoAggregate.features.filter(
+        (d) => d.properties.country === "Nigeria",
+      );
+    } else if (step === 9) {
+      // Only show Venezuela labels
+      labelData = this.geoAggregate.features.filter(
+        (d) =>
+          d.properties.country === "Caribbean" ||
+          d.properties.country === "Venezuela" ||
+          d.properties.country === "Eastern Pacific",
       );
     }
 
@@ -579,7 +630,7 @@ export class DotMapPlot {
       .call(d3.axisLeft(this.yScale));
 
     // Update map
-    this.sphere.attr("d", this.path);
+    // this.sphere.attr("d", this.path);
     this.land.attr("d", this.path);
     this.strikeCountriesGroup.selectAll(".strike-country").attr("d", this.path); // ADD THIS
 
@@ -680,7 +731,7 @@ export class DotMapPlot {
       this.projection.rotate(rotation);
 
       // Update map
-      this.sphere.attr("d", this.path);
+      // this.sphere.attr("d", this.path);
       this.land.attr("d", this.path);
 
       // Update dot positions
