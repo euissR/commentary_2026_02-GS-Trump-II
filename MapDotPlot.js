@@ -148,7 +148,7 @@ export class MapDotPlot {
     this.setupAxes();
 
     // Setup legend
-    this.setupLegend();
+    // this.setupLegend();
 
     // Setup data points
     this.setupDataPoints();
@@ -488,7 +488,7 @@ export class MapDotPlot {
         .duration(1000)
         .attr("cx", (d) => this.xScale(d.properties.country))
         .attr("cy", (d) => this.yScale(d.properties.name))
-        .attr("r", 8)
+        .attr("r", 6)
         .attr("fill", (d) => this.colorScale(d.properties.type))
         .style("opacity", 1);
 
@@ -524,7 +524,7 @@ export class MapDotPlot {
 
     if (!activeType) {
       // Reset: show all dots equally
-      this.dots.transition().duration(400).style("opacity", 1).attr("r", 8);
+      this.dots.transition().duration(400).style("opacity", 1).attr("r", 6);
 
       return;
     }
@@ -562,9 +562,10 @@ export class MapDotPlot {
           const endY = this.yScale(d.properties.name);
           return d3.interpolate(startY, endY)(progress);
         })
-        .attr("r", (d) => {
-          return d3.interpolate(6, 8)(progress);
-        })
+        // .attr("r", (d) => {
+        //   return d3.interpolate(6, 8)(progress);
+        // })
+        .attr("r", 6)
         .attr("fill", (d) => {
           const startColor = "#595959";
           const endColor = this.colorScale(d.properties.type);
@@ -575,7 +576,7 @@ export class MapDotPlot {
       // Fade out map, fade in axes and legend
       this.mapGroup.style("opacity", 1 - progress);
       this.axesGroup.style("opacity", progress);
-      this.legendGroup.style("opacity", progress);
+      // this.legendGroup.style("opacity", progress);
 
       // Toggle pointer events: enable dots, disable country features
       if (progress > 0.5) {
@@ -597,9 +598,10 @@ export class MapDotPlot {
           const endY = this.projection([d.properties.lon, d.properties.lat])[1];
           return d3.interpolate(startY, endY)(progress);
         })
-        .attr("r", (d) => {
-          return d3.interpolate(8, 6)(progress);
-        })
+        // .attr("r", (d) => {
+        //   return d3.interpolate(8, 6)(progress);
+        // })
+        .attr("r", 6)
         .attr("fill", (d) => {
           const startColor = this.colorScale(d.properties.type);
           const endColor = "#595959";
@@ -610,7 +612,7 @@ export class MapDotPlot {
       // Fade in map, fade out axes and legend
       this.mapGroup.style("opacity", progress);
       this.axesGroup.style("opacity", 1 - progress);
-      this.legendGroup.style("opacity", 1 - progress);
+      // this.legendGroup.style("opacity", 1 - progress);
 
       // Toggle pointer events: enable country features, disable dots
       if (progress > 0.5) {

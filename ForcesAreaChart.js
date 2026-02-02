@@ -85,6 +85,9 @@ export class ForcesAreaChart {
   }
 
   setupScales() {
+    // const maxDate = d3.max(this.dates, (layer) => d3.max(layer, (d) => d[1]));
+    const maxDate = d3.extent(this.dates);
+
     // X scale (time)
     this.xScale = d3
       .scaleTime()
@@ -246,9 +249,9 @@ export class ForcesAreaChart {
       .style("font-weight", "600")
       .attr("fill", (d) => this.colorScale(d.key))
       .style("pointer-events", "none")
-      .attr("x", this.xScale(midDate))
+      .attr("x", this.xScale(maxDate))
       .attr("y", (layer) => {
-        // find closest point to midDate
+        // find closest point to maxDate
         const bisect = d3.bisector((d) => d.data.date).left;
         const i = bisect(layer, maxDate);
         const d = layer[i] || layer[layer.length - 1];
@@ -256,7 +259,7 @@ export class ForcesAreaChart {
         // vertical midpoint of the stacked area
         return this.yScale((d[0] + d[1]) / 2);
       })
-      .attr("dx", "8em")
+      .attr("dx", "1em")
       // .attr("dy", "1em")
       .text((d) => d.key);
   }

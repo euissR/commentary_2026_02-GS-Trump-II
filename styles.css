@@ -16,6 +16,7 @@
   margin: 0 auto;
   z-index: 1;
   min-height: 100vh;
+  margin-bottom: 0; /* Space after scroll sections */
 }
 
 .container-dotmap {
@@ -44,6 +45,7 @@
 }
 
 /* Scroll content - positioned on top */
+
 .scroll-content-dotmap,
 .scroll-content-peace,
 .scroll-content-choropleth,
@@ -58,6 +60,7 @@
   padding-left: 20px;
   z-index: 3;
   pointer-events: none;
+    padding-bottom: 80vh; /* Keep sticky stuck until last card reaches ~10vh from top */
 }
 
 .scroll-content-dotmap a,
@@ -119,7 +122,7 @@
   left: 0;
   margin-bottom: 80vh;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.9) !important;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   opacity: 1;
