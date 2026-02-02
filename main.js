@@ -1,3 +1,4 @@
+import { CONFIG } from "./config.js";
 // import { DotMapPlot } from "./DotMapPlot.js";
 // import { PeaceMap } from "./PeaceMap.js";
 // import { ChoroplethMap } from "./ChoroplethMap.js";
@@ -6,14 +7,14 @@
 // import { ForcesAreaChart } from "./ForcesAreaChart.js";
 // import { FMSCategoryScatter } from "./FMSCategoryScatter.js";
 // import { FMSRegionChart } from "./FMSRegionChart.js";
-import { DotMapPlot } from "https://euissr.github.io/commentary_2026_02-GS-Trump-II/DotMapPlot.js";
-import { PeaceMap } from "https://euissr.github.io/commentary_2026_02-GS-Trump-II/PeaceMap.js";
-import { ChoroplethMap } from "https://euissr.github.io/commentary_2026_02-GS-Trump-II/ChoroplethMap.js";
-import { TradeChart } from "https://euissr.github.io/commentary_2026_02-GS-Trump-II/TradeChart.js";
-import { MapDotPlot } from "https://euissr.github.io/commentary_2026_02-GS-Trump-II/MapDotPlot.js";
-import { ForcesAreaChart } from "https://euissr.github.io/commentary_2026_02-GS-Trump-II/ForcesAreaChart.js";
-import { FMSCategoryScatter } from "https://euissr.github.io/commentary_2026_02-GS-Trump-II/FMSCategoryScatter.js";
-import { FMSRegionChart } from "https://euissr.github.io/commentary_2026_02-GS-Trump-II/FMSRegionChart.js";
+import { DotMapPlot } from `${CONFIG.BASE_URL}/DotMapPlot.js`;
+import { PeaceMap } from `${CONFIG.BASE_URL}/PeaceMap.js`;
+import { ChoroplethMap } from `${CONFIG.BASE_URL}/ChoroplethMap.js`;
+import { TradeChart } from `${CONFIG.BASE_URL}/TradeChart.js`;
+import { MapDotPlot } from `${CONFIG.BASE_URL}/MapDotPlot.js`;
+import { ForcesAreaChart } from `${CONFIG.BASE_URL}/ForcesAreaChart.js`;
+import { FMSCategoryScatter } from `${CONFIG.BASE_URL}/FMSCategoryScatter.js`;
+import { FMSRegionChart } from `${CONFIG.BASE_URL}/FMSRegionChart.js`;
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize all visualizations

@@ -1,4 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
+import { CONFIG } from "./config.js";
 
 export class TradeChart {
   constructor(container) {
@@ -35,7 +36,7 @@ export class TradeChart {
   async loadData() {
     try {
       const volumeData = await d3.csv(
-        "https://euissr.github.io/commentary_2026_02-GS-Trump-II/trade_vol_long.csv",
+        `${CONFIG.BASE_URL}trade_vol_long.csv`,
         (d) => ({
           date: d3.timeParse("%Y-%m-%d")(d.date),
           name: d.name,

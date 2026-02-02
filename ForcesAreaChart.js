@@ -1,4 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
+import { CONFIG } from "./config.js";
 
 export class ForcesAreaChart {
   constructor(container) {
@@ -40,14 +41,11 @@ export class ForcesAreaChart {
 
   async loadData() {
     try {
-      const data = await d3.csv(
-        "https://euissr.github.io/commentary_2026_02-GS-Trump-II/forces_total.csv",
-        (d) => ({
-          date: d3.timeParse("%Y-%m-%d")(d.date),
-          name: d.name,
-          value: +d.value,
-        }),
-      );
+      const data = await d3.csv(`${CONFIG.BASE_URL}forces_total.csv`, (d) => ({
+        date: d3.timeParse("%Y-%m-%d")(d.date),
+        name: d.name,
+        value: +d.value,
+      }));
 
       this.data = data;
 

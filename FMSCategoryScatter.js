@@ -1,4 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
+import { CONFIG } from "./config.js";
 
 export class FMSCategoryScatter {
   constructor(container) {
@@ -47,15 +48,12 @@ export class FMSCategoryScatter {
 
   async loadData() {
     try {
-      const data = await d3.csv(
-        "https://euissr.github.io/commentary_2026_02-GS-Trump-II/fms_cat_eu.csv",
-        (d) => ({
-          country: d.country,
-          name: d.name,
-          value: +d.value,
-          fill: d.fill,
-        }),
-      );
+      const data = await d3.csv(`${CONFIG.BASE_URL}fms_cat_eu.csv`, (d) => ({
+        country: d.country,
+        name: d.name,
+        value: +d.value,
+        fill: d.fill,
+      }));
 
       this.data = data;
 

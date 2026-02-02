@@ -58,9 +58,7 @@ export class MapDotPlot {
   async loadData() {
     try {
       const [geoData, worldData] = await Promise.all([
-        d3.json(
-          "https://euissr.github.io/commentary_2026_02-GS-Trump-II/trade_sf.geojson",
-        ),
+        d3.json(`${CONFIG.BASE_URL}trade_sf.geojson`),
         d3.json("https://unpkg.com/world-atlas@2/land-110m.json"),
       ]);
 

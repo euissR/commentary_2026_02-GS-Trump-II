@@ -1,4 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
+import { CONFIG } from "./config.js";
 
 export class FMSRegionChart {
   constructor(container) {
@@ -41,7 +42,7 @@ export class FMSRegionChart {
   async loadData() {
     try {
       const data = await d3.csv(
-        "https://euissr.github.io/commentary_2026_02-GS-Trump-II/fms_region_long.csv",
+        `${CONFIG.BASE_URL}fms_region_long.csv`,
         (d) => ({
           region: d.region,
           date: +d.date, // Numeric year

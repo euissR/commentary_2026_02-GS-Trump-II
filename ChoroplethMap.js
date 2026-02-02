@@ -1,5 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import * as topojson from "https://cdn.jsdelivr.net/npm/topojson-client@3/+esm";
+import { CONFIG } from "./config.js";
 
 export class ChoroplethMap {
   constructor(container) {
@@ -40,9 +41,7 @@ export class ChoroplethMap {
   async loadData() {
     try {
       const [ieepaSf, worldData] = await Promise.all([
-        d3.json(
-          "https://euissr.github.io/commentary_2026_02-GS-Trump-II/ieepa_sf.geojson",
-        ),
+        d3.json(`${CONFIG.BASE_URL}/ieepa_sf.geojson`),
         d3.json("https://unpkg.com/world-atlas@2/land-110m.json"),
       ]);
 
