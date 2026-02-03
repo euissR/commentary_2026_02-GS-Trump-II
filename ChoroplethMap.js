@@ -149,7 +149,7 @@ export class ChoroplethMap {
       .attr("class", "categorical-legend")
       .attr(
         "transform",
-        `translate(${this.width - 20}, ${this.isMobile ? legendY - 40 : legendY - 30})`,
+        `translate(${this.isMobile ? this.width : this.width - 20}, ${this.isMobile ? legendY - 40 : legendY - 30})`,
       )
       .style("opacity", 1);
 
@@ -312,7 +312,7 @@ export class ChoroplethMap {
     this.isMobile = window.innerWidth <= 768;
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
     this.projection
-      .scale(this.width / 50)
+      .scale(this.width / 5)
       .translate([this.width / 2, this.height / 2 + 40]);
     this.land.attr("d", this.path);
     this.countries.attr("d", this.path);
