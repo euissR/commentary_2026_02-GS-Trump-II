@@ -7,15 +7,15 @@ export class FMSRegionChart {
 
     // Get container dimensions - 50% width
     this.width = Math.round(container.clientWidth * 0.5);
-    this.height = this.width * 0.8;
+    this.height = Math.round(container.clientHeight * 0.66);
 
-    this.margin = { top: 200, right: 0, bottom: 200, left: 80 };
+    this.margin = { top: 50, right: 0, bottom: 60, left: 80 };
 
     this.init();
 
     window.addEventListener("resize", () => {
       this.width = Math.round(container.clientWidth * 0.5);
-      this.height = this.width * 0.8;
+      this.height = Math.round(container.clientHeight * 0.66);
       this.resize();
     });
   }
@@ -315,7 +315,7 @@ export class FMSRegionChart {
 
   resize() {
     // Update SVG size
-    this.svg.attr("width", this.width).attr("height", this.height);
+    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     // Update scales
     this.xScale.range([this.margin.left, this.width - this.margin.right]);

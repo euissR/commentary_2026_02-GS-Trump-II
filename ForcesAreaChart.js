@@ -7,7 +7,7 @@ export class ForcesAreaChart {
 
     // Get container dimensions - 50% width
     this.width = Math.round(container.clientWidth * 0.5);
-    this.height = window.innerHeight * 0.8;
+    this.height = Math.round(container.clientHeight * 0.66);
 
     this.margin = { top: 60, right: 200, bottom: 60, left: 80 };
 
@@ -15,7 +15,7 @@ export class ForcesAreaChart {
 
     window.addEventListener("resize", () => {
       this.width = Math.round(container.clientWidth * 0.5);
-      this.height = window.innerHeight * 0.8;
+      this.height = Math.round(container.clientHeight * 0.66);
       this.resize();
     });
   }
