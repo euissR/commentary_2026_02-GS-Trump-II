@@ -147,13 +147,7 @@ export class TradeChart {
   }
 
   setupLegend() {
-    const legendGroup = this.svg
-      .append("g")
-      .attr("class", "legend")
-      .attr(
-        "transform",
-        `translate(${this.isMobile ? 12 : 12 - this.margin.left}, ${this.isMobile ? this.margin.bottom + 20 : this.height * 0.33})`,
-      );
+    const legendGroup = this.svg.append("g").attr("class", "legend");
 
     this.categories.forEach((category, i) => {
       const group = legendGroup
@@ -344,13 +338,13 @@ export class TradeChart {
     if (this.isMobile) {
       this.width = this.container.clientWidth * 0.9;
       this.height = window.innerHeight * 0.5;
-      this.margin = { top: 20, right: 20, bottom: 220, left: 80 };
-      this.titleText.attr("y", this.isMobile ? 0 : 20);
+      this.margin = { top: 20, right: 20, bottom: 220, left: 40 };
     } else {
       this.width = this.container.clientWidth;
       this.height = Math.min(this.width, window.innerHeight * 0.9);
       this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
     }
+
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
@@ -368,13 +362,14 @@ export class TradeChart {
         .tickFormat(d3.timeFormat("%b %Y")),
     );
 
+    // ✅ legend positioning — ONLY HERE
     this.svg
       .select(".legend")
       .attr(
         "transform",
         this.isMobile
           ? `translate(${this.margin.left + 12}, ${this.height * 0.55})`
-          : `translate(${this.width - 12}, ${this.height * 0.33})`,
+          : `translate(${this.width - this.margin.right + 20}, ${this.margin.top})`,
       );
 
     this.chartGroup
@@ -384,7 +379,7 @@ export class TradeChart {
       .attr("width", (d) => this.xScale(d[1]) - this.xScale(d[0]))
       .attr("height", this.yScale.bandwidth());
 
-    this.titleText.attr("x", this.width);
+    this.titleText.attr("x", this.width).attr("y", this.isMobile ? 20 : 20);
   }
 }
 
