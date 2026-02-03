@@ -6,19 +6,19 @@ export class PeaceMap {
   constructor(container) {
     this.container = container;
 
-    // Get container dimensions
-    const containerRect = container.getBoundingClientRect(); // ADD THIS LINE
-    this.width = Math.round(container.clientWidth);
-    this.height = containerRect.width * 0.9;
+    // Get container dimensions - matching DotMapPlot pattern
+    const containerRect = container.getBoundingClientRect();
+    this.width = Math.floor(containerRect.width);
+    this.height = Math.min(this.width, window.innerHeight * 0.9);
 
     this.currentStep = 0;
 
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = this.container.getBoundingClientRect(); // FIX THIS LINE
-      this.width = Math.round(this.container.clientWidth);
-      this.height = containerRect.width * 0.9; // USE containerRect HERE
+      const containerRect = this.container.getBoundingClientRect();
+      this.width = Math.floor(containerRect.width);
+      this.height = Math.min(this.width, window.innerHeight * 0.9);
       this.resize();
     });
   }
@@ -54,8 +54,6 @@ export class PeaceMap {
   }
 
   setupProjection() {
-    // Rotated 50 degrees further east than the strikes map
-    // Original strikes map was [-90, -30], so this is [-40, -30]
     this.projection = d3
       .geoOrthographic()
       .scale(this.width / 2.5)
@@ -67,33 +65,23 @@ export class PeaceMap {
   }
 
   setupColorScale() {
-    // Color scale for "res" property
     this.colorScale = d3
       .scaleOrdinal()
       .domain(["Yes", "No"])
-      .range(["#309ebe", "#df3144"]); // Blue for Yes, Red for No
+      .range(["#309ebe", "#df3144"]);
   }
 
   createSVG() {
+    // Use viewBox for proper scaling (like DotMapPlot)
     this.svg = d3
       .select(this.container)
       .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height);
+      .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+      .style("width", "100%")
+      .style("height", "100%");
   }
 
   setupElements() {
-    // Add sphere (ocean)
-    // this.sphere = this.svg
-    //   .append("path")
-    //   .datum({ type: "Sphere" })
-    //   .attr("class", "sphere")
-    //   .attr("d", this.path)
-    //   .attr("fill", "#e0f2ff")
-    //   .attr("stroke", "#999")
-    //   .attr("stroke-width", 1);
-
-    // Add land
     this.land = this.svg
       .append("path")
       .datum(topojson.feature(this.worldData, this.worldData.objects.land))
@@ -103,7 +91,6 @@ export class PeaceMap {
       .attr("stroke", "#c6c6c6")
       .attr("stroke-width", 0.5);
 
-    // Add peace countries (special highlight)
     this.peaceCountriesGroup = this.svg
       .append("g")
       .attr("class", "peace-countries");
@@ -118,7 +105,6 @@ export class PeaceMap {
       .attr("fill", "#c6c6c6")
       .attr("stroke", "none");
 
-    // Add outer circles for dots with "min" property (radius 10, no fill, black outline)
     this.outerCircles = this.svg
       .selectAll(".peace-outer-circle")
       .data(this.peaceSf.features.filter((d) => d.properties.min))
@@ -131,9 +117,8 @@ export class PeaceMap {
       .attr("fill", "none")
       .attr("stroke", "#000")
       .attr("stroke-width", 1)
-      .style("opacity", 0); // Initially hidden until step 7
+      .style("opacity", 0);
 
-    // Add main dots (radius 5, filled by res)
     this.dots = this.svg
       .selectAll(".peace-dot")
       .data(this.peaceSf.features)
@@ -150,18 +135,14 @@ export class PeaceMap {
       .on("mouseover", (event, d) => this.showTooltip(event, d))
       .on("mouseout", () => this.hideTooltip());
 
-    // Setup legend
     this.setupLegend();
-
-    // Setup tooltip
     this.setupTooltip();
 
-    // Add title
     this.titleText = this.svg
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", 20) // Distance from top of SVG
+      .attr("y", 20)
       .text("The wars Trump claims to have solved");
   }
 
@@ -199,7 +180,7 @@ export class PeaceMap {
     legendItems.forEach((item, i) => {
       const group = this.legend
         .append("g")
-        .attr("transform", `translate(0, ${i * 15})`); // Stack vertically
+        .attr("transform", `translate(0, ${i * 15})`);
 
       if (item.type === "dot") {
         group
@@ -231,10 +212,9 @@ export class PeaceMap {
         .style("fill", "#333")
         .text(item.label);
 
-      // Store reference to minerals legend item (last item) and hide it initially
       if (i === legendItems.length - 1) {
         this.mineralsLegendItem = group;
-        group.style("opacity", 0); // Initially hidden until step 7
+        group.style("opacity", 0);
       }
     });
   }
@@ -256,24 +236,13 @@ export class PeaceMap {
 
   showTooltip(event, d) {
     const props = d.properties;
-    let html = `<strong>${props.name}</strong><br/>`;
-    html += `Resolution: ${props.res}<br/>`;
-
-    if (this.currentStep < 7) {
-      // Before step 7: show Trump's role
-      if (props.role) {
-        html += `<br/><em>Trump's role:</em><br/>${props.role}`;
-      }
-    } else {
-      // Step 7 onwards: show minerals component
-      if (props.min) {
-        html += `<br/><em>Minerals component:</em><br/>${props.min}`;
-      }
+    let html = `<strong>${props.name}</strong><br/>Resolution: ${props.res}<br/>`;
+    if (this.currentStep < 7 && props.role) {
+      html += `<br/><em>Trump's role:</em><br/>${props.role}`;
+    } else if (props.min) {
+      html += `<br/><em>Minerals component:</em><br/>${props.min}`;
     }
-
-    if (props.war) {
-      html += `<em>${props.war}</em>`;
-    }
+    if (props.war) html += `<em>${props.war}</em>`;
 
     this.tooltip
       .style("opacity", 1)
@@ -290,12 +259,8 @@ export class PeaceMap {
     return [...new Set(this.peaceSf.features.map((d) => d.properties.name))];
   }
 
-  // for step highlights
   highlightStep(step) {
-    // Save current step for tooltip
     this.currentStep = step;
-
-    // Define which peace agreements to highlight at each step
     const stepMapping = {
       1: ["Israel-Hamas"],
       2: ["DRC - Rwanda", "Armenia - Azerbaijan"],
@@ -304,10 +269,8 @@ export class PeaceMap {
       5: ["India-Pakistan"],
       6: ["Egypt-Ethiopia Renaissance Dam dispute", "Serbia-Kosovo"],
     };
-
     const highlightedNames = stepMapping[step] || [];
 
-    // Update all dots
     this.dots
       .transition()
       .duration(500)
@@ -317,7 +280,6 @@ export class PeaceMap {
         return highlightedNames.includes(d.properties.name) ? 1 : 0.7;
       });
 
-    // Update outer circles - show from step 7 onwards
     this.outerCircles
       .transition()
       .duration(500)
@@ -327,9 +289,8 @@ export class PeaceMap {
       .attr("stroke-width", (d) =>
         highlightedNames.includes(d.properties.name) ? 2 : 1,
       )
-      .style("opacity", step >= 7 ? 1 : 0); // Show only from step 7
+      .style("opacity", step >= 7 ? 1 : 0);
 
-    // Show/hide minerals legend item from step 7 onwards
     if (this.mineralsLegendItem) {
       this.mineralsLegendItem
         .transition()
@@ -339,31 +300,23 @@ export class PeaceMap {
   }
 
   resize() {
-    // Update SVG size
-    this.svg.attr("width", this.width).attr("height", this.height);
-
-    // Update projection
+    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
     this.projection
       .scale(this.width / 2.5)
       .translate([this.width / 2, this.height / 2]);
-
-    // Update all paths and circles
-    // this.sphere.attr("d", this.path);
     this.land.attr("d", this.path);
     this.peaceCountriesGroup.selectAll(".peace-country").attr("d", this.path);
-
     this.dots
       .attr("cx", (d) => this.projection(d.geometry.coordinates)[0])
       .attr("cy", (d) => this.projection(d.geometry.coordinates)[1]);
-
     this.outerCircles
       .attr("cx", (d) => this.projection(d.geometry.coordinates)[0])
       .attr("cy", (d) => this.projection(d.geometry.coordinates)[1]);
-
-    // Update legend position to stay at bottom right
-    const legendX = this.width - 150;
-    const legendY = this.height - 140;
-    this.legend.attr("transform", `translate(${legendX}, ${legendY})`);
+    this.legend.attr(
+      "transform",
+      `translate(${this.width * 0.66}, ${this.height * 0.7})`,
+    );
+    this.titleText.attr("x", this.width);
   }
 }
 

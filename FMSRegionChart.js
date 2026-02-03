@@ -5,17 +5,19 @@ export class FMSRegionChart {
   constructor(container) {
     this.container = container;
 
-    // Get container dimensions - 50% width
-    this.width = Math.round(container.clientWidth * 0.5);
-    this.height = Math.round(container.clientHeight * 0.66);
+    // Get container dimensions - 50% width, 66% height, right-aligned
+    const containerRect = container.getBoundingClientRect();
+    this.width = Math.round(containerRect.width * 0.5);
+    this.height = window.innerHeight * 0.66;
 
-    this.margin = { top: 50, right: 0, bottom: 60, left: 80 };
+    this.margin = { top: 100, right: 20, bottom: 60, left: 80 };
 
     this.init();
 
     window.addEventListener("resize", () => {
-      this.width = Math.round(container.clientWidth * 0.5);
-      this.height = Math.round(container.clientHeight * 0.66);
+      const containerRect = this.container.getBoundingClientRect();
+      this.width = Math.round(containerRect.width * 0.5);
+      this.height = window.innerHeight * 0.66;
       this.resize();
     });
   }
@@ -28,13 +30,11 @@ export class FMSRegionChart {
     this.setupElements();
     this.setupTooltip();
 
-    // Add title
     this.titleText = this.svg
       .append("text")
       .attr("class", "viz-title-narrow")
       .attr("x", this.margin.left)
-      .attr("y", 20) // Distance from top of SVG
-      // .attr("text-anchor", "start")
+      .attr("y", 20)
       .text("US foreign military sales");
   }
 
@@ -44,20 +44,15 @@ export class FMSRegionChart {
         `${CONFIG.BASE_URL}/fms_region_long.csv`,
         (d) => ({
           region: d.region,
-          date: +d.date, // Numeric year
+          date: +d.date,
           value: +d.value,
         }),
       );
 
       this.data = data;
-
-      // Get unique regions
       this.regions = [...new Set(data.map((d) => d.region))];
-
-      // Get unique dates
       this.dates = [...new Set(data.map((d) => d.date))].sort((a, b) => a - b);
 
-      // Create properly formatted data for stacking
       const dataByDate = d3.group(data, (d) => d.date);
       this.formattedData = this.dates.map((date) => {
         const dateData = { date };
@@ -65,7 +60,6 @@ export class FMSRegionChart {
         entries.forEach((entry) => {
           dateData[entry.region] = entry.value;
         });
-        // Fill missing regions with 0
         this.regions.forEach((region) => {
           if (!(region in dateData)) {
             dateData[region] = 0;
@@ -74,9 +68,7 @@ export class FMSRegionChart {
         return dateData;
       });
 
-      // Create stack generator
       this.stack = d3.stack().keys(this.regions);
-
       this.stackedData = this.stack(this.formattedData);
 
       console.log("FMS region data loaded:", {
@@ -91,14 +83,12 @@ export class FMSRegionChart {
   }
 
   setupScales() {
-    // X scale (years) - use scaleBand for bars
     this.xScale = d3
       .scaleBand()
       .domain(this.dates)
       .range([this.margin.left, this.width - this.margin.right])
       .padding(0.1);
 
-    // Y scale (values)
     const maxValue = d3.max(this.stackedData, (layer) =>
       d3.max(layer, (d) => d[1]),
     );
@@ -125,41 +115,37 @@ export class FMSRegionChart {
   }
 
   createSVG() {
+    // Use viewBox and right-align with margin-left: auto
     this.svg = d3
       .select(this.container)
       .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height)
-      .style("margin-left", "auto"); // Right-align
+      .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+      .style("width", "50%")
+      .style("height", "66vh")
+      .style("margin-left", "auto");
   }
 
   setupElements() {
-    // Create main chart group
     this.chartGroup = this.svg.append("g");
-
-    // Setup legend
     this.setupLegend();
-
-    // Setup axes
     this.setupAxes();
-
-    // Draw bars
     this.drawBars();
   }
 
   setupLegend() {
     const itemsPerRow = 3;
     const rowHeight = 20;
-    const colWidth = this.width / 6 < 100 ? 100 : this.width / 6; // adjust for label length
+    const colWidth = Math.max(
+      100,
+      (this.width - this.margin.left - this.margin.right) / itemsPerRow,
+    );
 
     const legendGroup = this.svg
       .append("g")
       .attr("class", "legend")
       .attr(
         "transform",
-        `translate(${this.margin.left + 20}, ${
-          this.margin.top - rowHeight * 3
-        })`,
+        `translate(${this.margin.left}, ${this.margin.top - rowHeight * 2 - 10})`,
       );
 
     this.regions.forEach((region, i) => {
@@ -170,7 +156,6 @@ export class FMSRegionChart {
         .append("g")
         .attr("transform", `translate(${col * colWidth}, ${row * rowHeight})`);
 
-      // Circle
       group
         .append("circle")
         .attr("cx", 6)
@@ -178,7 +163,6 @@ export class FMSRegionChart {
         .attr("r", 6)
         .attr("fill", this.colorScale(region));
 
-      // Text
       group
         .append("text")
         .attr("x", 18)
@@ -190,9 +174,6 @@ export class FMSRegionChart {
   }
 
   setupAxes() {
-    const yearTicks = [2017, 2020, 2025];
-
-    // X axis (years)
     this.xAxisGroup = this.svg
       .append("g")
       .attr("class", "x-axis")
@@ -204,22 +185,17 @@ export class FMSRegionChart {
           .tickFormat(d3.format("d")),
       );
 
-    // Y axis (values)
     this.yAxisGroup = this.svg
       .append("g")
       .attr("class", "y-axis")
       .attr("transform", `translate(${this.margin.left}, 0)`)
       .call(d3.axisLeft(this.yScale).ticks(6));
 
-    // Remove axis domain lines
     this.svg.selectAll(".domain").remove();
-
-    // Style ticks
     this.svg
       .selectAll(".tick line")
       .attr("stroke", "#999")
       .attr("stroke-width", 1);
-
     this.svg
       .selectAll(".tick text")
       .style("font-size", "11px")
@@ -254,7 +230,6 @@ export class FMSRegionChart {
       .style("opacity", 1)
       .style("cursor", "pointer")
       .on("mouseover", (event, d) => {
-        // Get the layer (region) data from the parent node
         const layer = d3.select(event.currentTarget.parentNode).datum();
         this.showTooltip(event, d, layer.key);
       })
@@ -278,7 +253,6 @@ export class FMSRegionChart {
 
   showTooltip(event, d, region) {
     const value = d.data[region];
-
     this.tooltip
       .style("opacity", 1)
       .html(`<strong>${region}</strong><br/>${value.toFixed(1)}`)
@@ -303,8 +277,7 @@ export class FMSRegionChart {
       .transition()
       .duration(500)
       .style("opacity", function () {
-        if (!target) return 1; // no target → full opacity
-
+        if (!target) return 1;
         const region = d3.select(this).attr("data-region");
         const date = +d3.select(this).attr("data-date");
         const isMatch =
@@ -314,14 +287,11 @@ export class FMSRegionChart {
   }
 
   resize() {
-    // Update SVG size
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
-    // Update scales
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([this.height - this.margin.bottom, this.margin.top]);
 
-    // Update axes
     this.xAxisGroup
       .attr("transform", `translate(0, ${this.height - this.margin.bottom})`)
       .call(
@@ -333,15 +303,6 @@ export class FMSRegionChart {
 
     this.yAxisGroup.call(d3.axisLeft(this.yScale).ticks(6));
 
-    // Update legend position
-    this.svg
-      .select(".legend")
-      .attr(
-        "transform",
-        `translate(${this.width - this.margin.right + 20}, ${this.margin.top})`,
-      );
-
-    // Update bar positions and heights
     this.chartGroup
       .selectAll(".fms-bar")
       .attr("x", (d) => this.xScale(d.data.date))

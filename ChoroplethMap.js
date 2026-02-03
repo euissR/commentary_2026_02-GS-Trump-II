@@ -6,27 +6,19 @@ export class ChoroplethMap {
   constructor(container) {
     this.container = container;
 
-    // Get container dimensions
-    const containerRect = container.getBoundingClientRect(); // ADD THIS LINE
-    this.width = Math.round(container.clientWidth);
-
-    // Right column for title + legend
-    this.legendWidth = 220;
-
-    // Map height
-    this.mapHeight = containerRect.width * 0.55;
-    this.height = this.mapHeight;
+    // Get container dimensions - matching DotMapPlot pattern
+    const containerRect = container.getBoundingClientRect();
+    this.width = Math.floor(containerRect.width);
+    this.height = Math.min(this.width, window.innerHeight * 0.9);
 
     this.currentView = "categorical";
 
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = this.container.getBoundingClientRect(); // FIX THIS LINE
-      this.width = Math.round(this.container.clientWidth);
-      this.legendWidth = 220;
-      this.mapHeight = containerRect.width * 0.55;
-      this.height = this.mapHeight;
+      const containerRect = this.container.getBoundingClientRect();
+      this.width = Math.floor(containerRect.width);
+      this.height = Math.min(this.width, window.innerHeight * 0.9);
       this.resize();
     });
   }
@@ -59,17 +51,16 @@ export class ChoroplethMap {
   }
 
   setupProjection() {
-    const mapAreaWidth = this.width - this.legendWidth;
+    // Full width map, offset down to make room for legend at top
     this.projection = d3
       .geoEqualEarth()
-      .scale(mapAreaWidth / 6)
-      .translate([mapAreaWidth / 2, this.mapHeight / 2]);
+      .scale(this.width / 5.5)
+      .translate([this.width / 2, this.height / 2 + 40]);
 
     this.path = d3.geoPath().projection(this.projection);
   }
 
   setupColorScales() {
-    // Categorical color scale for "cat"
     this.categoricalScale = d3
       .scaleOrdinal()
       .domain([
@@ -80,7 +71,6 @@ export class ChoroplethMap {
       ])
       .range(["#309ebe", "#C6C6C6", "#1d3956", "#df3144"]);
 
-    // Continuous color scale for "rate"
     const rateExtent = d3.extent(
       this.ieepaSf.features,
       (d) => d.properties.rate,
@@ -100,17 +90,16 @@ export class ChoroplethMap {
   }
 
   createSVG() {
+    // Use viewBox for proper scaling (like DotMapPlot)
     this.svg = d3
       .select(this.container)
       .append("svg")
       .attr("viewBox", `0 0 ${this.width} ${this.height}`)
-      .attr("preserveAspectRatio", "xMidYMid meet")
       .style("width", "100%")
       .style("height", "100%");
   }
 
   setupElements() {
-    // Add background land (no fill, gray stroke)
     this.land = this.svg
       .append("path")
       .datum(topojson.feature(this.worldData, this.worldData.objects.land))
@@ -120,7 +109,6 @@ export class ChoroplethMap {
       .attr("stroke", "#c6c6c6")
       .attr("stroke-width", 0.5);
 
-    // Add IEEPA countries (choropleth)
     this.countries = this.svg
       .append("g")
       .attr("class", "ieepa-countries")
@@ -136,62 +124,26 @@ export class ChoroplethMap {
       .on("mouseover", (event, d) => this.showTooltip(event, d))
       .on("mouseout", () => this.hideTooltip());
 
-    // Setup legends
     this.setupLegends();
-
-    // Setup tooltip
     this.setupTooltip();
   }
 
   setupLegends() {
-    const legendX = this.width - this.legendWidth;
-
-    // ── vertical rhythm ──────────────────────────
-    const titleY = 24; // title baseline
-    this.catLegendY = 56; // categorical group origin  (subtitle baseline)
-    //   subtitle at +0, items at +22 … +102  →  bottom of last circle at +108
-    this.contLegendY = this.catLegendY + 108 + 24; // 24 px gap before continuous
-
-    // ── white background panel (behind everything in this column) ──
-    this.legendBg = this.svg
-      .append("rect")
-      .attr("x", legendX)
-      .attr("y", 0)
-      .attr("width", this.legendWidth)
-      .attr("height", this.height)
-      .attr("fill", "rgba(255,255,255,0.92)");
-
-    // ── title ─────────────────────────────────────
+    // Title at top right
     this.titleText = this.svg
       .append("text")
       .attr("class", "viz-title")
-      .attr("x", legendX + this.legendWidth - 12)
-      .attr("y", titleY)
+      .attr("x", this.width)
+      .attr("y", 20)
       .attr("text-anchor", "end")
-      .style("font-size", "15px")
-      .style("font-weight", "700")
-      .style("fill", "#000")
-      .style("paint-order", "stroke")
-      .style("stroke", "#fff")
-      .style("stroke-width", "4")
       .text("Countries targeted by Trump tariffs");
 
-    // ── categorical legend ────────────────────────
+    // Categorical legend - horizontal, below title
     this.categoricalLegend = this.svg
       .append("g")
       .attr("class", "categorical-legend")
-      .attr("transform", `translate(${legendX}, ${this.catLegendY})`)
+      .attr("transform", `translate(${this.width - 20}, 50)`)
       .style("opacity", 1);
-
-    this.categoricalLegend
-      .append("text")
-      .attr("x", this.legendWidth - 12)
-      .attr("y", 0)
-      .attr("text-anchor", "end")
-      .style("font-size", "12px")
-      .style("font-weight", "700")
-      .style("fill", "#333")
-      .text("Tariff category");
 
     const catItems = [
       { label: "Reciprocal", color: "#309ebe" },
@@ -201,48 +153,52 @@ export class ChoroplethMap {
       { label: "Reciprocal + Russian oil", color: "#1d3956" },
     ];
 
-    catItems.forEach((item, i) => {
-      const g = this.categoricalLegend
-        .append("g")
-        .attr("transform", `translate(0, ${22 + i * 20})`);
+    let xOffset = 0;
+    const itemSpacing = 15;
 
-      // label – right-aligned, to the left of the dot
-      g.append("text")
-        .attr("x", this.legendWidth - 24)
-        .attr("y", 9)
-        .attr("text-anchor", "end")
-        .style("font-size", "11px")
-        .style("fill", "#333")
-        .text(item.label);
+    catItems
+      .slice()
+      .reverse()
+      .forEach((item) => {
+        const g = this.categoricalLegend
+          .append("g")
+          .attr("class", "cat-legend-item");
+        const textWidth = item.label.length * 6;
+        xOffset -= textWidth + 20 + itemSpacing;
+        g.attr("transform", `translate(${xOffset}, 0)`);
+        g.append("circle")
+          .attr("cx", 0)
+          .attr("cy", 4)
+          .attr("r", 5)
+          .attr("fill", item.color)
+          .attr("stroke", "#fff")
+          .attr("stroke-width", 1);
+        g.append("text")
+          .attr("x", 10)
+          .attr("y", 8)
+          .attr("text-anchor", "start")
+          .style("font-size", "11px")
+          .style("fill", "#333")
+          .text(item.label);
+      });
 
-      // dot
-      g.append("circle")
-        .attr("cx", this.legendWidth - 10)
-        .attr("cy", 6)
-        .attr("r", 6)
-        .attr("fill", item.color)
-        .attr("stroke", "#fff")
-        .attr("stroke-width", 1);
-    });
-
-    // ── continuous legend ─────────────────────────
+    // Continuous legend (hidden initially)
     this.continuousLegend = this.svg
       .append("g")
       .attr("class", "continuous-legend")
-      .attr("transform", `translate(${legendX}, ${this.contLegendY})`)
+      .attr("transform", `translate(${this.width - 250}, 50)`)
       .style("opacity", 0);
 
     this.continuousLegend
       .append("text")
-      .attr("x", this.legendWidth - 12)
+      .attr("x", 0)
       .attr("y", 0)
-      .attr("text-anchor", "end")
+      .attr("text-anchor", "start")
       .style("font-size", "12px")
       .style("font-weight", "700")
       .style("fill", "#333")
       .text("Tariff rate (%)");
 
-    // gradient definition
     const defs = this.svg.append("defs");
     const gradient = defs
       .append("linearGradient")
@@ -251,7 +207,6 @@ export class ChoroplethMap {
       .attr("y1", "0%")
       .attr("x2", "100%")
       .attr("y2", "0%");
-
     gradient.append("stop").attr("offset", "0%").attr("stop-color", "#fff");
     gradient.append("stop").attr("offset", "25%").attr("stop-color", "#FFDE75");
     gradient.append("stop").attr("offset", "50%").attr("stop-color", "#64C2C7");
@@ -261,14 +216,12 @@ export class ChoroplethMap {
       .attr("offset", "100%")
       .attr("stop-color", "#33163A");
 
-    // gradient bar – spans most of the column width
-    const barX = 10;
-    const barW = this.legendWidth - 22;
+    const barW = 200;
     this.continuousLegend
       .append("rect")
       .attr("class", "gradient-bar")
-      .attr("x", barX)
-      .attr("y", 18)
+      .attr("x", 0)
+      .attr("y", 15)
       .attr("width", barW)
       .attr("height", 10)
       .attr("rx", 5)
@@ -276,33 +229,29 @@ export class ChoroplethMap {
       .attr("stroke", "#999")
       .attr("stroke-width", 0.5);
 
-    // min / mid / max labels below the bar
     const rateExtent = d3.extent(
       this.ieepaSf.features,
       (d) => d.properties.rate,
     );
-
     this.continuousLegend
       .append("text")
-      .attr("x", barX)
-      .attr("y", 42)
+      .attr("x", 0)
+      .attr("y", 38)
       .style("font-size", "10px")
       .style("fill", "#666")
       .text(`${Math.round(rateExtent[0])}%`);
-
     this.continuousLegend
       .append("text")
-      .attr("x", barX + barW / 2)
-      .attr("y", 42)
+      .attr("x", barW / 2)
+      .attr("y", 38)
       .attr("text-anchor", "middle")
       .style("font-size", "10px")
       .style("fill", "#666")
       .text(`${Math.round((rateExtent[0] + rateExtent[1]) / 2)}%`);
-
     this.continuousLegend
       .append("text")
-      .attr("x", barX + barW)
-      .attr("y", 42)
+      .attr("x", barW)
+      .attr("y", 38)
       .attr("text-anchor", "end")
       .style("font-size", "10px")
       .style("fill", "#666")
@@ -326,13 +275,8 @@ export class ChoroplethMap {
 
   showTooltip(event, d) {
     const props = d.properties;
-    let html = `<strong>${props.country}</strong><br/>`;
-    html += `Category: ${props.cat}<br/>`;
-    html += `Rate: ${props.rate}%<br/>`;
-    if (props.note) {
-      html += `<br/><em>${props.note}</em>`;
-    }
-
+    let html = `<strong>${props.country}</strong><br/>Category: ${props.cat}<br/>Rate: ${props.rate}%<br/>`;
+    if (props.note) html += `<br/><em>${props.note}</em>`;
     this.tooltip
       .style("opacity", 1)
       .html(html)
@@ -345,50 +289,30 @@ export class ChoroplethMap {
   }
 
   resize() {
-    // Update SVG size
-    this.svg.attr("width", this.width).attr("height", this.height);
-
-    // Update projection – same math as setupProjection
-    const mapAreaWidth = this.width - this.legendWidth;
+    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
     this.projection
-      .scale(mapAreaWidth / 6)
-      .translate([mapAreaWidth / 2, this.mapHeight / 2]);
-
-    // Update all paths
+      .scale(this.width / 5.5)
+      .translate([this.width / 2, this.height / 2 + 40]);
     this.land.attr("d", this.path);
     this.countries.attr("d", this.path);
-
-    // Reposition legend panel + groups
-    const legendX = this.width - this.legendWidth;
-    this.legendBg
-      .attr("x", legendX)
-      .attr("width", this.legendWidth)
-      .attr("height", this.height);
-
-    this.titleText.attr("x", legendX + this.legendWidth - 12);
-
+    this.titleText.attr("x", this.width);
     this.categoricalLegend.attr(
       "transform",
-      `translate(${legendX}, ${this.catLegendY})`,
+      `translate(${this.width - 20}, 50)`,
     );
-
     this.continuousLegend.attr(
       "transform",
-      `translate(${legendX}, ${this.contLegendY})`,
+      `translate(${this.width - 250}, 50)`,
     );
   }
 
   toggleView(isContinuous, step) {
     if (isContinuous) {
-      // Switch to continuous (rate) view
       this.currentView = "continuous";
-
       this.countries
         .transition()
         .duration(1000)
         .attr("fill", (d) => this.continuousScale(d.properties.rate));
-
-      // Switch legends
       this.categoricalLegend.transition().duration(500).style("opacity", 0);
       this.continuousLegend
         .transition()
@@ -396,15 +320,11 @@ export class ChoroplethMap {
         .delay(500)
         .style("opacity", 1);
     } else {
-      // Switch to categorical (cat) view
       this.currentView = "categorical";
-
       this.countries
         .transition()
         .duration(1000)
         .attr("fill", (d) => this.categoricalScale(d.properties.cat));
-
-      // Switch legends
       this.continuousLegend.transition().duration(500).style("opacity", 0);
       this.categoricalLegend
         .transition()

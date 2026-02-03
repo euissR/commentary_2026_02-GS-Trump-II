@@ -5,19 +5,21 @@ export class TradeChart {
   constructor(container) {
     this.container = container;
 
-    // Get container dimensions
-    this.width = Math.round(container.clientWidth);
-    this.height = window.innerHeight * 0.8; // 80vh
+    // Get container dimensions - matching DotMapPlot pattern
+    const containerRect = container.getBoundingClientRect();
+    this.width = Math.floor(containerRect.width);
+    this.height = Math.min(this.width, window.innerHeight * 0.9);
 
     this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
 
-    this.currentStep = 0; // Track current step for highlighting
+    this.currentStep = 0;
 
     this.init();
 
     window.addEventListener("resize", () => {
-      this.width = Math.round(container.clientWidth);
-      this.height = window.innerHeight;
+      const containerRect = this.container.getBoundingClientRect();
+      this.width = Math.floor(containerRect.width);
+      this.height = Math.min(this.width, window.innerHeight * 0.9);
       this.resize();
     });
   }
@@ -43,17 +45,13 @@ export class TradeChart {
       );
 
       this.volumeData = volumeData;
-
-      // Get unique categories
       this.categories = [...new Set(volumeData.map((d) => d.name))];
 
-      // Group data by date
       const dataByDate = d3.group(volumeData, (d) => d.date.getTime());
       this.dates = Array.from(dataByDate.keys())
         .map((d) => new Date(d))
         .sort((a, b) => a - b);
 
-      // Create properly formatted data for stacking
       this.formattedData = this.dates.map((date) => {
         const dateData = { date };
         const entries = dataByDate.get(date.getTime());
@@ -63,12 +61,10 @@ export class TradeChart {
         return dateData;
       });
 
-      // Create stack generator with diverging offset for negative values
       this.stack = d3
         .stack()
         .keys(this.categories)
         .offset(d3.stackOffsetDiverging);
-
       this.stackedData = this.stack(this.formattedData);
 
       console.log("Trade data loaded:", {
@@ -83,14 +79,12 @@ export class TradeChart {
   }
 
   setupScales() {
-    // Y scales (dates) - vertical axis - using scaleBand for equal spacing
     this.yScale = d3
       .scaleBand()
-      .domain(this.dates) // Array of dates
+      .domain(this.dates)
       .range([this.margin.top, this.height - this.margin.bottom])
-      .paddingInner(0.05); // Small padding between bars (~2px)
+      .paddingInner(0.05);
 
-    // X scales (values) - horizontal axis
     const maxValue = d3.max(this.stackedData, (layer) =>
       d3.max(layer, (d) => d[1]),
     );
@@ -121,32 +115,26 @@ export class TradeChart {
   }
 
   createSVG() {
+    // Use viewBox for proper scaling (like DotMapPlot)
     this.svg = d3
       .select(this.container)
       .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height);
+      .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+      .style("width", "100%")
+      .style("height", "100%");
   }
 
   setupElements() {
-    // Create main chart group
     this.chartGroup = this.svg.append("g");
-
-    // Setup legend
     this.setupLegend();
-
-    // Setup axes
     this.setupAxes();
-
-    // Draw bar chart
     this.drawBars();
 
-    // Add title
     this.titleText = this.svg
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", 20) // Distance from top of SVG
+      .attr("y", 20)
       .text("US-EU trade balance over time");
   }
 
@@ -163,47 +151,38 @@ export class TradeChart {
       const group = legendGroup
         .append("g")
         .attr("transform", `translate(0, ${i * 22})`);
-
-      // Rectangle at the right (x=0)
       group
         .append("circle")
         .attr("cx", 6)
         .attr("cy", 8)
         .attr("r", 6)
         .attr("fill", this.colorScale(category));
-
-      // Text to the left of rectangle, right-aligned
       group
         .append("text")
-        .attr("x", -5) // 5px to the left of the rectangle
+        .attr("x", -5)
         .attr("y", 12)
-        .attr("text-anchor", "end") // Right-align text
+        .attr("text-anchor", "end")
         .style("font-size", "11px")
         .style("fill", "#333")
         .text(category);
     });
 
-    // Add explanatory text below the legend
-    const explanationY = this.categories.length * 22 + 15; // Position below all legend items
-
+    const explanationY = this.categories.length * 22 + 15;
     legendGroup
       .append("text")
       .attr("x", 0)
       .attr("y", explanationY)
-      .attr("text-anchor", "end") // Right-align with legend
+      .attr("text-anchor", "end")
       .style("font-size", "10px")
       .style("fill", "#666")
       .style("font-style", "italic")
-      .style("max-width", "200px")
       .each(function () {
-        // Split text into multiple lines for better readability
         const text = d3.select(this);
         const lines = [
           "Positive values indicate net EU exports to the US;",
           "negative values indicate net imports from",
           "the US to the EU.",
         ];
-
         lines.forEach((line, i) => {
           text
             .append("tspan")
@@ -216,7 +195,6 @@ export class TradeChart {
   }
 
   setupAxes() {
-    // X axis (horizontal - values)
     this.xAxisGroup = this.svg
       .append("g")
       .attr("class", "x-axis")
@@ -226,13 +204,6 @@ export class TradeChart {
       )
       .call(d3.axisBottom(this.xScale).ticks(6));
 
-    // Y axis (vertical - dates)
-    // With scaleBand, we can only show ticks for dates that exist in the domain
-    // Create a lookup for quick checking
-    const domainDates = new Set(this.yScale.domain().map((d) => d.getTime()));
-
-    // Filter to only dates that exist in our data
-    // Show every 6th month (twice per year) for better readability
     const tickDates = this.dates.filter((d, i) => i % 6 === 0);
 
     this.yAxisGroup = this.svg
@@ -246,15 +217,11 @@ export class TradeChart {
           .tickFormat(d3.timeFormat("%b %Y")),
       );
 
-    // Remove axis domain lines
     this.svg.selectAll(".domain").remove();
-
-    // Style ticks
     this.svg
       .selectAll(".tick line")
       .attr("stroke", "#999")
       .attr("stroke-width", 1);
-
     this.svg
       .selectAll(".tick text")
       .style("font-size", "11px")
@@ -262,7 +229,6 @@ export class TradeChart {
   }
 
   drawBars() {
-    // Use bandwidth from scaleBand for bar height
     this.barsGroup = this.chartGroup
       .selectAll(".layer")
       .data(this.stackedData)
@@ -284,7 +250,6 @@ export class TradeChart {
       .style("opacity", 1)
       .style("cursor", "pointer")
       .on("mouseover", (event, d) => {
-        // Get the layer (category) data from the parent node
         const layer = d3.select(event.currentTarget.parentNode).datum();
         this.showTooltip(event, d, layer.key);
       })
@@ -314,11 +279,7 @@ export class TradeChart {
     this.tooltip
       .style("opacity", 1)
       .html(
-        `
-        <strong>${name}</strong><br/>
-        €${Math.round(value * 10) / 10} billion<br/>
-        <i>${formattedDate}</i>
-      `,
+        `<strong>${name}</strong><br/>€${Math.round(value * 10) / 10} billion<br/><i>${formattedDate}</i>`,
       )
       .style("left", event.pageX + 10 + "px")
       .style("top", event.pageY - 10 + "px");
@@ -330,16 +291,12 @@ export class TradeChart {
 
   highlightDate(step) {
     this.currentStep = step;
-
-    // Define target dates for each step
     const targetDates = {
-      1: new Date("2025-03-01"), // March 2025
-      2: new Date("2025-09-01"), // September 2025
+      1: new Date("2025-03-01"),
+      2: new Date("2025-09-01"),
     };
-
     const targetDate = targetDates[step];
 
-    // If there's a target date for this step, dim non-matching bars
     if (targetDate) {
       this.chartGroup
         .selectAll(".trade-bar")
@@ -353,7 +310,6 @@ export class TradeChart {
           return isMatch ? 1 : 0.5;
         });
     } else {
-      // No highlighting - all bars at full opacity
       this.chartGroup
         .selectAll(".trade-bar")
         .transition()
@@ -363,21 +319,16 @@ export class TradeChart {
   }
 
   resize() {
-    // Update SVG size
-    this.svg.attr("width", this.width).attr("height", this.height);
+    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
-    // Update scales
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([this.margin.top, this.height - this.margin.bottom]);
 
-    // Update axes
     this.xAxisGroup
       .attr("transform", `translate(0, ${this.height - this.margin.bottom})`)
       .call(d3.axisBottom(this.xScale).ticks(6).tickFormat(d3.format(".2s")));
 
-    // Update y-axis with dates that exist in the domain
     const tickDates = this.dates.filter((d, i) => i % 6 === 0);
-
     this.yAxisGroup.call(
       d3
         .axisLeft(this.yScale)
@@ -385,21 +336,21 @@ export class TradeChart {
         .tickFormat(d3.timeFormat("%b %Y")),
     );
 
-    // Update legend position
     this.svg
       .select(".legend")
       .attr(
         "transform",
-        `translate(${this.width - this.margin.right}, ${this.height / 2})`,
+        `translate(${this.width - this.margin.right}, ${this.height * 0.33})`,
       );
 
-    // Update bar positions and heights using bandwidth
     this.chartGroup
       .selectAll(".trade-bar")
       .attr("x", (d) => this.xScale(d[0]))
       .attr("y", (d) => this.yScale(d.data.date))
       .attr("width", (d) => this.xScale(d[1]) - this.xScale(d[0]))
       .attr("height", this.yScale.bandwidth());
+
+    this.titleText.attr("x", this.width);
   }
 }
 

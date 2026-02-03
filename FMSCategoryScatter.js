@@ -5,20 +5,20 @@ export class FMSCategoryScatter {
   constructor(container) {
     this.container = container;
 
-    // Get container dimensions - full width
+    // Get container dimensions - matching DotMapPlot pattern
     const containerRect = container.getBoundingClientRect();
-    this.width = Math.round(container.clientWidth);
-    this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
+    this.width = Math.floor(containerRect.width);
+    this.height = Math.min(this.width, window.innerHeight * 0.9);
 
     this.legendWidth = 220;
-    this.margin = { top: 200, right: 180, bottom: 20, left: 0 };
+    this.margin = { top: 200, right: this.legendWidth, bottom: 20, left: 0 };
 
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = Math.round(container.clientWidth);
-      this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
+      const containerRect = this.container.getBoundingClientRect();
+      this.width = Math.floor(containerRect.width);
+      this.height = Math.min(this.width, window.innerHeight * 0.9);
       this.resize();
     });
 
@@ -31,7 +31,6 @@ export class FMSCategoryScatter {
 
   async init() {
     await this.loadData();
-
     this.setupScales();
     this.setupColorScale();
     this.createSVG();
@@ -50,18 +49,14 @@ export class FMSCategoryScatter {
 
       this.data = data;
 
-      // Build a grouped & ordered country list
-      // sum value per country
       const sumByCountry = d3.rollup(
         data,
         (v) => d3.sum(v, (d) => d.value),
         (d) => d.country,
       );
 
-      // group by fill
       const countriesByGroup = d3.group(data, (d) => d.fill);
 
-      // legendOrder first, then descending sum
       this.countries = this.legendOrder.flatMap((group) =>
         [
           ...new Set((countriesByGroup.get(group) || []).map((d) => d.country)),
@@ -70,7 +65,6 @@ export class FMSCategoryScatter {
         ),
       );
 
-      // get unique names
       this.names = [...new Set(data.map((d) => d.name))].sort();
       this.fillCategories = [...new Set(data.map((d) => d.fill))];
 
@@ -87,70 +81,55 @@ export class FMSCategoryScatter {
   }
 
   setupScales() {
-    // X scale (names/categories)
     this.xScale = d3
       .scalePoint()
       .domain(this.names)
       .range([this.margin.left, this.width - this.margin.right])
       .padding(0.5);
 
-    // Y scale (countries)
     this.yScale = d3
       .scalePoint()
       .domain(this.countries)
       .range([this.margin.top, this.height - this.margin.bottom])
       .padding(0.5);
 
-    // Size scale (value to radius)
     const maxValue = d3.max(this.data, (d) => d.value);
-    this.sizeScale = d3.scaleSqrt().domain([0, maxValue]).range([0, 20]); // Max radius of 20px
+    this.sizeScale = d3.scaleSqrt().domain([0, maxValue]).range([0, 20]);
   }
 
   setupColorScale() {
     this.colorScale = d3
       .scaleOrdinal()
-      // .domain([
-      //   "EU member state",
-      //   "Other European country",
-      //   "Non-European country",
-      // ])
       .domain(this.legendOrder)
-      .range(["#309ebe", "#1d3956", "#c6c6c6"]); // Adjust colors as needed
+      .range(["#309ebe", "#1d3956", "#c6c6c6"]);
   }
 
   createSVG() {
+    // Use viewBox for proper scaling (like DotMapPlot)
     this.svg = d3
       .select(this.container)
       .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height);
+      .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+      .style("width", "100%")
+      .style("height", "100%");
   }
 
   setupElements() {
-    // Setup axes
     this.setupAxes();
-
-    // Setup legend
     this.setupLegend();
-
-    // Setup gridlines
     this.setupGridlines();
-
-    // Setup data points
     this.setupDataPoints();
   }
 
   setupAxes() {
     this.axesGroup = this.svg.append("g");
 
-    // X-axis (categories) - positioned at TOP
     this.xAxisGroup = this.axesGroup
       .append("g")
       .attr("class", "x-axis")
       .attr("transform", `translate(0, ${this.margin.top})`)
       .call(d3.axisTop(this.xScale));
 
-    // Rotate x-axis labels
     this.xAxisGroup
       .selectAll("text")
       .attr("transform", "rotate(-45)")
@@ -160,17 +139,14 @@ export class FMSCategoryScatter {
       .style("font-size", "11px")
       .style("fill", "#666");
 
-    // Y-axis (countries) - labels on the right, flush against legend panel
     this.yAxisGroup = this.axesGroup
       .append("g")
       .attr("class", "y-axis")
       .call(d3.axisLeft(this.yScale));
 
-    // Remove all axis lines and tick marks
     this.axesGroup.selectAll(".domain").remove();
     this.axesGroup.selectAll(".tick line").remove();
 
-    // Style y-axis text (right side, 10px gap from panel)
     this.yAxisGroup
       .selectAll(".tick text")
       .attr("x", this.width - this.margin.right)
@@ -181,22 +157,9 @@ export class FMSCategoryScatter {
 
   setupLegend() {
     const legendX = this.width - this.legendWidth;
+    const titleY = 24;
+    this.legendY = 56;
 
-    // ── vertical rhythm ──────────────────────────
-    const titleY = 24; // title baseline
-    this.legendY = 56; // legend group origin (subtitle baseline)
-    //   subtitle at +0, three items at +22 / +42 / +62
-
-    // ── white background panel ────────────────────
-    // this.legendBg = this.svg
-    //   .append("rect")
-    //   .attr("x", legendX)
-    //   .attr("y", 0)
-    //   .attr("width", this.legendWidth)
-    //   .attr("height", this.height)
-    //   .attr("fill", "rgba(255,255,255,0.92)");
-
-    // ── title ─────────────────────────────────────
     this.titleText = this.svg
       .append("text")
       .attr("class", "viz-title")
@@ -211,30 +174,16 @@ export class FMSCategoryScatter {
       .style("stroke-width", "4")
       .text("European FMS purchases in 2025");
 
-    // ── legend group ──────────────────────────────
     this.legendGroup = this.svg
       .append("g")
       .attr("class", "color-legend")
       .attr("transform", `translate(${legendX}, ${this.legendY})`);
 
-    // subtitle
-    this.legendGroup
-      .append("text")
-      .attr("x", this.legendWidth - 12)
-      .attr("y", 0)
-      .attr("text-anchor", "end")
-      .style("font-size", "12px")
-      .style("font-weight", "700")
-      .style("fill", "#333")
-      .text("Country type");
-
-    // items
     this.legendOrder.forEach((category, i) => {
       const g = this.legendGroup
         .append("g")
         .attr("transform", `translate(0, ${22 + i * 20})`);
 
-      // label – right-aligned, to the left of the dot
       g.append("text")
         .attr("x", this.legendWidth - 24)
         .attr("y", 9)
@@ -243,7 +192,6 @@ export class FMSCategoryScatter {
         .style("fill", "#333")
         .text(category);
 
-      // dot
       g.append("circle")
         .attr("cx", this.legendWidth - 10)
         .attr("cy", 6)
@@ -257,7 +205,6 @@ export class FMSCategoryScatter {
   setupGridlines() {
     this.gridlinesGroup = this.svg.append("g").attr("class", "gridlines");
 
-    // Vertical gridlines (from x-axis labels down)
     this.gridlinesGroup
       .selectAll(".grid-vertical")
       .data(this.names)
@@ -271,7 +218,6 @@ export class FMSCategoryScatter {
       .attr("stroke", "#c6c6c6")
       .attr("stroke-width", 0.5);
 
-    // Horizontal gridlines (from y-axis labels across)
     this.gridlinesGroup
       .selectAll(".grid-horizontal")
       .data(this.countries)
@@ -289,7 +235,7 @@ export class FMSCategoryScatter {
   setupDataPoints() {
     this.dots = this.svg
       .selectAll(".fms-dot")
-      .data(this.data.filter((d) => d.value > 0)) // Only show non-zero values
+      .data(this.data.filter((d) => d.value > 0))
       .enter()
       .append("circle")
       .attr("class", "fms-dot")
@@ -335,14 +281,11 @@ export class FMSCategoryScatter {
   }
 
   resize() {
-    // Update SVG size
-    this.svg.attr("width", this.width).attr("height", this.height);
+    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
-    // Update scales
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([this.margin.top, this.height - this.margin.bottom]);
 
-    // Update axes
     this.xAxisGroup
       .attr("transform", `translate(0, ${this.margin.top})`)
       .call(d3.axisTop(this.xScale));
@@ -358,11 +301,9 @@ export class FMSCategoryScatter {
 
     this.yAxisGroup.call(d3.axisLeft(this.yScale));
 
-    // Remove axis lines
     this.axesGroup.selectAll(".domain").remove();
     this.axesGroup.selectAll(".tick line").remove();
 
-    // Re-style y-axis text (right side, 10px gap from panel)
     this.yAxisGroup
       .selectAll(".tick text")
       .attr("x", this.width - this.legendWidth - 10)
@@ -370,7 +311,6 @@ export class FMSCategoryScatter {
       .style("font-size", "11px")
       .style("fill", "#666");
 
-    // Update gridlines
     this.gridlinesGroup
       .selectAll(".grid-vertical")
       .attr("x1", (d) => this.xScale(d))
@@ -385,21 +325,12 @@ export class FMSCategoryScatter {
       .attr("y1", (d) => this.yScale(d))
       .attr("y2", (d) => this.yScale(d));
 
-    // Update dot positions
     this.dots
       .attr("cx", (d) => this.xScale(d.name))
       .attr("cy", (d) => this.yScale(d.country));
 
-    // Update legend panel
     const legendX = this.width - this.legendWidth;
-
-    // this.legendBg
-    //   .attr("x", legendX)
-    //   .attr("width", this.legendWidth)
-    //   .attr("height", this.height);
-
     this.titleText.attr("x", legendX + this.legendWidth - 12);
-
     this.legendGroup.attr(
       "transform",
       `translate(${legendX}, ${this.legendY})`,
