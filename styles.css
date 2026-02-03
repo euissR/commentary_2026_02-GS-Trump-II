@@ -71,14 +71,13 @@
 .sticky-container {
   position: sticky;
   top: 0;
-  width: 100vw;
-  /* width: 100%; */
+  width: 100%;
+  margin-left: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
-  margin-left: calc(-50vw + 50%); /* Center to viewport */
 }
 
 /* Visualizations */
@@ -90,8 +89,9 @@
 #visualization-fms-region,
 #visualization-fms-category,
 #visualization-forces-area {
-  width: 100%;
+  width: 100vw; /* for dev */
   height: 100%;
+  margin-left: calc(-50vw + 50%); /* for dev */
   max-height: 100vh;
   max-width: 1200px;
   display: flex;
@@ -99,6 +99,24 @@
   align-items: center;
   overflow: visible;
 }
+
+/* for prod */
+.field__item .sticky-container {
+  width: 100%;
+  margin-left: 0;
+}
+
+.field__item #visualization-dotmap,
+.field__item #visualization-peace,
+.field__item #visualization-choropleth,
+.field__item #visualization-trade,
+.field__item #visualization-mapdot,
+.field__item #visualization-fms-region,
+.field__item #visualization-fms-category,
+.field__item #visualization-forces-area {
+  max-width: 100%;
+}
+
 
 /* area chart label */
 .area-label {
