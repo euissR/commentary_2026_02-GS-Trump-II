@@ -7,8 +7,7 @@ export class PeaceMap {
     this.container = container;
 
     // Get container dimensions
-    const containerRect = container.getBoundingClientRect();
-    this.width = containerRect.width;
+    this.width = Math.round(container.clientWidth);
     this.height = containerRect.width * 0.9;
 
     this.currentStep = 0; // Track current step
@@ -16,8 +15,7 @@ export class PeaceMap {
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = containerRect.width;
+      this.width = Math.round(container.clientWidth);
       this.height = containerRect.width;
       this.resize();
     });

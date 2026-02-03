@@ -6,8 +6,7 @@ export class TradeChart {
     this.container = container;
 
     // Get container dimensions
-    const containerRect = container.getBoundingClientRect();
-    this.width = containerRect.width;
+    this.width = Math.round(container.clientWidth);
     this.height = window.innerHeight * 0.8; // 80vh
 
     this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
@@ -17,8 +16,7 @@ export class TradeChart {
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = containerRect.width;
+      this.width = Math.round(container.clientWidth);
       this.height = window.innerHeight;
       this.resize();
     });

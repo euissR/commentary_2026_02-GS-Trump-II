@@ -6,8 +6,7 @@ export class ForcesAreaChart {
     this.container = container;
 
     // Get container dimensions - 50% width
-    const containerRect = container.getBoundingClientRect();
-    this.width = containerRect.width * 0.5; // 50% width
+    this.width = Math.round(container.clientWidth * 0.5);
     this.height = window.innerHeight * 0.8;
 
     this.margin = { top: 60, right: 200, bottom: 60, left: 80 };
@@ -15,8 +14,7 @@ export class ForcesAreaChart {
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = containerRect.width * 0.5;
+      this.width = Math.round(container.clientWidth * 0.5);
       this.height = window.innerHeight * 0.8;
       this.resize();
     });
@@ -118,9 +116,9 @@ export class ForcesAreaChart {
     this.svg = d3
       .select(this.container)
       .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height)
-      .style("margin-left", "auto"); // Right-align
+      .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+      .style("width", "100%")
+      .style("height", "100%");
   }
 
   setupElements() {
@@ -311,7 +309,7 @@ export class ForcesAreaChart {
 
   resize() {
     // Update SVG size
-    this.svg.attr("width", this.width).attr("height", this.height);
+    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     // Update scales
     this.xScale.range([this.margin.left, this.width - this.margin.right]);

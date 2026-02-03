@@ -7,7 +7,7 @@ export class FMSCategoryScatter {
 
     // Get container dimensions - full width
     const containerRect = container.getBoundingClientRect();
-    this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
+    this.width = Math.round(container.clientWidth);
     this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
 
     this.legendWidth = 220;
@@ -17,7 +17,7 @@ export class FMSCategoryScatter {
 
     window.addEventListener("resize", () => {
       const containerRect = container.getBoundingClientRect();
-      this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
+      this.width = Math.round(container.clientWidth);
       this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
       this.resize();
     });

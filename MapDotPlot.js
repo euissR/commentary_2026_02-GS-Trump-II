@@ -8,8 +8,8 @@ export class MapDotPlot {
 
     // Get container dimensions, constrained to viewport
     const containerRect = container.getBoundingClientRect();
-    this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
-    this.height = Math.min(this.width, window.innerHeight * 0.95);
+    this.width = Math.round(container.clientWidth);
+    this.height = this.width;
 
     this.margin = { top: 200, right: 300, bottom: 0, left: 0 };
 
@@ -31,7 +31,7 @@ export class MapDotPlot {
 
     window.addEventListener("resize", () => {
       const containerRect = container.getBoundingClientRect();
-      this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
+      this.width = Math.round(container.clientWidth);
       this.height = Math.min(this.width, window.innerHeight * 0.95);
       this.scatterWidth = this.width * 0.9;
       this.scatterHeight = this.height * 0.8;

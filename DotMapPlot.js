@@ -30,8 +30,8 @@ export class DotMapPlot {
 
     window.addEventListener("resize", () => {
       const containerRect = container.getBoundingClientRect();
-      this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
-      this.height = Math.min(this.width, window.innerHeight * 0.95);
+      this.width = Math.round(container.clientWidth);
+      this.height = Math.round(this.width * 0.9);
       this.dotWidth = this.width * 0.9;
       this.dotHeight = this.width * 0.6;
       this.dotOffsetX = (this.width - this.dotWidth) / 2;
@@ -134,8 +134,9 @@ export class DotMapPlot {
     this.svg = d3
       .select(this.container)
       .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height);
+      .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+      .style("width", "100%")
+      .style("height", "100%");
   }
 
   setupElements() {
@@ -611,7 +612,7 @@ export class DotMapPlot {
 
   resize() {
     // Update SVG size
-    this.svg.attr("width", this.width).attr("height", this.height);
+    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     // Update projection
     this.projection

@@ -7,8 +7,7 @@ export class ChoroplethMap {
     this.container = container;
 
     // Get container dimensions
-    const containerRect = container.getBoundingClientRect();
-    this.width = containerRect.width;
+    this.width = Math.round(container.clientWidth);
 
     // Right column for title + legend
     this.legendWidth = 220;
@@ -22,8 +21,7 @@ export class ChoroplethMap {
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = containerRect.width;
+      this.width = Math.round(this.container.clientWidth);
       this.legendWidth = 220;
       this.mapHeight = containerRect.width * 0.55;
       this.height = this.mapHeight;
@@ -103,8 +101,10 @@ export class ChoroplethMap {
     this.svg = d3
       .select(this.container)
       .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height);
+      .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+      .attr("preserveAspectRatio", "xMidYMid meet")
+      .style("width", "100%")
+      .style("height", "100%");
   }
 
   setupElements() {

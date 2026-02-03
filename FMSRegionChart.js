@@ -6,18 +6,16 @@ export class FMSRegionChart {
     this.container = container;
 
     // Get container dimensions - 50% width
-    const containerRect = container.getBoundingClientRect();
-    this.width = containerRect.width * 0.5; // 50% width
-    this.height = window.innerHeight * 0.8;
+    this.width = Math.round(container.clientWidth * 0.5);
+    this.height = this.width * 0.8;
 
     this.margin = { top: 200, right: 0, bottom: 200, left: 80 };
 
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = containerRect.width * 0.5;
-      this.height = window.innerHeight * 0.8;
+      this.width = Math.round(container.clientWidth * 0.5);
+      this.height = this.width * 0.8;
       this.resize();
     });
   }
