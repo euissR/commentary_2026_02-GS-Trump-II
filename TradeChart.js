@@ -11,7 +11,14 @@ export class TradeChart {
     this.width = Math.floor(containerRect.width);
     this.height = Math.min(this.width, window.innerHeight * 0.9);
 
-    this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
+    if (this.isMobile) {
+      this.width = this.container.clientWidth * 0.9;
+      this.height = window.innerHeight * 0.5;
+    }
+
+    this.margin = this.isMobile
+      ? { top: 60, right: 20, bottom: 80, left: 80 }
+      : { top: 100, right: 180, bottom: 100, left: 80 };
 
     this.currentStep = 0;
 
@@ -331,11 +338,16 @@ export class TradeChart {
 
   resize() {
     this.isMobile = window.innerWidth <= 768;
+
     if (this.isMobile) {
       this.width = this.container.clientWidth * 0.9;
       this.height = window.innerHeight * 0.5;
+      this.margin = { top: 60, right: 20, bottom: 80, left: 80 };
+    } else {
+      this.width = this.container.clientWidth;
+      this.height = Math.min(this.width, window.innerHeight * 0.9);
+      this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
     }
-
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
@@ -358,7 +370,7 @@ export class TradeChart {
       .attr(
         "transform",
         this.isMobile
-          ? `translate(${this.width / 2}, ${this.height - 40})`
+          ? `translate(${this.width - 10}, ${this.height - 40})`
           : `translate(${this.width - 12}, ${this.height * 0.33})`,
       );
 

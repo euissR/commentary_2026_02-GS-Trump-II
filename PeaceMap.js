@@ -158,7 +158,7 @@ export class PeaceMap {
     if (this.isMobile) {
       this.legend.attr(
         "transform",
-        `translate(${this.width / 2 - 100}, ${this.height - 120})`,
+        `translate(${this.width / 2 - 100}, ${this.height + 120})`,
       );
     } else {
       this.legend.attr(
@@ -328,7 +328,7 @@ export class PeaceMap {
     if (this.isMobile) {
       this.legend.attr(
         "transform",
-        `translate(${this.width / 2 - 100}, ${this.height - 120})`,
+        `translate(${this.width / 2 - 100}, ${this.height + 120})`,
       );
     } else {
       this.legend.attr(

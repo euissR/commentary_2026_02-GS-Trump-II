@@ -139,7 +139,7 @@ export class ChoroplethMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? legendY - 50 : legendY - 30)
+      .attr("y", this.isMobile ? legendY - 80 : legendY - 60)
       .attr("text-anchor", "end")
       .text("Countries targeted by Trump tariffs");
 
@@ -149,7 +149,7 @@ export class ChoroplethMap {
       .attr("class", "categorical-legend")
       .attr(
         "transform",
-        `translate(${this.width - 20}, ${this.isMobile ? legendY - 50 : legendY - 30})`,
+        `translate(${this.width - 20}, ${this.isMobile ? legendY - 40 : legendY - 30})`,
       )
       .style("opacity", 1);
 
@@ -270,10 +270,7 @@ export class ChoroplethMap {
 
     // Stack categorical legend vertically above map on mobile
     if (this.isMobile) {
-      this.categoricalLegend.attr(
-        "transform",
-        `translate(${this.width / 2 - 80}, 60)`,
-      );
+      this.categoricalLegend.attr("transform", `translate(10, 50)`);
 
       this.categoricalLegend
         .selectAll(".cat-legend-item")
