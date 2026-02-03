@@ -4,7 +4,7 @@ import { CONFIG } from "./config.js";
 
 export class ChoroplethMap {
   constructor(container) {
-    const isMobile = window.innerWidth <= 768;
+    this.isMobile = window.innerWidth <= 768;
     this.container = container;
 
     // Get container dimensions - matching DotMapPlot pattern
@@ -57,7 +57,7 @@ export class ChoroplethMap {
     // Full width map, offset down to make room for legend at top
     this.projection = d3
       .geoEqualEarth()
-      .scale(isMobile ? this.width / 4.9 : this.width / 5.5)
+      .scale(this.isMobile ? this.width / 4.9 : this.width / 5.5)
       .translate([this.width / 2, this.height / 2 + 40]);
 
     this.path = d3.geoPath().projection(this.projection);
@@ -139,7 +139,7 @@ export class ChoroplethMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", isMobile ? legendY - 50 : legendY - 30)
+      .attr("y", this.isMobile ? legendY - 50 : legendY - 30)
       .attr("text-anchor", "end")
       .text("Countries targeted by Trump tariffs");
 
@@ -149,7 +149,7 @@ export class ChoroplethMap {
       .attr("class", "categorical-legend")
       .attr(
         "transform",
-        `translate(${this.width - 20}, ${isMobile ? legendY - 50 : legendY - 30})`,
+        `translate(${this.width - 20}, ${this.isMobile ? legendY - 50 : legendY - 30})`,
       )
       .style("opacity", 1);
 
@@ -196,7 +196,7 @@ export class ChoroplethMap {
       .attr("class", "continuous-legend")
       .attr(
         "transform",
-        `translate(${this.width - 250}, ${isMobile ? legendY - 50 : legendY - 30})`,
+        `translate(${this.width - 250}, ${this.isMobile ? legendY - 50 : legendY - 30})`,
       )
       .style("opacity", 0);
 
@@ -269,7 +269,7 @@ export class ChoroplethMap {
       .text(`${Math.round(rateExtent[1])}%`);
 
     // Stack categorical legend vertically above map on mobile
-    if (isMobile) {
+    if (this.isMobile) {
       this.categoricalLegend.attr(
         "transform",
         `translate(${this.width / 2 - 80}, 60)`,

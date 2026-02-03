@@ -3,7 +3,7 @@ import { CONFIG } from "./config.js";
 
 export class TradeChart {
   constructor(container) {
-    const isMobile = window.innerWidth <= 768;
+    this.isMobile = window.innerWidth <= 768;
     this.container = container;
 
     // Get container dimensions - matching DotMapPlot pattern
@@ -330,7 +330,7 @@ export class TradeChart {
   }
 
   resize() {
-    if (isMobile) {
+    if (this.isMobile) {
       this.width = this.container.clientWidth * 0.9;
       this.height = window.innerHeight * 0.5;
     }
@@ -356,7 +356,7 @@ export class TradeChart {
       .select(".legend")
       .attr(
         "transform",
-        isMobile
+        this.isMobile
           ? `translate(${this.width / 2}, ${this.height - 40})`
           : `translate(${this.width - 12}, ${this.height * 0.33})`,
       );

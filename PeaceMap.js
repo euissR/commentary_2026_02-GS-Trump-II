@@ -4,7 +4,7 @@ import { CONFIG } from "./config.js";
 
 export class PeaceMap {
   constructor(container) {
-    const isMobile = window.innerWidth <= 768;
+    this.isMobile = window.innerWidth <= 768;
     this.container = container;
 
     // Get container dimensions - matching DotMapPlot pattern
@@ -57,7 +57,7 @@ export class PeaceMap {
   setupProjection() {
     this.projection = d3
       .geoOrthographic()
-      .scale(isMobile ? this.width / 2.1 : this.width / 2.5)
+      .scale(this.isMobile ? this.width / 2.1 : this.width / 2.5)
       .center([0, 0])
       .rotate([-60, -29])
       .translate([this.width / 2, this.height / 2]);
@@ -155,7 +155,7 @@ export class PeaceMap {
 
     this.legend = this.svg.append("g").attr("class", "legend");
 
-    if (isMobile) {
+    if (this.isMobile) {
       this.legend.attr(
         "transform",
         `translate(${this.width / 2 - 100}, ${this.height - 120})`,
@@ -324,7 +324,7 @@ export class PeaceMap {
     this.outerCircles
       .attr("cx", (d) => this.projection(d.geometry.coordinates)[0])
       .attr("cy", (d) => this.projection(d.geometry.coordinates)[1]);
-    if (isMobile) {
+    if (this.isMobile) {
       this.legend.attr(
         "transform",
         `translate(${this.width / 2 - 100}, ${this.height - 120})`,

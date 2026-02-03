@@ -3,14 +3,14 @@ import { CONFIG } from "./config.js";
 
 export class FMSCategoryScatter {
   constructor(container) {
-    const isMobile = window.innerWidth <= 768;
+    this.isMobile = window.innerWidth <= 768;
     this.container = container;
 
     // Get container dimensions - matching DotMapPlot pattern
     const containerRect = container.getBoundingClientRect();
     this.width = Math.floor(containerRect.width);
-    this.height = isMobile ? window.innerHeight * 0.8 : this.width;
-    this.margin = isMobile
+    this.height = this.isMobile ? window.innerHeight * 0.8 : this.width;
+    this.margin = this.isMobile
       ? { top: 80, right: 20, bottom: 20, left: 10 }
       : { top: 200, right: this.legendWidth, bottom: 20, left: 0 };
 
@@ -171,7 +171,7 @@ export class FMSCategoryScatter {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", legendX + this.legendWidth - 12)
-      .attr("y", isMobile ? 20 : titleY)
+      .attr("y", this.isMobile ? 20 : titleY)
       .attr("text-anchor", "end")
       .style("font-size", "15px")
       .style("font-weight", "700")
@@ -186,7 +186,7 @@ export class FMSCategoryScatter {
       .attr("class", "color-legend")
       .attr(
         "transform",
-        isMobile
+        this.isMobile
           ? `translate(${this.width - 120}, 50)`
           : `translate(${legendX}, ${this.legendY})`,
       );
@@ -324,7 +324,7 @@ export class FMSCategoryScatter {
       .style("font-size", "11px")
       .style("fill", "#666");
 
-    if (isMobile) {
+    if (this.isMobile) {
       this.yAxisGroup
         .selectAll(".tick text")
         .attr("x", this.xScale.range()[0] + 6)
