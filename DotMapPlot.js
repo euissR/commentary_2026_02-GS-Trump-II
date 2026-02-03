@@ -470,14 +470,14 @@ export class DotMapPlot {
           .text(`${d.properties.n} strikes`);
       })
       .transition()
-      .delay(500)
-      .duration(500)
+      .delay(250)
+      .duration(250)
       .style("opacity", 1);
 
     this.countryLabels
       .transition()
-      .duration(500)
-      .delay(500)
+      .duration(250)
+      .delay(250)
       .style("opacity", 1);
 
     this.labelsVisible = true;

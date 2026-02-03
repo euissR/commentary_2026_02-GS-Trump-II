@@ -320,9 +320,10 @@ export class PeaceMap {
       .attr("cx", (d) => this.projection(d.geometry.coordinates)[0])
       .attr("cy", (d) => this.projection(d.geometry.coordinates)[1]);
     if (this.isMobile) {
+      const legendY = this.height * 0.75;
       this.legend.attr(
         "transform",
-        `translate(${this.width / 2 - 100}, ${this.height + 120})`,
+        `translate(${this.width / 2 - 100}, ${legendY})`,
       );
     } else {
       this.legend.attr(

@@ -317,10 +317,17 @@ export class ChoroplethMap {
     this.land.attr("d", this.path);
     this.countries.attr("d", this.path);
     this.titleText.attr("x", this.width);
-    this.categoricalLegend.attr(
-      "transform",
-      `translate(${this.width - 20}, 50)`,
-    );
+    if (this.isMobile) {
+      this.categoricalLegend.attr(
+        "transform",
+        `translate(10, 30)`, // left-aligned, 20px higher
+      );
+    } else {
+      this.categoricalLegend.attr(
+        "transform",
+        `translate(${this.width - 20}, 50)`,
+      );
+    }
     this.continuousLegend.attr(
       "transform",
       `translate(${this.width - 250}, 50)`,

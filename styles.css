@@ -308,6 +308,21 @@
 }
 
 @media screen and (max-width: 480px) {
+
+  .scroll-content-dotmap,
+  .scroll-content-peace,
+  .scroll-content-choropleth,
+  .scroll-content-trade,
+  .scroll-content-mapdot,
+  .scroll-content-fms-region,
+  .scroll-content-fms-category,
+  .scroll-content-forces-area {
+    width: 100%;
+    padding-right: 10px;
+    padding-left: 10px;
+    order: 2;
+  }
+
   .sticky-container {
     height: 40vh;
     top: 30vh;

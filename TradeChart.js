@@ -142,7 +142,7 @@ export class TradeChart {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", 20)
+      .attr("y", this.isMobile ? 0 : 20)
       .text("US-EU trade balance over time");
   }
 
@@ -344,7 +344,8 @@ export class TradeChart {
     if (this.isMobile) {
       this.width = this.container.clientWidth * 0.9;
       this.height = window.innerHeight * 0.5;
-      this.margin = { top: 60, right: 20, bottom: 80, left: 80 };
+      this.margin = { top: 40, right: 20, bottom: 160, left: 80 };
+      this.titleText.attr("y", this.isMobile ? 0 : 20);
     } else {
       this.width = this.container.clientWidth;
       this.height = Math.min(this.width, window.innerHeight * 0.9);
@@ -372,7 +373,7 @@ export class TradeChart {
       .attr(
         "transform",
         this.isMobile
-          ? `translate(${this.width - 10}, ${this.height - 40})`
+          ? `translate(${this.margin.left + 12}, ${this.height * 0.55})`
           : `translate(${this.width - 12}, ${this.height * 0.33})`,
       );
 
