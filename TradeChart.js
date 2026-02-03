@@ -134,7 +134,7 @@ export class TradeChart {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.margin.top - 20) // Distance from top of chart
+      .attr("y", 20)
       .text("US-EU trade balance over time");
   }
 
@@ -142,7 +142,10 @@ export class TradeChart {
     const legendGroup = this.svg
       .append("g")
       .attr("class", "legend")
-      .attr("transform", `translate(${this.width}, ${this.height * 0.33})`);
+      .attr(
+        "transform",
+        `translate(${this.width - 12}, ${this.height * 0.33})`,
+      );
 
     this.categories.forEach((category, i) => {
       const group = legendGroup
@@ -337,7 +340,7 @@ export class TradeChart {
       .select(".legend")
       .attr(
         "transform",
-        `translate(${this.width - this.margin.right}, ${this.height * 0.33})`,
+        `translate(${this.width - 12}, ${this.height * 0.33})`,
       );
 
     this.chartGroup

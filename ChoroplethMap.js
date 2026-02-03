@@ -21,8 +21,6 @@ export class ChoroplethMap {
       this.height = Math.min(this.width, window.innerHeight * 0.9);
       this.resize();
     });
-
-    const legendY = this.height / 2 - (this.width / 5.5) * 0.8;
   }
 
   async init() {
@@ -131,6 +129,8 @@ export class ChoroplethMap {
   }
 
   setupLegends() {
+    const legendY = this.height / 2 - (this.width / 5.5) * 0.8;
+
     // Title at top right
     this.titleText = this.svg
       .append("text")
