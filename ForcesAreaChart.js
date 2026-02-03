@@ -34,8 +34,9 @@ export class ForcesAreaChart {
     this.titleText = this.svg
       .append("text")
       .attr("class", "viz-title")
-      .attr("x", this.width)
+      .attr("x", this.margin.left)
       .attr("y", 20) // Distance from top of SVG
+      .attr("text-anchor", "start")
       .text("US personnel in Europe over time");
   }
 

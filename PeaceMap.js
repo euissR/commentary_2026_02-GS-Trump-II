@@ -60,7 +60,7 @@ export class PeaceMap {
       .geoOrthographic()
       .scale(this.width / 2.5)
       .center([0, 0])
-      .rotate([-60, -30])
+      .rotate([-60, -29])
       .translate([this.width / 2, this.height / 2]);
 
     this.path = d3.geoPath().projection(this.projection);
