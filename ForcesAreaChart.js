@@ -42,7 +42,7 @@ export class ForcesAreaChart {
     // Add title
     this.titleText = this.svg
       .append("text")
-      .attr("class", "viz-title")
+      .attr("class", "viz-title-narrow")
       .attr("x", this.margin.left)
       .attr("y", 24)
       .attr("text-anchor", "start")

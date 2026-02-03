@@ -37,13 +37,21 @@
 } */
 
 /* Title of all visuals */
-.viz-title {
+.viz-title,
+.viz-title-narrow {
   color: #000;
   font-size: 18px;
-  text-anchor: end;
   font-weight: bold;
   top: 2em;
   right: 2em;
+}
+
+.viz-title {
+  text-anchor: end;
+}
+
+.viz-title-narrow {
+  text-anchor: start;
 }
 
 /* Scroll content - positioned on top */
