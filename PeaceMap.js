@@ -145,7 +145,7 @@ export class PeaceMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", 20)
+      .attr("y", this.isMobile ? 10 : 40)
       .text("The wars Trump claims to have solved");
   }
 
@@ -221,7 +221,7 @@ export class PeaceMap {
         .attr("y", 0)
         .attr("dy", "0.35em")
         .style("font-size", "12px")
-        .style("fill", "#333")
+        .style("fill", "#595959")
         .text(item.label);
 
       if (i === legendItems.length - 1) {

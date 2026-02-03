@@ -139,7 +139,7 @@ export class ChoroplethMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? legendY - 80 : legendY - 60)
+      .attr("y", this.isMobile ? legendY - 60 : legendY - 50)
       .attr("text-anchor", "end")
       .text("Countries targeted by Trump tariffs");
 

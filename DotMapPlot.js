@@ -160,7 +160,7 @@ export class DotMapPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 20 : 50) // Distance from top of screen
+      .attr("y", this.isMobile ? 10 : 40) // Distance from top of screen
       // Two-line title
       .text(null)
       .append("tspan")
@@ -361,16 +361,35 @@ export class DotMapPlot {
   }
 
   updateTitle(step) {
-    const titleElement =
-      this.container.parentElement.querySelector(".viz-title");
+    const titleElement = d3.select(
+      this.container.parentElement.querySelector(".viz-title"),
+    );
+
     if (!titleElement) return;
 
+    // Clear existing text + tspans
+    titleElement.textContent = "";
+
     if (step >= 4) {
-      // Map view title
-      titleElement.textContent = "US strikes in 2025";
+      // Map view title (single line)
+      titleElement
+        .append("tspan")
+        .attr("x", this.width)
+        .attr("dy", 0)
+        .text("US strikes in 2025");
     } else {
-      // Dot plot view title
-      titleElement.textContent = "Timeline of US strikes worldwide, 2017-25";
+      // Dot plot view title (two lines)
+      titleElement
+        .append("tspan")
+        .attr("x", this.width)
+        .attr("dy", 0)
+        .text("Timeline of US strikes worldwide,");
+
+      titleElement
+        .append("tspan")
+        .attr("x", this.width)
+        .attr("dy", "1.2em")
+        .text("2017–25");
     }
   }
 
