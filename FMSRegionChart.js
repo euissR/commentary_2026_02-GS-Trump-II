@@ -1,16 +1,16 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import { CONFIG } from "./config.js";
+import { getEditorialRect } from "./layout.js";
 
 export class FMSRegionChart {
   constructor(container) {
     this.container = container;
 
     // Get container dimensions - 50% width
-    const body = container.closest(".field--name-body");
-    const rect = body.getBoundingClientRect();
+    const rect = getEditorialRect(container);
 
     this.width = rect.width * 0.5;
-    this.height = window.innerHeight * 0.66;
+    this.height = window.innerHeight * 0.5;
 
     this.margin = {
       top: 90,
@@ -22,11 +22,10 @@ export class FMSRegionChart {
     this.init();
 
     window.addEventListener("resize", () => {
-      const body = container.closest(".field--name-body");
-      const rect = body.getBoundingClientRect();
+      const rect = getEditorialRect(container);
 
       this.width = rect.width * 0.5;
-      this.height = Math.min(this.width * 0.9, window.innerHeight * 0.8);
+      this.height = window.innerHeight * 0.5;
       this.resize();
     });
   }

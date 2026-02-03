@@ -1,15 +1,16 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import { CONFIG } from "./config.js";
+import { getEditorialRect } from "./layout.js";
 
 export class FMSCategoryScatter {
   constructor(container) {
     this.container = container;
 
     // ⬇️ measure the sticky full-width container instead of the column
-    const body = container.closest(".field--name-body");
-    const rect = body.getBoundingClientRect();
+    const rect = getEditorialRect(container);
+
     this.width = rect.width;
-    this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
+    this.height = window.innerHeight * 0.5;
 
     this.legendWidth = 220;
     this.margin = { top: 200, right: 180, bottom: 20, left: 0 };
@@ -17,11 +18,9 @@ export class FMSCategoryScatter {
     this.init();
 
     window.addEventListener("resize", () => {
-      const body = container.closest(".field--name-body");
-      const rect = body.getBoundingClientRect();
-
+      const rect = getEditorialRect(container);
       this.width = rect.width;
-      this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
+      this.height = window.innerHeight * 0.5;
       this.resize();
     });
 
