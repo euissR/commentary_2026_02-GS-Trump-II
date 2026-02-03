@@ -3,6 +3,7 @@ import { CONFIG } from "./config.js";
 
 export class TradeChart {
   constructor(container) {
+    const isMobile = window.innerWidth <= 768;
     this.container = container;
 
     // Get container dimensions - matching DotMapPlot pattern
@@ -157,14 +158,24 @@ export class TradeChart {
         .attr("cy", 8)
         .attr("r", 6)
         .attr("fill", this.colorScale(category));
-      group
+
+      // special handling for long category name on mobile
+      const text = group
         .append("text")
         .attr("x", -5)
         .attr("y", 12)
-        .attr("text-anchor", "end")
-        .style("font-size", "11px")
-        .style("fill", "#333")
-        .text(category);
+        .attr("text-anchor", "end");
+
+      if (category === "Net EU imports from the US") {
+        text.append("tspan").text("Net EU imports");
+        text
+          .append("tspan")
+          .attr("x", -5)
+          .attr("dy", "1.1em")
+          .text("from the US");
+      } else {
+        text.text(category);
+      }
     });
 
     const explanationY = this.categories.length * 22 + 15;
@@ -319,6 +330,11 @@ export class TradeChart {
   }
 
   resize() {
+    if (isMobile) {
+      this.width = this.container.clientWidth * 0.9;
+      this.height = window.innerHeight * 0.5;
+    }
+
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
@@ -340,7 +356,9 @@ export class TradeChart {
       .select(".legend")
       .attr(
         "transform",
-        `translate(${this.width - 12}, ${this.height * 0.33})`,
+        isMobile
+          ? `translate(${this.width / 2}, ${this.height - 40})`
+          : `translate(${this.width - 12}, ${this.height * 0.33})`,
       );
 
     this.chartGroup

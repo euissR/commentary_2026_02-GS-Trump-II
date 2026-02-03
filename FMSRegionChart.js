@@ -3,6 +3,7 @@ import { CONFIG } from "./config.js";
 
 export class FMSRegionChart {
   constructor(container) {
+    const isMobile = window.innerWidth <= 768;
     this.container = container;
 
     // Get container dimensions - 50% width, 66% height, right-aligned
@@ -120,7 +121,7 @@ export class FMSRegionChart {
       .select(this.container)
       .append("svg")
       .attr("viewBox", `0 0 ${this.width} ${this.height}`)
-      .style("width", "50%")
+      .style("width", isMobile ? "90%" : "50%")
       .style("height", "66vh")
       .style("margin-left", "auto");
   }

@@ -4,6 +4,7 @@ import { CONFIG } from "./config.js";
 
 export class ChoroplethMap {
   constructor(container) {
+    const isMobile = window.innerWidth <= 768;
     this.container = container;
 
     // Get container dimensions - matching DotMapPlot pattern
@@ -21,6 +22,8 @@ export class ChoroplethMap {
       this.height = Math.min(this.width, window.innerHeight * 0.9);
       this.resize();
     });
+
+    // check for mobile
   }
 
   async init() {
@@ -54,7 +57,7 @@ export class ChoroplethMap {
     // Full width map, offset down to make room for legend at top
     this.projection = d3
       .geoEqualEarth()
-      .scale(this.width / 5.5)
+      .scale(isMobile ? this.width / 4.9 : this.width / 5.5)
       .translate([this.width / 2, this.height / 2 + 40]);
 
     this.path = d3.geoPath().projection(this.projection);
@@ -136,7 +139,7 @@ export class ChoroplethMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", legendY - 30)
+      .attr("y", isMobile ? legendY - 50 : legendY - 30)
       .attr("text-anchor", "end")
       .text("Countries targeted by Trump tariffs");
 
@@ -144,7 +147,10 @@ export class ChoroplethMap {
     this.categoricalLegend = this.svg
       .append("g")
       .attr("class", "categorical-legend")
-      .attr("transform", `translate(${this.width - 20}, ${legendY})`)
+      .attr(
+        "transform",
+        `translate(${this.width - 20}, ${isMobile ? legendY - 50 : legendY - 30})`,
+      )
       .style("opacity", 1);
 
     const catItems = [
@@ -188,7 +194,10 @@ export class ChoroplethMap {
     this.continuousLegend = this.svg
       .append("g")
       .attr("class", "continuous-legend")
-      .attr("transform", `translate(${this.width - 250}, ${legendY})`)
+      .attr(
+        "transform",
+        `translate(${this.width - 250}, ${isMobile ? legendY - 50 : legendY - 30})`,
+      )
       .style("opacity", 0);
 
     this.continuousLegend
@@ -258,6 +267,18 @@ export class ChoroplethMap {
       .style("font-size", "10px")
       .style("fill", "#666")
       .text(`${Math.round(rateExtent[1])}%`);
+
+    // Stack categorical legend vertically above map on mobile
+    if (isMobile) {
+      this.categoricalLegend.attr(
+        "transform",
+        `translate(${this.width / 2 - 80}, 60)`,
+      );
+
+      this.categoricalLegend
+        .selectAll(".cat-legend-item")
+        .attr("transform", (_, i) => `translate(0, ${i * 18})`);
+    }
   }
 
   setupTooltip() {

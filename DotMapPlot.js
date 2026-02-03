@@ -161,7 +161,16 @@ export class DotMapPlot {
       .attr("class", "viz-title")
       .attr("x", this.width)
       .attr("y", this.margin.top - 10) // Distance from top of chart
-      .text("Timeline of US strikes worldwide, 2017-25");
+      // Two-line title
+      .text(null)
+      .append("tspan")
+      .attr("x", this.width)
+      .attr("dy", 0)
+      .text("Timeline of US strikes worldwide,")
+      .append("tspan")
+      .attr("x", this.width)
+      .attr("dy", "1.2em")
+      .text("2017–25");
   }
 
   setupAxes() {

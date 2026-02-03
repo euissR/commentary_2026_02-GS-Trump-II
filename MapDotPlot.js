@@ -4,6 +4,8 @@ import { CONFIG } from "./config.js";
 
 export class MapDotPlot {
   constructor(container) {
+    const isMobile = window.innerWidth <= 768;
+
     this.container = container;
 
     // Get container dimensions - matching DotMapPlot pattern
@@ -11,7 +13,9 @@ export class MapDotPlot {
     this.width = Math.floor(containerRect.width);
     this.height = Math.min(this.width, window.innerHeight * 0.9);
 
-    this.margin = { top: 200, right: 300, bottom: 0, left: 0 };
+    this.margin = isMobile
+      ? { top: 60, right: 50, bottom: 0, left: 10 }
+      : { top: 200, right: 300, bottom: 0, left: 0 };
 
     this.scatterWidth = this.width * 0.9;
     this.scatterHeight = this.height * 0.75;
@@ -143,7 +147,8 @@ export class MapDotPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.margin.top - 50) // Distance from top of chart
+      .attr("y", isMobile ? 20 : this.margin.top - 50)
+      // Distance from top of chart
       .text("US trade deals under Trump 2.0");
   }
 
@@ -202,10 +207,12 @@ export class MapDotPlot {
       .style("font-size", "11px")
       .style("fill", "#666");
 
-    this.yAxisGroup = this.axesGroup
-      .append("g")
-      .attr("class", "y-axis")
-      .call(d3.axisLeft(this.yScale));
+    if (isMobile) {
+      this.yAxisGroup
+        .selectAll("text")
+        .attr("x", this.xScale.range()[0] + 6)
+        .style("text-anchor", "start");
+    }
 
     this.axesGroup.selectAll(".domain").remove();
     this.axesGroup.selectAll(".tick line").remove();
@@ -312,7 +319,7 @@ export class MapDotPlot {
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     this.projection
-      .scale(this.width / 6)
+      .scale(isMobile ? this.width / 5.2 : this.width / 6)
       .translate([this.width / 2, this.height / 2]);
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
