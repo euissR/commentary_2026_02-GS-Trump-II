@@ -147,7 +147,13 @@ export class TradeChart {
   }
 
   setupLegend() {
-    const legendGroup = this.svg.append("g").attr("class", "legend");
+    const legendGroup = this.svg
+      .append("g")
+      .attr("class", "legend")
+      .attr(
+        "transform",
+        `translate(${this.width - 12}, ${this.height * 0.33})`,
+      );
 
     this.categories.forEach((category, i) => {
       const group = legendGroup
@@ -362,14 +368,14 @@ export class TradeChart {
         .tickFormat(d3.timeFormat("%b %Y")),
     );
 
-    // ✅ legend positioning — ONLY HERE
+    // legend positioning
     this.svg
       .select(".legend")
       .attr(
         "transform",
         this.isMobile
-          ? `translate(${this.margin.left + 12}, ${this.height * 0.55})`
-          : `translate(${this.width - this.margin.right + 20}, ${this.margin.top})`,
+          ? `translate(${this.margin.left + 12}, ${this.height - this.margin.bottom + 30})`
+          : `translate(${this.width - 12}, ${this.height * 0.33})`,
       );
 
     this.chartGroup
