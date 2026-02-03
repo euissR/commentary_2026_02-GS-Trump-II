@@ -153,8 +153,8 @@ export class TradeChart {
       .attr(
         "transform",
         this.isMobile
-          ? `translate(${this.margin.left + -25}, ${this.height - this.margin.bottom + 30})`
-          : `translate(${this.width - 12}, ${this.height * 0.33})`,
+          ? `translate(${this.margin.left + -40}, ${this.height - this.margin.bottom + 30})`
+          : `translate(${this.width - 18}, ${this.height * 0.33})`,
       );
 
     this.categories.forEach((category, i) => {
@@ -376,8 +376,8 @@ export class TradeChart {
       .attr(
         "transform",
         this.isMobile
-          ? `translate(${this.margin.left + -25}, ${this.height - this.margin.bottom + 30})`
-          : `translate(${this.width - 12}, ${this.height * 0.33})`,
+          ? `translate(${this.margin.left + -40}, ${this.height - this.margin.bottom + 30})`
+          : `translate(${this.width - 18}, ${this.height * 0.33})`,
       );
 
     this.chartGroup
