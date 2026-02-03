@@ -10,9 +10,14 @@ export class ForcesAreaChart {
     const rect = body.getBoundingClientRect();
 
     this.width = rect.width * 0.5;
-    this.height = Math.min(this.width * 0.9, window.innerHeight * 0.8);
+    this.height = window.innerHeight * 0.5;
 
-    this.margin = { top: 60, right: 200, bottom: 60, left: 80 };
+    this.margin = {
+      top: 90,
+      right: 160,
+      bottom: 80,
+      left: 80,
+    };
 
     this.init();
 
@@ -39,11 +44,8 @@ export class ForcesAreaChart {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.margin.left)
-      .attr("y", 20) // Distance from top of SVG
-      .attr(
-        "transform",
-        `translate(${this.width - this.margin.right + 20}, ${this.margin.top / 2})`,
-      )
+      .attr("y", 24)
+      .attr("text-anchor", "start")
       .text("US personnel in Europe over time");
   }
 

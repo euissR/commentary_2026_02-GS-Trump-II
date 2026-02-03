@@ -10,9 +10,14 @@ export class FMSRegionChart {
     const rect = body.getBoundingClientRect();
 
     this.width = rect.width * 0.5;
-    this.height = Math.min(this.width * 0.9, window.innerHeight * 0.8);
+    this.height = window.innerHeight * 0.5;
 
-    this.margin = { top: 50, right: 0, bottom: 200, left: 80 };
+    this.margin = {
+      top: 90,
+      right: 0,
+      bottom: 120,
+      left: 80,
+    };
 
     this.init();
 
@@ -39,11 +44,8 @@ export class FMSRegionChart {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.margin.left)
-      .attr("y", 20) // Distance from top of SVG
-      .attr(
-        "transform",
-        `translate(${this.margin.left + 20}, ${this.margin.top / 2})`,
-      )
+      .attr("y", 24)
+      .attr("text-anchor", "start")
       .text("US foreign military sales");
   }
 
@@ -164,12 +166,7 @@ export class FMSRegionChart {
     const legendGroup = this.svg
       .append("g")
       .attr("class", "legend")
-      .attr(
-        "transform",
-        `translate(${this.margin.left + 20}, ${
-          this.margin.top - rowHeight * 3
-        })`,
-      );
+      .attr("transform", `translate(${this.margin.left}, 40)`);
 
     this.regions.forEach((region, i) => {
       const col = i % itemsPerRow;
