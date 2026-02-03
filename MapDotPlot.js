@@ -13,8 +13,8 @@ export class MapDotPlot {
     this.height = Math.min(this.width, window.innerHeight * 0.9);
 
     this.margin = this.isMobile
-      ? { top: 60, right: 50, bottom: 0, left: 10 }
-      : { top: 200, right: 300, bottom: 0, left: 0 };
+      ? { top: 20, right: 250, bottom: 0, left: 10 }
+      : { top: 300, right: 300, bottom: 0, left: 0 };
 
     this.scatterWidth = this.width * 0.9;
     this.scatterHeight = this.height * 0.75;
@@ -146,7 +146,7 @@ export class MapDotPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 20 : this.margin.top - 50)
+      .attr("y", this.isMobile ? 10 : this.margin.top - 50)
       // Distance from top of chart
       .text("US trade deals under Trump 2.0");
   }
@@ -324,7 +324,7 @@ export class MapDotPlot {
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     this.projection
-      .scale(this.isMobile ? this.width / 5.2 : this.width / 6)
+      .scale(this.isMobile ? this.width / 5 : this.width / 6)
       .translate([this.width / 2, this.height / 2]);
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
@@ -342,7 +342,7 @@ export class MapDotPlot {
     this.xAxisGroup
       .selectAll("text")
       .attr("transform", "rotate(-45)")
-      .style("text-anchor", "end")
+      .style("text-anchor", "start")
       .attr("dx", "-0.5em")
       .attr("dy", "-0.5em")
       .style("font-size", "11px")

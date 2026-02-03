@@ -312,7 +312,7 @@ export class ChoroplethMap {
     this.isMobile = window.innerWidth <= 768;
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
     this.projection
-      .scale(this.width / 5.5)
+      .scale(this.width / 50)
       .translate([this.width / 2, this.height / 2 + 40]);
     this.land.attr("d", this.path);
     this.countries.attr("d", this.path);
