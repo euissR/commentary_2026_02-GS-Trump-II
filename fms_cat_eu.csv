@@ -1,22 +1,22 @@
 country,name,value,fill,sum
-Denmark,AV & Ground systems,0,EU member state,31.2802
-Denmark,Air Defences,8.5,EU member state,31.2802
-Denmark,Anti-armor,0,EU member state,31.2802
-Denmark,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Denmark,C3 & Electronics,4.8,EU member state,31.2802
-Denmark,Combat aircraft,0,EU member state,31.2802
-Denmark,"Construction, Logistics & Services",0,EU member state,31.2802
-Denmark,Helicopters,0,EU member state,31.2802
-Denmark,Light weapons,0,EU member state,31.2802
-Denmark,Missiles,1.9994,EU member state,31.2802
-Denmark,Naval systems,0,EU member state,31.2802
-Denmark,Radars & sensors,0,EU member state,31.2802
-Denmark,Rockets/Artillery,0,EU member state,31.2802
-Denmark,Transport aircraft,0,EU member state,31.2802
-Denmark,UAVs,0,EU member state,31.2802
+Denmark,AV & Ground systems,0,EU Member State,31.2802
+Denmark,Air Defences,8.5,EU Member State,31.2802
+Denmark,Anti-armour,0,EU Member State,31.2802
+Denmark,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Denmark,C3 & Electronics,4.8,EU Member State,31.2802
+Denmark,Combat aircraft,0,EU Member State,31.2802
+Denmark,"Construction, Logistics & Services",0,EU Member State,31.2802
+Denmark,Helicopters,0,EU Member State,31.2802
+Denmark,Light weapons,0,EU Member State,31.2802
+Denmark,Missiles,1.9994,EU Member State,31.2802
+Denmark,Naval systems,0,EU Member State,31.2802
+Denmark,Radars & sensors,0,EU Member State,31.2802
+Denmark,Rockets/Artillery,0,EU Member State,31.2802
+Denmark,Transport aircraft,0,EU Member State,31.2802
+Denmark,UAVs,0,EU Member State,31.2802
 Taiwan,AV & Ground systems,0,Non-European country,65.5709
 Taiwan,Air Defences,0,Non-European country,65.5709
-Taiwan,Anti-armor,0,Non-European country,65.5709
+Taiwan,Anti-armour,0,Non-European country,65.5709
 Taiwan,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Taiwan,C3 & Electronics,1.34,Non-European country,65.5709
 Taiwan,Combat aircraft,0,Non-European country,65.5709
@@ -31,7 +31,7 @@ Taiwan,Transport aircraft,0,Non-European country,65.5709
 Taiwan,UAVs,1.1,Non-European country,65.5709
 Israel,AV & Ground systems,0.475,Non-European country,65.5709
 Israel,Air Defences,0,Non-European country,65.5709
-Israel,Anti-armor,0,Non-European country,65.5709
+Israel,Anti-armour,0,Non-European country,65.5709
 Israel,"Bombs, Munitions & Projectiles",9.975700000000002,Non-European country,65.5709
 Israel,C3 & Electronics,0,Non-European country,65.5709
 Israel,Combat aircraft,0,Non-European country,65.5709
@@ -46,7 +46,7 @@ Israel,Transport aircraft,0,Non-European country,65.5709
 Israel,UAVs,0,Non-European country,65.5709
 Philippines,AV & Ground systems,0,Non-European country,65.5709
 Philippines,Air Defences,0,Non-European country,65.5709
-Philippines,Anti-armor,0,Non-European country,65.5709
+Philippines,Anti-armour,0,Non-European country,65.5709
 Philippines,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Philippines,C3 & Electronics,0,Non-European country,65.5709
 Philippines,Combat aircraft,5.7,Non-European country,65.5709
@@ -61,7 +61,7 @@ Philippines,Transport aircraft,0,Non-European country,65.5709
 Philippines,UAVs,0,Non-European country,65.5709
 Egypt,AV & Ground systems,0,Non-European country,65.5709
 Egypt,Air Defences,4.67,Non-European country,65.5709
-Egypt,Anti-armor,0,Non-European country,65.5709
+Egypt,Anti-armour,0,Non-European country,65.5709
 Egypt,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Egypt,C3 & Electronics,0,Non-European country,65.5709
 Egypt,Combat aircraft,0,Non-European country,65.5709
@@ -76,7 +76,7 @@ Egypt,Transport aircraft,0,Non-European country,65.5709
 Egypt,UAVs,0,Non-European country,65.5709
 Japan,AV & Ground systems,0,Non-European country,65.5709
 Japan,Air Defences,0,Non-European country,65.5709
-Japan,Anti-armor,0,Non-European country,65.5709
+Japan,Anti-armour,0,Non-European country,65.5709
 Japan,"Bombs, Munitions & Projectiles",0.282,Non-European country,65.5709
 Japan,C3 & Electronics,0,Non-European country,65.5709
 Japan,Combat aircraft,0,Non-European country,65.5709
@@ -89,24 +89,24 @@ Japan,Radars & sensors,0,Non-European country,65.5709
 Japan,Rockets/Artillery,0,Non-European country,65.5709
 Japan,Transport aircraft,0,Non-European country,65.5709
 Japan,UAVs,0,Non-European country,65.5709
-Germany,AV & Ground systems,0,EU member state,31.2802
-Germany,Air Defences,0,EU member state,31.2802
-Germany,Anti-armor,0,EU member state,31.2802
-Germany,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Germany,C3 & Electronics,0,EU member state,31.2802
-Germany,Combat aircraft,0,EU member state,31.2802
-Germany,"Construction, Logistics & Services",0,EU member state,31.2802
-Germany,Helicopters,0,EU member state,31.2802
-Germany,Light weapons,0,EU member state,31.2802
-Germany,Missiles,4.73,EU member state,31.2802
-Germany,Naval systems,0,EU member state,31.2802
-Germany,Radars & sensors,0,EU member state,31.2802
-Germany,Rockets/Artillery,0,EU member state,31.2802
-Germany,Transport aircraft,0,EU member state,31.2802
-Germany,UAVs,0,EU member state,31.2802
+Germany,AV & Ground systems,0,EU Member State,31.2802
+Germany,Air Defences,0,EU Member State,31.2802
+Germany,Anti-armour,0,EU Member State,31.2802
+Germany,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Germany,C3 & Electronics,0,EU Member State,31.2802
+Germany,Combat aircraft,0,EU Member State,31.2802
+Germany,"Construction, Logistics & Services",0,EU Member State,31.2802
+Germany,Helicopters,0,EU Member State,31.2802
+Germany,Light weapons,0,EU Member State,31.2802
+Germany,Missiles,4.73,EU Member State,31.2802
+Germany,Naval systems,0,EU Member State,31.2802
+Germany,Radars & sensors,0,EU Member State,31.2802
+Germany,Rockets/Artillery,0,EU Member State,31.2802
+Germany,Transport aircraft,0,EU Member State,31.2802
+Germany,UAVs,0,EU Member State,31.2802
 Saudi Arabia,AV & Ground systems,0,Non-European country,65.5709
 Saudi Arabia,Air Defences,0,Non-European country,65.5709
-Saudi Arabia,Anti-armor,0,Non-European country,65.5709
+Saudi Arabia,Anti-armour,0,Non-European country,65.5709
 Saudi Arabia,"Bombs, Munitions & Projectiles",0.1,Non-European country,65.5709
 Saudi Arabia,C3 & Electronics,0.5,Non-European country,65.5709
 Saudi Arabia,Combat aircraft,0,Non-European country,65.5709
@@ -121,7 +121,7 @@ Saudi Arabia,Transport aircraft,0,Non-European country,65.5709
 Saudi Arabia,UAVs,0,Non-European country,65.5709
 Canada,AV & Ground systems,0.16,Non-European country,65.5709
 Canada,Air Defences,0,Non-European country,65.5709
-Canada,Anti-armor,0,Non-European country,65.5709
+Canada,Anti-armour,0,Non-European country,65.5709
 Canada,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Canada,C3 & Electronics,0,Non-European country,65.5709
 Canada,Combat aircraft,0,Non-European country,65.5709
@@ -136,7 +136,7 @@ Canada,Transport aircraft,0,Non-European country,65.5709
 Canada,UAVs,0,Non-European country,65.5709
 Australia,AV & Ground systems,0,Non-European country,65.5709
 Australia,Air Defences,0,Non-European country,65.5709
-Australia,Anti-armor,0.0973,Non-European country,65.5709
+Australia,Anti-armour,0.0973,Non-European country,65.5709
 Australia,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Australia,C3 & Electronics,0,Non-European country,65.5709
 Australia,Combat aircraft,2.404,Non-European country,65.5709
@@ -149,24 +149,24 @@ Australia,Radars & sensors,0.165,Non-European country,65.5709
 Australia,Rockets/Artillery,0.7962,Non-European country,65.5709
 Australia,Transport aircraft,0,Non-European country,65.5709
 Australia,UAVs,0,Non-European country,65.5709
-Poland,AV & Ground systems,0,EU member state,31.2802
-Poland,Air Defences,0,EU member state,31.2802
-Poland,Anti-armor,0.78,EU member state,31.2802
-Poland,"Bombs, Munitions & Projectiles",0.18,EU member state,31.2802
-Poland,C3 & Electronics,0,EU member state,31.2802
-Poland,Combat aircraft,1.85,EU member state,31.2802
-Poland,"Construction, Logistics & Services",0.2,EU member state,31.2802
-Poland,Helicopters,0,EU member state,31.2802
-Poland,Light weapons,0,EU member state,31.2802
-Poland,Missiles,1.33,EU member state,31.2802
-Poland,Naval systems,0,EU member state,31.2802
-Poland,Radars & sensors,0,EU member state,31.2802
-Poland,Rockets/Artillery,0,EU member state,31.2802
-Poland,Transport aircraft,0,EU member state,31.2802
-Poland,UAVs,0,EU member state,31.2802
+Poland,AV & Ground systems,0,EU Member State,31.2802
+Poland,Air Defences,0,EU Member State,31.2802
+Poland,Anti-armour,0.78,EU Member State,31.2802
+Poland,"Bombs, Munitions & Projectiles",0.18,EU Member State,31.2802
+Poland,C3 & Electronics,0,EU Member State,31.2802
+Poland,Combat aircraft,1.85,EU Member State,31.2802
+Poland,"Construction, Logistics & Services",0.2,EU Member State,31.2802
+Poland,Helicopters,0,EU Member State,31.2802
+Poland,Light weapons,0,EU Member State,31.2802
+Poland,Missiles,1.33,EU Member State,31.2802
+Poland,Naval systems,0,EU Member State,31.2802
+Poland,Radars & sensors,0,EU Member State,31.2802
+Poland,Rockets/Artillery,0,EU Member State,31.2802
+Poland,Transport aircraft,0,EU Member State,31.2802
+Poland,UAVs,0,EU Member State,31.2802
 Peru,AV & Ground systems,0,Non-European country,65.5709
 Peru,Air Defences,0,Non-European country,65.5709
-Peru,Anti-armor,0,Non-European country,65.5709
+Peru,Anti-armour,0,Non-European country,65.5709
 Peru,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Peru,C3 & Electronics,0,Non-European country,65.5709
 Peru,Combat aircraft,3.42,Non-European country,65.5709
@@ -181,7 +181,7 @@ Peru,Transport aircraft,0,Non-European country,65.5709
 Peru,UAVs,0,Non-European country,65.5709
 Norway,AV & Ground systems,0,Other European country,7.3762
 Norway,Air Defences,0,Other European country,7.3762
-Norway,Anti-armor,0,Other European country,7.3762
+Norway,Anti-armour,0,Other European country,7.3762
 Norway,"Bombs, Munitions & Projectiles",0.113,Other European country,7.3762
 Norway,C3 & Electronics,0,Other European country,7.3762
 Norway,Combat aircraft,0,Other European country,7.3762
@@ -194,24 +194,24 @@ Norway,Radars & sensors,0,Other European country,7.3762
 Norway,Rockets/Artillery,0,Other European country,7.3762
 Norway,Transport aircraft,0,Other European country,7.3762
 Norway,UAVs,0,Other European country,7.3762
-Netherlands,AV & Ground systems,0,EU member state,31.2802
-Netherlands,Air Defences,0,EU member state,31.2802
-Netherlands,Anti-armor,0,EU member state,31.2802
-Netherlands,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Netherlands,C3 & Electronics,0,EU member state,31.2802
-Netherlands,Combat aircraft,0,EU member state,31.2802
-Netherlands,"Construction, Logistics & Services",0,EU member state,31.2802
-Netherlands,Helicopters,0,EU member state,31.2802
-Netherlands,Light weapons,0,EU member state,31.2802
-Netherlands,Missiles,2.975,EU member state,31.2802
-Netherlands,Naval systems,0,EU member state,31.2802
-Netherlands,Radars & sensors,0,EU member state,31.2802
-Netherlands,Rockets/Artillery,0,EU member state,31.2802
-Netherlands,Transport aircraft,0,EU member state,31.2802
-Netherlands,UAVs,0,EU member state,31.2802
+Netherlands,AV & Ground systems,0,EU Member State,31.2802
+Netherlands,Air Defences,0,EU Member State,31.2802
+Netherlands,Anti-armour,0,EU Member State,31.2802
+Netherlands,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Netherlands,C3 & Electronics,0,EU Member State,31.2802
+Netherlands,Combat aircraft,0,EU Member State,31.2802
+Netherlands,"Construction, Logistics & Services",0,EU Member State,31.2802
+Netherlands,Helicopters,0,EU Member State,31.2802
+Netherlands,Light weapons,0,EU Member State,31.2802
+Netherlands,Missiles,2.975,EU Member State,31.2802
+Netherlands,Naval systems,0,EU Member State,31.2802
+Netherlands,Radars & sensors,0,EU Member State,31.2802
+Netherlands,Rockets/Artillery,0,EU Member State,31.2802
+Netherlands,Transport aircraft,0,EU Member State,31.2802
+Netherlands,UAVs,0,EU Member State,31.2802
 Ukraine,AV & Ground systems,0.15,Other European country,7.3762
 Ukraine,Air Defences,0.6361,Other European country,7.3762
-Ukraine,Anti-armor,0,Other European country,7.3762
+Ukraine,Anti-armour,0,Other European country,7.3762
 Ukraine,"Bombs, Munitions & Projectiles",0.825,Other European country,7.3762
 Ukraine,C3 & Electronics,0.15,Other European country,7.3762
 Ukraine,Combat aircraft,0.3105,Other European country,7.3762
@@ -226,7 +226,7 @@ Ukraine,Transport aircraft,0,Other European country,7.3762
 Ukraine,UAVs,0,Other European country,7.3762
 Kuwait,AV & Ground systems,0.325,Non-European country,65.5709
 Kuwait,Air Defences,0,Non-European country,65.5709
-Kuwait,Anti-armor,0,Non-European country,65.5709
+Kuwait,Anti-armour,0,Non-European country,65.5709
 Kuwait,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Kuwait,C3 & Electronics,0,Non-European country,65.5709
 Kuwait,Combat aircraft,0,Non-European country,65.5709
@@ -241,7 +241,7 @@ Kuwait,Transport aircraft,0,Non-European country,65.5709
 Kuwait,UAVs,0,Non-European country,65.5709
 Qatar,AV & Ground systems,0,Non-European country,65.5709
 Qatar,Air Defences,0,Non-European country,65.5709
-Qatar,Anti-armor,0,Non-European country,65.5709
+Qatar,Anti-armour,0,Non-European country,65.5709
 Qatar,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Qatar,C3 & Electronics,0,Non-European country,65.5709
 Qatar,Combat aircraft,0,Non-European country,65.5709
@@ -256,7 +256,7 @@ Qatar,Transport aircraft,0,Non-European country,65.5709
 Qatar,UAVs,1.96,Non-European country,65.5709
 United Arab Emirates,AV & Ground systems,0,Non-European country,65.5709
 United Arab Emirates,Air Defences,0,Non-European country,65.5709
-United Arab Emirates,Anti-armor,0,Non-European country,65.5709
+United Arab Emirates,Anti-armour,0,Non-European country,65.5709
 United Arab Emirates,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 United Arab Emirates,C3 & Electronics,0,Non-European country,65.5709
 United Arab Emirates,Combat aircraft,0.13,Non-European country,65.5709
@@ -269,24 +269,24 @@ United Arab Emirates,Radars & sensors,0,Non-European country,65.5709
 United Arab Emirates,Rockets/Artillery,0,Non-European country,65.5709
 United Arab Emirates,Transport aircraft,0,Non-European country,65.5709
 United Arab Emirates,UAVs,0,Non-European country,65.5709
-Finland,AV & Ground systems,0,EU member state,31.2802
-Finland,Air Defences,0,EU member state,31.2802
-Finland,Anti-armor,0,EU member state,31.2802
-Finland,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Finland,C3 & Electronics,0,EU member state,31.2802
-Finland,Combat aircraft,0,EU member state,31.2802
-Finland,"Construction, Logistics & Services",0,EU member state,31.2802
-Finland,Helicopters,0,EU member state,31.2802
-Finland,Light weapons,0,EU member state,31.2802
-Finland,Missiles,1.07,EU member state,31.2802
-Finland,Naval systems,0,EU member state,31.2802
-Finland,Radars & sensors,0,EU member state,31.2802
-Finland,Rockets/Artillery,0,EU member state,31.2802
-Finland,Transport aircraft,0,EU member state,31.2802
-Finland,UAVs,0,EU member state,31.2802
+Finland,AV & Ground systems,0,EU Member State,31.2802
+Finland,Air Defences,0,EU Member State,31.2802
+Finland,Anti-armour,0,EU Member State,31.2802
+Finland,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Finland,C3 & Electronics,0,EU Member State,31.2802
+Finland,Combat aircraft,0,EU Member State,31.2802
+Finland,"Construction, Logistics & Services",0,EU Member State,31.2802
+Finland,Helicopters,0,EU Member State,31.2802
+Finland,Light weapons,0,EU Member State,31.2802
+Finland,Missiles,1.07,EU Member State,31.2802
+Finland,Naval systems,0,EU Member State,31.2802
+Finland,Radars & sensors,0,EU Member State,31.2802
+Finland,Rockets/Artillery,0,EU Member State,31.2802
+Finland,Transport aircraft,0,EU Member State,31.2802
+Finland,UAVs,0,EU Member State,31.2802
 United Kingdom,AV & Ground systems,0,Other European country,7.3762
 United Kingdom,Air Defences,0,Other European country,7.3762
-United Kingdom,Anti-armor,0,Other European country,7.3762
+United Kingdom,Anti-armour,0,Other European country,7.3762
 United Kingdom,"Bombs, Munitions & Projectiles",0,Other European country,7.3762
 United Kingdom,C3 & Electronics,0.2,Other European country,7.3762
 United Kingdom,Combat aircraft,0,Other European country,7.3762
@@ -301,7 +301,7 @@ United Kingdom,Transport aircraft,0.861,Other European country,7.3762
 United Kingdom,UAVs,0,Other European country,7.3762
 Bahrain,AV & Ground systems,0,Non-European country,65.5709
 Bahrain,Air Defences,0,Non-European country,65.5709
-Bahrain,Anti-armor,0,Non-European country,65.5709
+Bahrain,Anti-armour,0,Non-European country,65.5709
 Bahrain,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Bahrain,C3 & Electronics,0,Non-European country,65.5709
 Bahrain,Combat aircraft,0.445,Non-European country,65.5709
@@ -316,7 +316,7 @@ Bahrain,Transport aircraft,0,Non-European country,65.5709
 Bahrain,UAVs,0,Non-European country,65.5709
 Morocco,AV & Ground systems,0,Non-European country,65.5709
 Morocco,Air Defences,0,Non-European country,65.5709
-Morocco,Anti-armor,0,Non-European country,65.5709
+Morocco,Anti-armour,0,Non-European country,65.5709
 Morocco,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Morocco,C3 & Electronics,0,Non-European country,65.5709
 Morocco,Combat aircraft,0,Non-European country,65.5709
@@ -331,7 +331,7 @@ Morocco,Transport aircraft,0,Non-European country,65.5709
 Morocco,UAVs,0,Non-European country,65.5709
 Pakistan,AV & Ground systems,0,Non-European country,65.5709
 Pakistan,Air Defences,0,Non-European country,65.5709
-Pakistan,Anti-armor,0,Non-European country,65.5709
+Pakistan,Anti-armour,0,Non-European country,65.5709
 Pakistan,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Pakistan,C3 & Electronics,0,Non-European country,65.5709
 Pakistan,Combat aircraft,0.686,Non-European country,65.5709
@@ -344,69 +344,69 @@ Pakistan,Radars & sensors,0,Non-European country,65.5709
 Pakistan,Rockets/Artillery,0,Non-European country,65.5709
 Pakistan,Transport aircraft,0,Non-European country,65.5709
 Pakistan,UAVs,0,Non-European country,65.5709
-Belgium,AV & Ground systems,0,EU member state,31.2802
-Belgium,Air Defences,0,EU member state,31.2802
-Belgium,Anti-armor,0,EU member state,31.2802
-Belgium,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Belgium,C3 & Electronics,0,EU member state,31.2802
-Belgium,Combat aircraft,0,EU member state,31.2802
-Belgium,"Construction, Logistics & Services",0,EU member state,31.2802
-Belgium,Helicopters,0,EU member state,31.2802
-Belgium,Light weapons,0,EU member state,31.2802
-Belgium,Missiles,0.6467999999999999,EU member state,31.2802
-Belgium,Naval systems,0,EU member state,31.2802
-Belgium,Radars & sensors,0,EU member state,31.2802
-Belgium,Rockets/Artillery,0,EU member state,31.2802
-Belgium,Transport aircraft,0,EU member state,31.2802
-Belgium,UAVs,0,EU member state,31.2802
-Bulgaria,AV & Ground systems,0,EU member state,31.2802
-Bulgaria,Air Defences,0,EU member state,31.2802
-Bulgaria,Anti-armor,0,EU member state,31.2802
-Bulgaria,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Bulgaria,C3 & Electronics,0,EU member state,31.2802
-Bulgaria,Combat aircraft,0,EU member state,31.2802
-Bulgaria,"Construction, Logistics & Services",0,EU member state,31.2802
-Bulgaria,Helicopters,0,EU member state,31.2802
-Bulgaria,Light weapons,0,EU member state,31.2802
-Bulgaria,Missiles,0,EU member state,31.2802
-Bulgaria,Naval systems,0.62,EU member state,31.2802
-Bulgaria,Radars & sensors,0,EU member state,31.2802
-Bulgaria,Rockets/Artillery,0,EU member state,31.2802
-Bulgaria,Transport aircraft,0,EU member state,31.2802
-Bulgaria,UAVs,0,EU member state,31.2802
-Italy,AV & Ground systems,0,EU member state,31.2802
-Italy,Air Defences,0,EU member state,31.2802
-Italy,Anti-armor,0,EU member state,31.2802
-Italy,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Italy,C3 & Electronics,0,EU member state,31.2802
-Italy,Combat aircraft,0,EU member state,31.2802
-Italy,"Construction, Logistics & Services",0,EU member state,31.2802
-Italy,Helicopters,0,EU member state,31.2802
-Italy,Light weapons,0,EU member state,31.2802
-Italy,Missiles,0.512,EU member state,31.2802
-Italy,Naval systems,0,EU member state,31.2802
-Italy,Radars & sensors,0,EU member state,31.2802
-Italy,Rockets/Artillery,0,EU member state,31.2802
-Italy,Transport aircraft,0,EU member state,31.2802
-Italy,UAVs,0,EU member state,31.2802
-Romania,AV & Ground systems,0,EU member state,31.2802
-Romania,Air Defences,0.28,EU member state,31.2802
-Romania,Anti-armor,0,EU member state,31.2802
-Romania,"Bombs, Munitions & Projectiles",0.084,EU member state,31.2802
-Romania,C3 & Electronics,0,EU member state,31.2802
-Romania,Combat aircraft,0,EU member state,31.2802
-Romania,"Construction, Logistics & Services",0,EU member state,31.2802
-Romania,Helicopters,0,EU member state,31.2802
-Romania,Light weapons,0,EU member state,31.2802
-Romania,Missiles,0,EU member state,31.2802
-Romania,Naval systems,0,EU member state,31.2802
-Romania,Radars & sensors,0,EU member state,31.2802
-Romania,Rockets/Artillery,0,EU member state,31.2802
-Romania,Transport aircraft,0,EU member state,31.2802
-Romania,UAVs,0,EU member state,31.2802
+Belgium,AV & Ground systems,0,EU Member State,31.2802
+Belgium,Air Defences,0,EU Member State,31.2802
+Belgium,Anti-armour,0,EU Member State,31.2802
+Belgium,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Belgium,C3 & Electronics,0,EU Member State,31.2802
+Belgium,Combat aircraft,0,EU Member State,31.2802
+Belgium,"Construction, Logistics & Services",0,EU Member State,31.2802
+Belgium,Helicopters,0,EU Member State,31.2802
+Belgium,Light weapons,0,EU Member State,31.2802
+Belgium,Missiles,0.6467999999999999,EU Member State,31.2802
+Belgium,Naval systems,0,EU Member State,31.2802
+Belgium,Radars & sensors,0,EU Member State,31.2802
+Belgium,Rockets/Artillery,0,EU Member State,31.2802
+Belgium,Transport aircraft,0,EU Member State,31.2802
+Belgium,UAVs,0,EU Member State,31.2802
+Bulgaria,AV & Ground systems,0,EU Member State,31.2802
+Bulgaria,Air Defences,0,EU Member State,31.2802
+Bulgaria,Anti-armour,0,EU Member State,31.2802
+Bulgaria,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Bulgaria,C3 & Electronics,0,EU Member State,31.2802
+Bulgaria,Combat aircraft,0,EU Member State,31.2802
+Bulgaria,"Construction, Logistics & Services",0,EU Member State,31.2802
+Bulgaria,Helicopters,0,EU Member State,31.2802
+Bulgaria,Light weapons,0,EU Member State,31.2802
+Bulgaria,Missiles,0,EU Member State,31.2802
+Bulgaria,Naval systems,0.62,EU Member State,31.2802
+Bulgaria,Radars & sensors,0,EU Member State,31.2802
+Bulgaria,Rockets/Artillery,0,EU Member State,31.2802
+Bulgaria,Transport aircraft,0,EU Member State,31.2802
+Bulgaria,UAVs,0,EU Member State,31.2802
+Italy,AV & Ground systems,0,EU Member State,31.2802
+Italy,Air Defences,0,EU Member State,31.2802
+Italy,Anti-armour,0,EU Member State,31.2802
+Italy,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Italy,C3 & Electronics,0,EU Member State,31.2802
+Italy,Combat aircraft,0,EU Member State,31.2802
+Italy,"Construction, Logistics & Services",0,EU Member State,31.2802
+Italy,Helicopters,0,EU Member State,31.2802
+Italy,Light weapons,0,EU Member State,31.2802
+Italy,Missiles,0.512,EU Member State,31.2802
+Italy,Naval systems,0,EU Member State,31.2802
+Italy,Radars & sensors,0,EU Member State,31.2802
+Italy,Rockets/Artillery,0,EU Member State,31.2802
+Italy,Transport aircraft,0,EU Member State,31.2802
+Italy,UAVs,0,EU Member State,31.2802
+Romania,AV & Ground systems,0,EU Member State,31.2802
+Romania,Air Defences,0.28,EU Member State,31.2802
+Romania,Anti-armour,0,EU Member State,31.2802
+Romania,"Bombs, Munitions & Projectiles",0.084,EU Member State,31.2802
+Romania,C3 & Electronics,0,EU Member State,31.2802
+Romania,Combat aircraft,0,EU Member State,31.2802
+Romania,"Construction, Logistics & Services",0,EU Member State,31.2802
+Romania,Helicopters,0,EU Member State,31.2802
+Romania,Light weapons,0,EU Member State,31.2802
+Romania,Missiles,0,EU Member State,31.2802
+Romania,Naval systems,0,EU Member State,31.2802
+Romania,Radars & sensors,0,EU Member State,31.2802
+Romania,Rockets/Artillery,0,EU Member State,31.2802
+Romania,Transport aircraft,0,EU Member State,31.2802
+Romania,UAVs,0,EU Member State,31.2802
 Singapore,AV & Ground systems,0,Non-European country,65.5709
 Singapore,Air Defences,0,Non-European country,65.5709
-Singapore,Anti-armor,0,Non-European country,65.5709
+Singapore,Anti-armour,0,Non-European country,65.5709
 Singapore,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Singapore,C3 & Electronics,0,Non-European country,65.5709
 Singapore,Combat aircraft,0,Non-European country,65.5709
@@ -421,7 +421,7 @@ Singapore,Transport aircraft,0,Non-European country,65.5709
 Singapore,UAVs,0,Non-European country,65.5709
 Nigeria,AV & Ground systems,0,Non-European country,65.5709
 Nigeria,Air Defences,0,Non-European country,65.5709
-Nigeria,Anti-armor,0,Non-European country,65.5709
+Nigeria,Anti-armour,0,Non-European country,65.5709
 Nigeria,"Bombs, Munitions & Projectiles",0.346,Non-European country,65.5709
 Nigeria,C3 & Electronics,0,Non-European country,65.5709
 Nigeria,Combat aircraft,0,Non-European country,65.5709
@@ -436,7 +436,7 @@ Nigeria,Transport aircraft,0,Non-European country,65.5709
 Nigeria,UAVs,0,Non-European country,65.5709
 Türkiye,AV & Ground systems,0,Other European country,7.3762
 Türkiye,Air Defences,0,Other European country,7.3762
-Türkiye,Anti-armor,0,Other European country,7.3762
+Türkiye,Anti-armour,0,Other European country,7.3762
 Türkiye,"Bombs, Munitions & Projectiles",0,Other European country,7.3762
 Türkiye,C3 & Electronics,0,Other European country,7.3762
 Türkiye,Combat aircraft,0,Other European country,7.3762
@@ -449,24 +449,24 @@ Türkiye,Radars & sensors,0,Other European country,7.3762
 Türkiye,Rockets/Artillery,0,Other European country,7.3762
 Türkiye,Transport aircraft,0,Other European country,7.3762
 Türkiye,UAVs,0,Other European country,7.3762
-Estonia,AV & Ground systems,0,EU member state,31.2802
-Estonia,Air Defences,0,EU member state,31.2802
-Estonia,Anti-armor,0.296,EU member state,31.2802
-Estonia,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Estonia,C3 & Electronics,0,EU member state,31.2802
-Estonia,Combat aircraft,0,EU member state,31.2802
-Estonia,"Construction, Logistics & Services",0,EU member state,31.2802
-Estonia,Helicopters,0,EU member state,31.2802
-Estonia,Light weapons,0,EU member state,31.2802
-Estonia,Missiles,0,EU member state,31.2802
-Estonia,Naval systems,0,EU member state,31.2802
-Estonia,Radars & sensors,0,EU member state,31.2802
-Estonia,Rockets/Artillery,0,EU member state,31.2802
-Estonia,Transport aircraft,0,EU member state,31.2802
-Estonia,UAVs,0,EU member state,31.2802
+Estonia,AV & Ground systems,0,EU Member State,31.2802
+Estonia,Air Defences,0,EU Member State,31.2802
+Estonia,Anti-armour,0.296,EU Member State,31.2802
+Estonia,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Estonia,C3 & Electronics,0,EU Member State,31.2802
+Estonia,Combat aircraft,0,EU Member State,31.2802
+Estonia,"Construction, Logistics & Services",0,EU Member State,31.2802
+Estonia,Helicopters,0,EU Member State,31.2802
+Estonia,Light weapons,0,EU Member State,31.2802
+Estonia,Missiles,0,EU Member State,31.2802
+Estonia,Naval systems,0,EU Member State,31.2802
+Estonia,Radars & sensors,0,EU Member State,31.2802
+Estonia,Rockets/Artillery,0,EU Member State,31.2802
+Estonia,Transport aircraft,0,EU Member State,31.2802
+Estonia,UAVs,0,EU Member State,31.2802
 NATO,AV & Ground systems,0,Other European country,7.3762
 NATO,Air Defences,0,Other European country,7.3762
-NATO,Anti-armor,0,Other European country,7.3762
+NATO,Anti-armour,0,Other European country,7.3762
 NATO,"Bombs, Munitions & Projectiles",0,Other European country,7.3762
 NATO,C3 & Electronics,0,Other European country,7.3762
 NATO,Combat aircraft,0,Other European country,7.3762
@@ -481,7 +481,7 @@ NATO,Transport aircraft,0,Other European country,7.3762
 NATO,UAVs,0,Other European country,7.3762
 Lebanon,AV & Ground systems,0.125,Non-European country,65.5709
 Lebanon,Air Defences,0,Non-European country,65.5709
-Lebanon,Anti-armor,0,Non-European country,65.5709
+Lebanon,Anti-armour,0,Non-European country,65.5709
 Lebanon,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Lebanon,C3 & Electronics,0,Non-European country,65.5709
 Lebanon,Combat aircraft,0.1,Non-European country,65.5709
@@ -496,7 +496,7 @@ Lebanon,Transport aircraft,0,Non-European country,65.5709
 Lebanon,UAVs,0,Non-European country,65.5709
 India,AV & Ground systems,0,Non-European country,65.5709
 India,Air Defences,0,Non-European country,65.5709
-India,Anti-armor,0.045700000000000005,Non-European country,65.5709
+India,Anti-armour,0.045700000000000005,Non-European country,65.5709
 India,"Bombs, Munitions & Projectiles",0.0471,Non-European country,65.5709
 India,C3 & Electronics,0,Non-European country,65.5709
 India,Combat aircraft,0,Non-European country,65.5709
@@ -509,39 +509,39 @@ India,Radars & sensors,0.131,Non-European country,65.5709
 India,Rockets/Artillery,0,Non-European country,65.5709
 India,Transport aircraft,0,Non-European country,65.5709
 India,UAVs,0,Non-European country,65.5709
-Spain,AV & Ground systems,0,EU member state,31.2802
-Spain,Air Defences,0,EU member state,31.2802
-Spain,Anti-armor,0,EU member state,31.2802
-Spain,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Spain,C3 & Electronics,0,EU member state,31.2802
-Spain,Combat aircraft,0,EU member state,31.2802
-Spain,"Construction, Logistics & Services",0.2,EU member state,31.2802
-Spain,Helicopters,0,EU member state,31.2802
-Spain,Light weapons,0,EU member state,31.2802
-Spain,Missiles,0,EU member state,31.2802
-Spain,Naval systems,0,EU member state,31.2802
-Spain,Radars & sensors,0,EU member state,31.2802
-Spain,Rockets/Artillery,0,EU member state,31.2802
-Spain,Transport aircraft,0,EU member state,31.2802
-Spain,UAVs,0,EU member state,31.2802
-Czechia,AV & Ground systems,0,EU member state,31.2802
-Czechia,Air Defences,0,EU member state,31.2802
-Czechia,Anti-armor,0,EU member state,31.2802
-Czechia,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Czechia,C3 & Electronics,0.181,EU member state,31.2802
-Czechia,Combat aircraft,0,EU member state,31.2802
-Czechia,"Construction, Logistics & Services",0,EU member state,31.2802
-Czechia,Helicopters,0,EU member state,31.2802
-Czechia,Light weapons,0,EU member state,31.2802
-Czechia,Missiles,0,EU member state,31.2802
-Czechia,Naval systems,0,EU member state,31.2802
-Czechia,Radars & sensors,0,EU member state,31.2802
-Czechia,Rockets/Artillery,0,EU member state,31.2802
-Czechia,Transport aircraft,0,EU member state,31.2802
-Czechia,UAVs,0,EU member state,31.2802
+Spain,AV & Ground systems,0,EU Member State,31.2802
+Spain,Air Defences,0,EU Member State,31.2802
+Spain,Anti-armour,0,EU Member State,31.2802
+Spain,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Spain,C3 & Electronics,0,EU Member State,31.2802
+Spain,Combat aircraft,0,EU Member State,31.2802
+Spain,"Construction, Logistics & Services",0.2,EU Member State,31.2802
+Spain,Helicopters,0,EU Member State,31.2802
+Spain,Light weapons,0,EU Member State,31.2802
+Spain,Missiles,0,EU Member State,31.2802
+Spain,Naval systems,0,EU Member State,31.2802
+Spain,Radars & sensors,0,EU Member State,31.2802
+Spain,Rockets/Artillery,0,EU Member State,31.2802
+Spain,Transport aircraft,0,EU Member State,31.2802
+Spain,UAVs,0,EU Member State,31.2802
+Czechia,AV & Ground systems,0,EU Member State,31.2802
+Czechia,Air Defences,0,EU Member State,31.2802
+Czechia,Anti-armour,0,EU Member State,31.2802
+Czechia,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Czechia,C3 & Electronics,0.181,EU Member State,31.2802
+Czechia,Combat aircraft,0,EU Member State,31.2802
+Czechia,"Construction, Logistics & Services",0,EU Member State,31.2802
+Czechia,Helicopters,0,EU Member State,31.2802
+Czechia,Light weapons,0,EU Member State,31.2802
+Czechia,Missiles,0,EU Member State,31.2802
+Czechia,Naval systems,0,EU Member State,31.2802
+Czechia,Radars & sensors,0,EU Member State,31.2802
+Czechia,Rockets/Artillery,0,EU Member State,31.2802
+Czechia,Transport aircraft,0,EU Member State,31.2802
+Czechia,UAVs,0,EU Member State,31.2802
 South Korea,AV & Ground systems,0,Non-European country,65.5709
 South Korea,Air Defences,0,Non-European country,65.5709
-South Korea,Anti-armor,0,Non-European country,65.5709
+South Korea,Anti-armour,0,Non-European country,65.5709
 South Korea,"Bombs, Munitions & Projectiles",0.1118,Non-European country,65.5709
 South Korea,C3 & Electronics,0,Non-European country,65.5709
 South Korea,Combat aircraft,0,Non-European country,65.5709
@@ -556,7 +556,7 @@ South Korea,Transport aircraft,0,Non-European country,65.5709
 South Korea,UAVs,0,Non-European country,65.5709
 Bosnia and Herzegovina,AV & Ground systems,0,Other European country,7.3762
 Bosnia and Herzegovina,Air Defences,0,Other European country,7.3762
-Bosnia and Herzegovina,Anti-armor,0,Other European country,7.3762
+Bosnia and Herzegovina,Anti-armour,0,Other European country,7.3762
 Bosnia and Herzegovina,"Bombs, Munitions & Projectiles",0,Other European country,7.3762
 Bosnia and Herzegovina,C3 & Electronics,0,Other European country,7.3762
 Bosnia and Herzegovina,Combat aircraft,0,Other European country,7.3762
@@ -571,7 +571,7 @@ Bosnia and Herzegovina,Transport aircraft,0,Other European country,7.3762
 Bosnia and Herzegovina,UAVs,0,Other European country,7.3762
 Iraq,AV & Ground systems,0,Non-European country,65.5709
 Iraq,Air Defences,0,Non-European country,65.5709
-Iraq,Anti-armor,0,Non-European country,65.5709
+Iraq,Anti-armour,0,Non-European country,65.5709
 Iraq,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Iraq,C3 & Electronics,0.1,Non-European country,65.5709
 Iraq,Combat aircraft,0,Non-European country,65.5709
@@ -586,7 +586,7 @@ Iraq,Transport aircraft,0,Non-European country,65.5709
 Iraq,UAVs,0,Non-European country,65.5709
 Zambia,AV & Ground systems,0,Non-European country,65.5709
 Zambia,Air Defences,0,Non-European country,65.5709
-Zambia,Anti-armor,0,Non-European country,65.5709
+Zambia,Anti-armour,0,Non-European country,65.5709
 Zambia,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Zambia,C3 & Electronics,0,Non-European country,65.5709
 Zambia,Combat aircraft,0,Non-European country,65.5709
@@ -601,7 +601,7 @@ Zambia,Transport aircraft,0,Non-European country,65.5709
 Zambia,UAVs,0,Non-European country,65.5709
 Ecuador,AV & Ground systems,0,Non-European country,65.5709
 Ecuador,Air Defences,0,Non-European country,65.5709
-Ecuador,Anti-armor,0,Non-European country,65.5709
+Ecuador,Anti-armour,0,Non-European country,65.5709
 Ecuador,"Bombs, Munitions & Projectiles",0,Non-European country,65.5709
 Ecuador,C3 & Electronics,0,Non-European country,65.5709
 Ecuador,Combat aircraft,0,Non-European country,65.5709
@@ -614,18 +614,18 @@ Ecuador,Radars & sensors,0,Non-European country,65.5709
 Ecuador,Rockets/Artillery,0,Non-European country,65.5709
 Ecuador,Transport aircraft,0,Non-European country,65.5709
 Ecuador,UAVs,0,Non-European country,65.5709
-Ireland,AV & Ground systems,0,EU member state,31.2802
-Ireland,Air Defences,0,EU member state,31.2802
-Ireland,Anti-armor,0.046,EU member state,31.2802
-Ireland,"Bombs, Munitions & Projectiles",0,EU member state,31.2802
-Ireland,C3 & Electronics,0,EU member state,31.2802
-Ireland,Combat aircraft,0,EU member state,31.2802
-Ireland,"Construction, Logistics & Services",0,EU member state,31.2802
-Ireland,Helicopters,0,EU member state,31.2802
-Ireland,Light weapons,0,EU member state,31.2802
-Ireland,Missiles,0,EU member state,31.2802
-Ireland,Naval systems,0,EU member state,31.2802
-Ireland,Radars & sensors,0,EU member state,31.2802
-Ireland,Rockets/Artillery,0,EU member state,31.2802
-Ireland,Transport aircraft,0,EU member state,31.2802
-Ireland,UAVs,0,EU member state,31.2802
+Ireland,AV & Ground systems,0,EU Member State,31.2802
+Ireland,Air Defences,0,EU Member State,31.2802
+Ireland,Anti-armour,0.046,EU Member State,31.2802
+Ireland,"Bombs, Munitions & Projectiles",0,EU Member State,31.2802
+Ireland,C3 & Electronics,0,EU Member State,31.2802
+Ireland,Combat aircraft,0,EU Member State,31.2802
+Ireland,"Construction, Logistics & Services",0,EU Member State,31.2802
+Ireland,Helicopters,0,EU Member State,31.2802
+Ireland,Light weapons,0,EU Member State,31.2802
+Ireland,Missiles,0,EU Member State,31.2802
+Ireland,Naval systems,0,EU Member State,31.2802
+Ireland,Radars & sensors,0,EU Member State,31.2802
+Ireland,Rockets/Artillery,0,EU Member State,31.2802
+Ireland,Transport aircraft,0,EU Member State,31.2802
+Ireland,UAVs,0,EU Member State,31.2802

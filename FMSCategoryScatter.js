@@ -23,7 +23,7 @@ export class FMSCategoryScatter {
     });
 
     this.legendOrder = [
-      "EU member state",
+      "EU Member State",
       "Other European country",
       "Non-European country",
     ];

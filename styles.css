@@ -2,7 +2,7 @@
    SHARED STYLES FOR ALL VISUALIZATIONS
    ============================================ */
 
-/* Container positioning - now with overlay layout */
+/* Main visualization containers */
 .container-dotmap,
 .container-peace,
 .container-choropleth,
@@ -14,19 +14,16 @@
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
-  z-index: 1;
   min-height: 100vh;
-  /* margin-bottom: 0; Space after scroll sections */
+  z-index: 1;
 }
 
-/* Title of all visuals */
+/* Visualization titles (SVG text) */
 .viz-title,
 .viz-title-narrow {
   color: #000;
   font-size: 18px;
   font-weight: bold;
-  top: 2em;
-  right: 2em;
 }
 
 .viz-title {
@@ -37,8 +34,7 @@
   text-anchor: start;
 }
 
-/* Scroll content - positioned on top */
-
+/* Scroll content layered above the visualization */
 .scroll-content-dotmap,
 .scroll-content-peace,
 .scroll-content-choropleth,
@@ -49,11 +45,9 @@
 .scroll-content-forces-area {
   position: relative;
   width: 50%;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding: 0 20px 20vh;
   z-index: 3;
   pointer-events: none;
-  padding-bottom: 20vh; /* Keep sticky stuck until last card reaches ~10vh from top */
 }
 
 .scroll-content-dotmap a,
@@ -67,7 +61,7 @@
   pointer-events: auto;
 }
 
-/* Sticky containers - full width behind content */
+/* Sticky visualization layer */
 .sticky-container {
   position: sticky;
   top: 0;
@@ -78,7 +72,7 @@
   align-items: center;
 }
 
-/* Visualizations */
+/* Visualization mount points */
 #visualization-dotmap,
 #visualization-peace,
 #visualization-choropleth,
@@ -89,36 +83,21 @@
 #visualization-forces-area {
   width: 100%;
   height: 100%;
-  max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* for prod */
-.field__item .sticky-container {
-  width: 100%;
-  margin-left: 0;
-}
-
-.field__item #visualization-dotmap,
-.field__item #visualization-peace,
-.field__item #visualization-choropleth,
-.field__item #visualization-trade,
-.field__item #visualization-mapdot,
-.field__item #visualization-fms-region,
-.field__item #visualization-fms-category,
-.field__item #visualization-forces-area {
-  max-width: 100%;
-}
-
-
-/* area chart label */
-.area-label {
-  /* paint-order: stroke;
-  stroke: rgba(0,0,0,0.5);
-  stroke-width: 5px;
-  stroke-opacity: .2; */
+/* Ensure SVGs center perfectly (no inline baseline quirks) */
+#visualization-dotmap svg,
+#visualization-peace svg,
+#visualization-choropleth svg,
+#visualization-trade svg,
+#visualization-mapdot svg,
+#visualization-fms-region svg,
+#visualization-fms-category svg,
+#visualization-forces-area svg {
+  display: block;
 }
 
 /* ============================================
