@@ -152,7 +152,9 @@ export class TradeChart {
       .attr("class", "legend")
       .attr(
         "transform",
-        `translate(${this.width - 12}, ${this.height * 0.33})`,
+        this.isMobile
+          ? `translate(${this.margin.left + -25}, ${this.height - this.margin.bottom + 30})`
+          : `translate(${this.width - 12}, ${this.height * 0.33})`,
       );
 
     this.categories.forEach((category, i) => {
@@ -161,7 +163,7 @@ export class TradeChart {
         .attr("transform", `translate(0, ${i * 22})`);
       group
         .append("circle")
-        .attr("cx", 10)
+        .attr("cx", 12)
         .attr("cy", 8)
         .attr("r", 6)
         .attr("fill", this.colorScale(category));
@@ -169,7 +171,7 @@ export class TradeChart {
       // special handling for long category name on mobile
       const text = group
         .append("text")
-        .attr("x", 24)
+        .attr("x", this.isMobile ? 6 : -5)
         .attr("y", 12)
         .style("font-size", "14px")
         .style("fill", "#595959")
@@ -374,7 +376,7 @@ export class TradeChart {
       .attr(
         "transform",
         this.isMobile
-          ? `translate(${this.margin.left + 12}, ${this.height - this.margin.bottom + 30})`
+          ? `translate(${this.margin.left + -25}, ${this.height - this.margin.bottom + 30})`
           : `translate(${this.width - 12}, ${this.height * 0.33})`,
       );
 
