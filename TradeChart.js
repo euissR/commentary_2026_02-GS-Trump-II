@@ -171,7 +171,7 @@ export class TradeChart {
         .append("text")
         .attr("x", 24)
         .attr("y", 12)
-        .style("font-size", "12px")
+        .style("font-size", "14px")
         .style("fill", "#595959")
         .attr("text-anchor", "start");
 
@@ -244,7 +244,7 @@ export class TradeChart {
       .attr("stroke-width", 1);
     this.svg
       .selectAll(".tick text")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
   }
 

@@ -187,7 +187,7 @@ export class ChoroplethMap {
           .attr("x", 10)
           .attr("y", 8)
           .attr("text-anchor", "start")
-          .style("font-size", "11px")
+          .style("font-size", "14px")
           .style("fill", "#333")
           .text(item.label);
       });
@@ -207,7 +207,7 @@ export class ChoroplethMap {
       .attr("x", 0)
       .attr("y", 0)
       .attr("text-anchor", "start")
-      .style("font-size", "12px")
+      .style("font-size", "14px")
       .style("font-weight", "700")
       .style("fill", "#333")
       .text("Tariff rate (%)");
@@ -250,7 +250,7 @@ export class ChoroplethMap {
       .append("text")
       .attr("x", 0)
       .attr("y", 38)
-      .style("font-size", "10px")
+      .style("font-size", "12px")
       .style("fill", "#666")
       .text(`${Math.round(rateExtent[0])}%`);
     this.continuousLegend
@@ -258,7 +258,7 @@ export class ChoroplethMap {
       .attr("x", barW / 2)
       .attr("y", 38)
       .attr("text-anchor", "middle")
-      .style("font-size", "10px")
+      .style("font-size", "12px")
       .style("fill", "#666")
       .text(`${Math.round((rateExtent[0] + rateExtent[1]) / 2)}%`);
     this.continuousLegend
@@ -266,7 +266,7 @@ export class ChoroplethMap {
       .attr("x", barW)
       .attr("y", 38)
       .attr("text-anchor", "end")
-      .style("font-size", "10px")
+      .style("font-size", "12px")
       .style("fill", "#666")
       .text(`${Math.round(rateExtent[1])}%`);
 

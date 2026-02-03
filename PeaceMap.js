@@ -214,7 +214,7 @@ export class PeaceMap {
         .attr("x", 20)
         .attr("y", 0)
         .attr("dy", "0.35em")
-        .style("font-size", "12px")
+        .style("font-size", "14px")
         .style("fill", "#595959")
         .text(item.label);
 

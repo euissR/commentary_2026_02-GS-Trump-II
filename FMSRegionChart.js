@@ -172,7 +172,7 @@ export class FMSRegionChart {
         .append("text")
         .attr("x", 18)
         .attr("y", 12)
-        .style("font-size", "11px")
+        .style("font-size", "12px")
         .style("fill", "#333")
         .text(region);
     });
@@ -203,7 +203,7 @@ export class FMSRegionChart {
       .attr("stroke-width", 1);
     this.svg
       .selectAll(".tick text")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
   }
 

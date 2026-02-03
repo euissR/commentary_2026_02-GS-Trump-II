@@ -144,7 +144,7 @@ export class ForcesAreaChart {
       .attr("stroke-width", 1);
     this.svg
       .selectAll(".tick text")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
   }
 
@@ -192,7 +192,7 @@ export class ForcesAreaChart {
       .attr("class", "area-label")
       .attr("text-anchor", "start")
       .attr("dominant-baseline", "middle")
-      .style("font-size", "12px")
+      .style("font-size", "14px")
       .style("font-weight", "600")
       .attr("fill", (d) => this.colorScale(d.key))
       .style("pointer-events", "none")

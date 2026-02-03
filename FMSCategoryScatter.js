@@ -143,7 +143,7 @@ export class FMSCategoryScatter {
       .style("text-anchor", "start")
       .attr("dx", "1em")
       .attr("dy", "-.25em")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
 
     this.yAxisGroup = this.axesGroup
@@ -158,7 +158,7 @@ export class FMSCategoryScatter {
       .selectAll(".tick text")
       .attr("x", this.width - this.margin.right)
       .style("text-anchor", "start")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
   }
 
@@ -173,7 +173,7 @@ export class FMSCategoryScatter {
       .attr("x", legendX + this.legendWidth - 12)
       .attr("y", this.isMobile ? 20 : titleY)
       .attr("text-anchor", "end")
-      .style("font-size", "15px")
+      .style("font-size", "16px")
       .style("font-weight", "700")
       .style("fill", "#000")
       .style("paint-order", "stroke")
@@ -200,7 +200,7 @@ export class FMSCategoryScatter {
         .attr("x", this.legendWidth - 24)
         .attr("y", 9)
         .attr("text-anchor", "end")
-        .style("font-size", "11px")
+        .style("font-size", "14px")
         .style("fill", "#333")
         .text(category);
 
@@ -311,7 +311,7 @@ export class FMSCategoryScatter {
       .style("text-anchor", "start")
       .attr("dx", ".25em")
       .attr("dy", ".75em")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
 
     this.yAxisGroup.call(d3.axisLeft(this.yScale));
@@ -322,7 +322,7 @@ export class FMSCategoryScatter {
     this.yAxisGroup
       .selectAll(".tick text")
       .style("text-anchor", "end")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
 
     if (this.isMobile) {

@@ -443,7 +443,7 @@ export class DotMapPlot {
         return baseY - 30;
       })
       .attr("text-anchor", "middle")
-      .style("font-size", "12px")
+      .style("font-size", "14px")
       .style("opacity", 0)
       .each(function (d) {
         const text = d3.select(this);

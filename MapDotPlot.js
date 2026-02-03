@@ -208,7 +208,7 @@ export class MapDotPlot {
       .attr("transform", "rotate(-45)")
       .style("text-anchor", "start")
       .attr("dy", "1em")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
 
     this.axesGroup.selectAll(".domain").remove();
@@ -218,7 +218,7 @@ export class MapDotPlot {
       .selectAll(".tick text")
       .attr("x", this.width - this.margin.right)
       .style("text-anchor", "start")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
 
     if (this.isMobile) {
@@ -345,7 +345,7 @@ export class MapDotPlot {
       .style("text-anchor", "start")
       .attr("dx", "-0.5em")
       .attr("dy", "-0.5em")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
 
     this.yAxisGroup.call(d3.axisLeft(this.yScale));
@@ -355,7 +355,7 @@ export class MapDotPlot {
       .selectAll(".tick text")
       .attr("x", this.width - this.margin.right)
       .style("text-anchor", "start")
-      .style("font-size", "11px")
+      .style("font-size", "12px")
       .style("fill", "#666");
 
     this.gridlinesGroup
