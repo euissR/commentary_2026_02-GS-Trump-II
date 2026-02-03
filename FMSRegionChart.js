@@ -5,22 +5,19 @@ export class FMSRegionChart {
   constructor(container) {
     this.container = container;
 
-    // ⬇️ measure the sticky full-width container instead of the column
-    const body = container.closest(".field--name-body");
-    const rect = body.getBoundingClientRect();
-    this.width = rect.width;
-    this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
+    // Get container dimensions - 50% width
+    const containerRect = container.getBoundingClientRect();
+    this.width = containerRect.width * 0.5; // 50% width
+    this.height = window.innerHeight * 0.8;
 
     this.margin = { top: 200, right: 0, bottom: 200, left: 80 };
 
     this.init();
 
     window.addEventListener("resize", () => {
-      const body = container.closest(".field--name-body");
-      const rect = body.getBoundingClientRect();
-
-      this.width = rect.width;
-      this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
+      const containerRect = container.getBoundingClientRect();
+      this.width = containerRect.width * 0.5;
+      this.height = window.innerHeight * 0.8;
       this.resize();
     });
   }
