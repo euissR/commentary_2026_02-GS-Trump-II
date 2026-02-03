@@ -21,6 +21,8 @@ export class ChoroplethMap {
       this.height = Math.min(this.width, window.innerHeight * 0.9);
       this.resize();
     });
+
+    const legendY = this.height / 2 - (this.width / 5.5) * 0.8;
   }
 
   async init() {
@@ -134,7 +136,7 @@ export class ChoroplethMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", 20)
+      .attr("y", legendY - 30)
       .attr("text-anchor", "end")
       .text("Countries targeted by Trump tariffs");
 
@@ -142,7 +144,7 @@ export class ChoroplethMap {
     this.categoricalLegend = this.svg
       .append("g")
       .attr("class", "categorical-legend")
-      .attr("transform", `translate(${this.width - 20}, 50)`)
+      .attr("transform", `translate(${this.width - 20}, ${legendY})`)
       .style("opacity", 1);
 
     const catItems = [
@@ -186,7 +188,7 @@ export class ChoroplethMap {
     this.continuousLegend = this.svg
       .append("g")
       .attr("class", "continuous-legend")
-      .attr("transform", `translate(${this.width - 250}, 50)`)
+      .attr("transform", `translate(${this.width - 250}, ${legendY})`)
       .style("opacity", 0);
 
     this.continuousLegend

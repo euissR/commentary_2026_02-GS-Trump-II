@@ -143,7 +143,7 @@ export class MapDotPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", 20)
+      .attr("y", this.margin.top - 20) // Distance from top of chart
       .text("US trade deals under Trump 2.0");
   }
 
@@ -176,7 +176,7 @@ export class MapDotPlot {
         .attr("d", this.path)
         .attr("fill", "#c6c6c6")
         .attr("opacity", 0.33)
-        .attr("stroke", "#999")
+        .attr("stroke", "#595959")
         .attr("stroke-width", 0.5)
         .style("pointer-events", "auto")
         .style("cursor", "pointer")

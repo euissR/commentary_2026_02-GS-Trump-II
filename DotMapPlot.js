@@ -160,7 +160,7 @@ export class DotMapPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", 20) // Distance from top of SVG
+      .attr("y", this.margin.top - 20) // Distance from top of chart
       .text("Timeline of US strikes worldwide, 2017-25");
   }
 

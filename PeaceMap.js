@@ -103,7 +103,9 @@ export class PeaceMap {
       .attr("class", "peace-country")
       .attr("d", this.path)
       .attr("fill", "#c6c6c6")
-      .attr("stroke", "none");
+      .attr("opacity", 0.33)
+      .attr("stroke", "#595959")
+      .attr("stroke-width", 0.5);
 
     this.outerCircles = this.svg
       .selectAll(".peace-outer-circle")

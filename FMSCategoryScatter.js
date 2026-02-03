@@ -8,7 +8,8 @@ export class FMSCategoryScatter {
     // Get container dimensions - matching DotMapPlot pattern
     const containerRect = container.getBoundingClientRect();
     this.width = Math.floor(containerRect.width);
-    this.height = Math.min(this.width, window.innerHeight * 0.9);
+    // this.height = Math.min(this.width, window.innerHeight * 0.9);
+    this.height = this.width; // Square layout
 
     this.legendWidth = 220;
     this.margin = { top: 200, right: this.legendWidth, bottom: 20, left: 0 };
@@ -18,7 +19,7 @@ export class FMSCategoryScatter {
     window.addEventListener("resize", () => {
       const containerRect = this.container.getBoundingClientRect();
       this.width = Math.floor(containerRect.width);
-      this.height = Math.min(this.width, window.innerHeight * 0.9);
+      this.height = this.width; // Square layout
       this.resize();
     });
 
