@@ -13,13 +13,13 @@
 .container-forces-area {
   position: relative;
   max-width: 1200px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   z-index: 1;
   min-height: 100vh;
   margin-bottom: 0; /* Space after scroll sections */
 }
 
-.container-dotmap {
+/* .container-dotmap {
   margin-bottom: 100px;
 }
 
@@ -34,7 +34,7 @@
 
 .container-choropleth {
   margin-top: 100px;
-}
+} */
 
 /* Title of all visuals */
 .viz-title {
@@ -80,7 +80,7 @@
 .sticky-container {
   position: sticky;
   top: 0;
-  width: 95vw;
+  width: 100vw;
   /* width: 100%; */
   height: 100vh;
   display: flex;
