@@ -8,22 +8,21 @@ export class PeaceMap {
 
     // Get container dimensions
     // ⬇️ measure the sticky full-width container instead of the column
-    const sticky = container.closest(".sticky-container");
-    const rect = sticky.getBoundingClientRect();
-
-    this.width = Math.min(rect.width, window.innerWidth);
-    this.height = Math.min(this.width, window.innerHeight * 0.95);
+    const body = container.closest(".field--name-body");
+    const rect = body.getBoundingClientRect();
+    this.width = rect.width;
+    this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
 
     this.currentStep = 0; // Track current step
 
     this.init();
 
     window.addEventListener("resize", () => {
-      const sticky = container.closest(".sticky-container");
-      const rect = sticky.getBoundingClientRect();
+      const body = container.closest(".field--name-body");
+      const rect = body.getBoundingClientRect();
 
-      this.width = Math.min(rect.width, window.innerWidth);
-      this.height = Math.min(this.width, window.innerHeight * 0.95);
+      this.width = rect.width;
+      this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
       this.resize();
     });
   }

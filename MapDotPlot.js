@@ -7,9 +7,10 @@ export class MapDotPlot {
     this.container = container;
 
     // Get container dimensions, constrained to viewport
-    const containerRect = container.getBoundingClientRect();
-    this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
-    this.height = Math.min(this.width, window.innerHeight * 0.95);
+    const body = container.closest(".field--name-body");
+    const rect = body.getBoundingClientRect();
+    this.width = rect.width;
+    this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
 
     this.margin = { top: 200, right: 300, bottom: 0, left: 0 };
 
@@ -30,14 +31,17 @@ export class MapDotPlot {
     this.init();
 
     window.addEventListener("resize", () => {
-      const sticky = container.closest(".sticky-container");
-      const rect = sticky.getBoundingClientRect();
-      this.width = Math.min(rect.width, window.innerWidth * 0.95);
-      this.height = Math.min(this.width, window.innerHeight * 0.95);
+      const body = container.closest(".field--name-body");
+      const rect = body.getBoundingClientRect();
+
+      this.width = rect.width;
+      this.height = Math.min(this.width * 0.9, window.innerHeight * 0.95);
+
       this.scatterWidth = this.width * 0.9;
-      this.scatterHeight = this.height * 0.8;
+      this.scatterHeight = this.height * 0.75;
       this.scatterOffsetX = (this.width - this.scatterWidth) / 2;
       this.scatterOffsetY = (this.height - this.scatterHeight) / 2;
+
       this.resize();
     });
 

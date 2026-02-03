@@ -7,11 +7,10 @@ export class DotMapPlot {
     this.container = container;
 
     // ⬇️ measure the sticky full-width container instead of the column
-    const sticky = container.closest(".sticky-container");
-    const rect = sticky.getBoundingClientRect();
-
-    this.width = Math.min(rect.width, window.innerWidth);
-    this.height = Math.min(this.width, window.innerHeight * 0.95);
+    const body = container.closest(".field--name-body");
+    const rect = body.getBoundingClientRect();
+    this.width = rect.width;
+    this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
 
     // Dot plot dimensions (for the stacked week view)
     this.dotWidth = this.width * 0.9;
@@ -31,15 +30,17 @@ export class DotMapPlot {
     this.init();
 
     window.addEventListener("resize", () => {
-      const sticky = container.closest(".sticky-container");
-      const rect = sticky.getBoundingClientRect();
+      const body = container.closest(".field--name-body");
+      const rect = body.getBoundingClientRect();
 
-      this.width = Math.min(rect.width, window.innerWidth);
-      this.height = Math.min(this.width, window.innerHeight * 0.95);
-      this.dotWidth = this.width * 0.9;
-      this.dotHeight = this.width * 0.6;
-      this.dotOffsetX = (this.width - this.dotWidth) / 2;
-      this.dotOffsetY = (this.height - this.dotHeight) / 2;
+      this.width = rect.width;
+      this.height = Math.min(this.width * 0.9, window.innerHeight * 0.95);
+
+      this.scatterWidth = this.width * 0.9;
+      this.scatterHeight = this.height * 0.75;
+      this.scatterOffsetX = (this.width - this.scatterWidth) / 2;
+      this.scatterOffsetY = (this.height - this.scatterHeight) / 2;
+
       this.resize();
     });
   }
