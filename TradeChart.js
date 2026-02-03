@@ -152,7 +152,7 @@ export class TradeChart {
       .attr("class", "legend")
       .attr(
         "transform",
-        `translate(${this.isMobile ? this.margin.left + 12 : this.width - 12}, ${this.isMobile ? this.margin.bottom + 20 : this.height * 0.33})`,
+        `translate(${this.isMobile ? 12 : this.width - 12}, ${this.isMobile ? this.margin.bottom + 20 : this.height * 0.33})`,
       );
 
     this.categories.forEach((category, i) => {
@@ -173,7 +173,7 @@ export class TradeChart {
         .attr("y", 12)
         .style("font-size", "14px")
         .style("fill", "#595959")
-        .attr("text-anchor", "start");
+        .attr("text-anchor", this.isMobile ? "start" : "end");
 
       if (category === "Net EU imports from the US") {
         text.append("tspan").text("Net EU imports");
@@ -190,10 +190,10 @@ export class TradeChart {
     const explanationY = this.categories.length * 22 + 15;
     legendGroup
       .append("text")
-      .attr("x", 0)
+      .attr("x", 12)
       .attr("y", explanationY)
       .attr("text-anchor", "end")
-      .style("font-size", "10px")
+      .style("font-size", "12px")
       .style("fill", "#666")
       .style("font-style", "italic")
       .each(function () {
@@ -206,9 +206,9 @@ export class TradeChart {
         lines.forEach((line, i) => {
           text
             .append("tspan")
-            .attr("x", 0)
+            .attr("x", 12)
             .attr("dy", i === 0 ? 0 : "1.2em")
-            .attr("text-anchor", "end")
+            .attr("text-anchor", this.isMobile ? "start" : "end")
             .text(line);
         });
       });

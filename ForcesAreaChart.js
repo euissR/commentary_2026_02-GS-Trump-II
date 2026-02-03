@@ -15,7 +15,7 @@ export class ForcesAreaChart {
 
     this.margin = this.isMobile
       ? { top: 60, right: 40, bottom: 60, left: 60 }
-      : { top: 60, right: 150, bottom: 60, left: 80 };
+      : { top: 60, right: 200, bottom: 60, left: 80 };
 
     this.init();
 
@@ -255,7 +255,7 @@ export class ForcesAreaChart {
 
     this.margin = this.isMobile
       ? { top: 60, right: 40, bottom: 60, left: 60 }
-      : { top: 60, right: 150, bottom: 60, left: 80 };
+      : { top: 60, right: 200, bottom: 60, left: 80 };
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([this.height - this.margin.bottom, this.margin.top]);
