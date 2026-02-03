@@ -110,12 +110,12 @@ export class FMSCategoryScatter {
     this.svg = d3
       .select(this.container)
       .append("svg")
-      // .attr("viewBox", `0 0 ${this.width} ${this.height}`)
-      // .style("width", "100%")
-      // .style("height", "100%");
-      // to prevent scaling down of svg to fit container
-      .attr("width", this.width)
-      .attr("height", this.height);
+      .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+      .style("width", "100%")
+      .style("height", "100%");
+    // to prevent scaling down of svg to fit container
+    // .attr("width", this.width)
+    // .attr("height", this.height);
   }
 
   setupElements() {
@@ -161,8 +161,8 @@ export class FMSCategoryScatter {
 
   setupLegend() {
     const legendX = this.width - this.legendWidth;
-    const titleY = this.margin.top - 100;
-    this.legendY = this.margin.top - 90;
+    const titleY = this.margin.top - 120;
+    this.legendY = this.margin.top - 110;
 
     this.titleText = this.svg
       .append("text")
@@ -285,9 +285,9 @@ export class FMSCategoryScatter {
   }
 
   resize() {
-    // this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
+    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
     // to prevent scaling down of svg to fit container
-    this.svg.attr("width", this.width).attr("height", this.height);
+    // this.svg.attr("width", this.width).attr("height", this.height);
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([this.margin.top, this.height - this.margin.bottom]);
