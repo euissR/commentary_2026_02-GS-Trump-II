@@ -5,6 +5,8 @@ import { CONFIG } from "./config.js";
 export class DotMapPlot {
   constructor(container) {
     this.container = container;
+    this.isMobile = window.innerWidth <= 768;
+    this.titleMode = null; // "dot" or "map"
 
     // Get container dimensions, constrained to viewport
     const containerRect = container.getBoundingClientRect();
@@ -13,7 +15,7 @@ export class DotMapPlot {
 
     // Dot plot dimensions (for the stacked week view)
     this.dotWidth = this.width;
-    this.dotHeight = this.width * 0.6;
+    this.dotHeight = this.width * 0.8;
     this.dotOffsetX = (this.width - this.dotWidth) / 2;
     this.dotOffsetY = (this.height - this.dotHeight) / 2;
 
@@ -361,31 +363,26 @@ export class DotMapPlot {
   }
 
   updateTitle(step) {
-    const titleElement = d3.select(
+    const mode = step >= 4 ? "map" : "dot";
+    if (mode === this.titleMode) return; // 👈 key line
+
+    this.titleMode = mode;
+
+    const title = d3.select(
       this.container.parentElement.querySelector(".viz-title"),
     );
+    if (title.empty()) return;
 
-    if (!titleElement) return;
+    title.text("");
 
-    // Clear existing text + tspans
-    titleElement.textContent = "";
-
-    if (step >= 4) {
-      // Map view title (single line)
-      titleElement
-        .append("tspan")
-        .attr("x", this.width)
-        .attr("dy", 0)
-        .text("US strikes in 2025");
+    if (mode === "map") {
+      title.append("tspan").attr("x", this.width).text("US strikes in 2025");
     } else {
-      // Dot plot view title (two lines)
-      titleElement
+      title
         .append("tspan")
         .attr("x", this.width)
-        .attr("dy", 0)
         .text("Timeline of US strikes worldwide,");
-
-      titleElement
+      title
         .append("tspan")
         .attr("x", this.width)
         .attr("dy", "1.2em")
