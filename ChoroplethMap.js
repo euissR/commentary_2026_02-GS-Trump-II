@@ -129,7 +129,7 @@ export class ChoroplethMap {
   }
 
   setupLegends() {
-    const legendY = this.height - this.height / 2 - 50;
+    const legendY = this.height - this.height * 0.75;
 
     // Title at top right
     this.titleText = this.svg
