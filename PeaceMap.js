@@ -145,21 +145,15 @@ export class PeaceMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 10 : 40)
+      .attr("y", this.isMobile ? 15 : 40)
       .text("The wars Trump claims to have solved");
   }
 
   setupLegend() {
-    const legendX = this.width * 0.66;
-    const legendY = this.height * 0.7;
-
     this.legend = this.svg.append("g").attr("class", "legend");
 
     if (this.isMobile) {
-      this.legend.attr(
-        "transform",
-        `translate(${this.width / 2 - 100}, ${this.height + 120})`,
-      );
+      this.legend.attr("transform", `translate(20, 20)`);
     } else {
       this.legend.attr(
         "transform",
