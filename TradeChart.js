@@ -8,7 +8,7 @@ export class TradeChart {
     // Get container dimensions
     const containerRect = container.getBoundingClientRect();
     this.width = containerRect.width;
-    this.height = window.innerHeight; // 80vh
+    this.height = window.innerHeight * 0.8; // 80vh
 
     this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
 
@@ -153,6 +153,11 @@ export class TradeChart {
   }
 
   setupLegend() {
+    // dot and label positions relative to group origin (width - margin.right)
+    // dots end up at  width − 10,  labels end at  width − 24  — same as ChoroplethMap
+    const dotX = this.margin.right - 10;
+    const textX = this.margin.right - 24;
+
     const legendGroup = this.svg
       .append("g")
       .attr("class", "legend")
@@ -164,41 +169,41 @@ export class TradeChart {
     this.categories.forEach((category, i) => {
       const group = legendGroup
         .append("g")
-        .attr("transform", `translate(0, ${i * 22})`);
+        .attr("transform", `translate(0, ${i * 20})`);
 
-      // Rectangle at the right (x=0)
-      group
-        .append("circle")
-        .attr("cx", 6)
-        .attr("cy", 8)
-        .attr("r", 6)
-        .attr("fill", this.colorScale(category));
-
-      // Text to the left of rectangle, right-aligned
+      // label – right-aligned, to the left of the dot
       group
         .append("text")
-        .attr("x", -5) // 5px to the left of the rectangle
-        .attr("y", 12)
-        .attr("text-anchor", "end") // Right-align text
+        .attr("x", textX)
+        .attr("y", 9)
+        .attr("text-anchor", "end")
         .style("font-size", "11px")
         .style("fill", "#333")
         .text(category);
+
+      // dot
+      group
+        .append("circle")
+        .attr("cx", dotX)
+        .attr("cy", 6)
+        .attr("r", 6)
+        .attr("fill", this.colorScale(category))
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1);
     });
 
-    // Add explanatory text below the legend
-    const explanationY = this.categories.length * 22 + 15; // Position below all legend items
+    // explanatory text below the legend, right-aligned to labels
+    const explanationY = this.categories.length * 20 + 15;
 
     legendGroup
       .append("text")
-      .attr("x", 0)
+      .attr("x", textX)
       .attr("y", explanationY)
-      .attr("text-anchor", "end") // Right-align with legend
+      .attr("text-anchor", "end")
       .style("font-size", "10px")
       .style("fill", "#666")
       .style("font-style", "italic")
-      .style("max-width", "200px")
       .each(function () {
-        // Split text into multiple lines for better readability
         const text = d3.select(this);
         const lines = [
           "Positive values indicate net EU exports to the US;",
@@ -209,7 +214,7 @@ export class TradeChart {
         lines.forEach((line, i) => {
           text
             .append("tspan")
-            .attr("x", 0)
+            .attr("x", textX)
             .attr("dy", i === 0 ? 0 : "1.2em")
             .attr("text-anchor", "end")
             .text(line);
@@ -387,12 +392,12 @@ export class TradeChart {
         .tickFormat(d3.timeFormat("%b %Y")),
     );
 
-    // Update legend position
+    // Update legend position (keep same y ratio as initial setup)
     this.svg
       .select(".legend")
       .attr(
         "transform",
-        `translate(${this.width - this.margin.right}, ${this.height / 2})`,
+        `translate(${this.width - this.margin.right}, ${this.height * 0.33})`,
       );
 
     // Update bar positions and heights using bandwidth

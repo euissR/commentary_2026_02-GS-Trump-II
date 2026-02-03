@@ -104,7 +104,7 @@ export class DotMapPlot {
       .geoAzimuthalEqualArea()
       .scale(this.width / 2.75)
       .center([0, 0])
-      .rotate([20, 0])
+      .rotate([20, -12])
       .translate([this.width / 2, this.height / 2]);
 
     this.path = d3.geoPath().projection(this.projection);

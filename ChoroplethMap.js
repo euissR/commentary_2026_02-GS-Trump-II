@@ -10,12 +10,12 @@ export class ChoroplethMap {
     const containerRect = container.getBoundingClientRect();
     this.width = containerRect.width;
 
-    // Legend margin at top
-    this.legendMargin = 30;
+    // Right column for title + legend
+    this.legendWidth = 220;
 
-    // Map height (Robinson aspect ratio) + margin for legend
-    this.mapHeight = containerRect.width * 0.6;
-    this.height = this.mapHeight + this.legendMargin;
+    // Map height
+    this.mapHeight = containerRect.width * 0.55;
+    this.height = this.mapHeight;
 
     this.currentView = "categorical"; // Track current fill type
 
@@ -24,8 +24,9 @@ export class ChoroplethMap {
     window.addEventListener("resize", () => {
       const containerRect = container.getBoundingClientRect();
       this.width = containerRect.width;
-      this.mapHeight = containerRect.width * 0.6;
-      this.height = this.mapHeight + this.legendMargin;
+      this.legendWidth = 220;
+      this.mapHeight = containerRect.width * 0.55;
+      this.height = this.mapHeight;
       this.resize();
     });
   }
@@ -58,10 +59,11 @@ export class ChoroplethMap {
   }
 
   setupProjection() {
+    const mapAreaWidth = this.width - this.legendWidth;
     this.projection = d3
       .geoEqualEarth()
-      .scale(150) // Add a fixed scale
-      .translate([this.width / 2, this.mapHeight / 2 + this.legendMargin]);
+      .scale(mapAreaWidth / 6)
+      .translate([mapAreaWidth / 2, this.mapHeight / 2]);
 
     this.path = d3.geoPath().projection(this.projection);
   }
@@ -75,9 +77,8 @@ export class ChoroplethMap {
         "Exempt",
         'Reciprocal and Limitations on "free speech"',
         "Fentanyl crisis",
-        "Reciprocal and Secondary tariffs for Russian oil",
       ])
-      .range(["#309ebe", "#C6C6C6", "#376882", "#df3144", "#1d3956"]);
+      .range(["#309ebe", "#C6C6C6", "#1d3956", "#df3144"]);
 
     // Continuous color scale for "rate"
     const rateExtent = d3.extent(
@@ -138,131 +139,108 @@ export class ChoroplethMap {
 
     // Setup tooltip
     this.setupTooltip();
-
-    // Add title
-    this.titleText = this.svg
-      .append("text")
-      .attr("class", "viz-title")
-      .attr("x", this.width)
-      .attr("y", 20) // Distance from top of SVG
-      .text("Countries targeted by Trump tariffs");
   }
 
   setupLegends() {
-    const legendX = 5;
-    const legendY = 15; // Position in top margin
+    const legendX = this.width - this.legendWidth;
 
-    // Categorical Legend (horizontal)
+    // ── vertical rhythm ──────────────────────────
+    const titleY = 24; // title baseline
+    this.catLegendY = 56; // categorical group origin  (subtitle baseline)
+    //   subtitle at +0, items at +22 … +102  →  bottom of last circle at +108
+    this.contLegendY = this.catLegendY + 108 + 24; // 24 px gap before continuous
+
+    // ── white background panel (behind everything in this column) ──
+    this.legendBg = this.svg
+      .append("rect")
+      .attr("x", legendX)
+      .attr("y", 0)
+      .attr("width", this.legendWidth)
+      .attr("height", this.height)
+      .attr("fill", "rgba(255,255,255,0.92)");
+
+    // ── title ─────────────────────────────────────
+    this.titleText = this.svg
+      .append("text")
+      .attr("class", "viz-title")
+      .attr("x", legendX + this.legendWidth - 12)
+      .attr("y", titleY)
+      .attr("text-anchor", "end")
+      .style("font-size", "15px")
+      .style("font-weight", "700")
+      .style("fill", "#000")
+      .style("paint-order", "stroke")
+      .style("stroke", "#fff")
+      .style("stroke-width", "4")
+      .text("Countries targeted by Trump tariffs");
+
+    // ── categorical legend ────────────────────────
     this.categoricalLegend = this.svg
       .append("g")
       .attr("class", "categorical-legend")
-      .attr("transform", `translate(${legendX}, ${legendY})`)
+      .attr("transform", `translate(${legendX}, ${this.catLegendY})`)
       .style("opacity", 1);
 
-    // Legend title
     this.categoricalLegend
       .append("text")
-      .attr("x", 0)
-      .attr("y", -5)
-      .style("font-size", "14px")
+      .attr("x", this.legendWidth - 12)
+      .attr("y", 0)
+      .attr("text-anchor", "end")
+      .style("font-size", "12px")
       .style("font-weight", "700")
       .style("fill", "#333")
-      .style("stroke", "#fff")
-      .style("stroke-width", "3")
-      .style("paint-order", "stroke")
       .text("Tariff category");
 
-    const categoricalItems = [
-      { label: "Reciprocal", color: "#309ebe", short: true },
-      { label: "Exempt", color: "#C6C6C6", short: true },
-      { label: "Fentanyl crisis", color: "#df3144", short: true },
-      {
-        label: "Reciprocal and limitations on 'free speech'",
-        color: "#376882",
-        short: false,
-      },
-      {
-        label: "Reciprocal and secondary tariffs for Russian oil",
-        color: "#1d3956",
-        short: false,
-      },
+    const catItems = [
+      { label: "Reciprocal", color: "#309ebe" },
+      { label: "Exempt", color: "#C6C6C6" },
+      { label: "Fentanyl crisis", color: "#df3144" },
+      { label: "Reciprocal + free speech", color: "#376882" },
+      { label: "Reciprocal + Russian oil", color: "#1d3956" },
     ];
 
-    // First row: short labels
-    let xOffset = 0;
-    categoricalItems
-      .filter((item) => item.short)
-      .forEach((item, i) => {
-        const group = this.categoricalLegend
-          .append("g")
-          .attr("transform", `translate(${xOffset}, 0)`);
+    catItems.forEach((item, i) => {
+      const g = this.categoricalLegend
+        .append("g")
+        .attr("transform", `translate(0, ${22 + i * 20})`);
 
-        (group
-          .append("circle")
-          .attr("cx", 6)
-          .attr("cy", 8)
-          .attr("r", 6)
-          .attr("fill", item.color)
-          .attr("stroke", "#fff")
-          .attr("stroke-width", 0.5),
-          group
-            .append("text")
-            .attr("x", 16)
-            .attr("y", 12)
-            .style("font-size", "11px")
-            .style("fill", "#333")
-            .text(item.label));
+      // label – right-aligned, to the left of the dot
+      g.append("text")
+        .attr("x", this.legendWidth - 24)
+        .attr("y", 9)
+        .attr("text-anchor", "end")
+        .style("font-size", "11px")
+        .style("fill", "#333")
+        .text(item.label);
 
-        xOffset += this.width / 9 < 100 ? this.width / 9 : 100;
-      });
+      // dot
+      g.append("circle")
+        .attr("cx", this.legendWidth - 10)
+        .attr("cy", 6)
+        .attr("r", 6)
+        .attr("fill", item.color)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1);
+    });
 
-    // Second row: long labels
-    xOffset = 0;
-    categoricalItems
-      .filter((item) => !item.short)
-      .forEach((item, i) => {
-        const group = this.categoricalLegend
-          .append("g")
-          .attr("transform", `translate(${xOffset}, 20)`);
-
-        group
-          .append("circle")
-          .attr("cx", 6)
-          .attr("cy", 8)
-          .attr("r", 6)
-          .attr("fill", item.color)
-          .attr("stroke", "#fff")
-          .attr("stroke-width", 0.5);
-
-        group
-          .append("text")
-          .attr("x", 16)
-          .attr("y", 12)
-          .style("font-size", "11px")
-          .style("fill", "#333")
-          .text(item.label);
-
-        xOffset += this.width / 9 < 100 ? this.width / 3.5 : 250;
-      });
-
-    // Continuous Legend (horizontal gradient)
+    // ── continuous legend ─────────────────────────
     this.continuousLegend = this.svg
       .append("g")
       .attr("class", "continuous-legend")
-      .attr("transform", `translate(${legendX}, ${legendY})`)
+      .attr("transform", `translate(${legendX}, ${this.contLegendY})`)
       .style("opacity", 0);
 
-    // Legend title
     this.continuousLegend
       .append("text")
-      .attr("x", 0)
-      .attr("y", -5)
-      .style("font-size", "14px")
+      .attr("x", this.legendWidth - 12)
+      .attr("y", 0)
+      .attr("text-anchor", "end")
+      .style("font-size", "12px")
       .style("font-weight", "700")
       .style("fill", "#333")
       .text("Tariff rate (%)");
 
-    // Gradient definition (horizontal)
+    // gradient definition
     const defs = this.svg.append("defs");
     const gradient = defs
       .append("linearGradient")
@@ -272,7 +250,6 @@ export class ChoroplethMap {
       .attr("x2", "100%")
       .attr("y2", "0%");
 
-    // Add color stops (reversed for horizontal left-to-right)
     gradient.append("stop").attr("offset", "0%").attr("stop-color", "#fff");
     gradient.append("stop").attr("offset", "25%").attr("stop-color", "#FFDE75");
     gradient.append("stop").attr("offset", "50%").attr("stop-color", "#64C2C7");
@@ -282,51 +259,51 @@ export class ChoroplethMap {
       .attr("offset", "100%")
       .attr("stop-color", "#33163A");
 
-    // Draw gradient rectangle (horizontal)
-    const gradientWidth = this.width / 3;
+    // gradient bar – spans most of the column width
+    const barX = 10;
+    const barW = this.legendWidth - 22;
     this.continuousLegend
       .append("rect")
-      .attr("width", gradientWidth)
+      .attr("class", "gradient-bar")
+      .attr("x", barX)
+      .attr("y", 18)
+      .attr("width", barW)
       .attr("height", 10)
-      .attr("y", 0)
+      .attr("rx", 5)
       .style("fill", "url(#rate-gradient)")
       .attr("stroke", "#999")
-      .attr("stroke-width", 0.5)
-      .attr("rx", 5);
+      .attr("stroke-width", 0.5);
 
-    // Add labels
+    // min / mid / max labels below the bar
     const rateExtent = d3.extent(
       this.ieepaSf.features,
       (d) => d.properties.rate,
     );
 
-    // Low value (left)
     this.continuousLegend
       .append("text")
-      .attr("x", 0)
-      .attr("y", 20)
-      .style("font-size", "11px")
-      .style("fill", "#333")
+      .attr("x", barX)
+      .attr("y", 42)
+      .style("font-size", "10px")
+      .style("fill", "#666")
       .text(`${Math.round(rateExtent[0])}%`);
 
-    // Mid value
     this.continuousLegend
       .append("text")
-      .attr("x", gradientWidth / 2)
-      .attr("y", 20)
+      .attr("x", barX + barW / 2)
+      .attr("y", 42)
       .attr("text-anchor", "middle")
-      .style("font-size", "11px")
-      .style("fill", "#333")
+      .style("font-size", "10px")
+      .style("fill", "#666")
       .text(`${Math.round((rateExtent[0] + rateExtent[1]) / 2)}%`);
 
-    // High value (right)
     this.continuousLegend
       .append("text")
-      .attr("x", gradientWidth)
-      .attr("y", 20)
+      .attr("x", barX + barW)
+      .attr("y", 42)
       .attr("text-anchor", "end")
-      .style("font-size", "11px")
-      .style("fill", "#333")
+      .style("font-size", "10px")
+      .style("fill", "#666")
       .text(`${Math.round(rateExtent[1])}%`);
   }
 
@@ -369,14 +346,34 @@ export class ChoroplethMap {
     // Update SVG size
     this.svg.attr("width", this.width).attr("height", this.height);
 
-    // Update projection
+    // Update projection – same math as setupProjection
+    const mapAreaWidth = this.width - this.legendWidth;
     this.projection
-      .scale(this.width / 6) // Adjust this ratio as needed
-      .translate([this.width / 2, this.mapHeight / 2 + this.legendMargin]);
+      .scale(mapAreaWidth / 6)
+      .translate([mapAreaWidth / 2, this.mapHeight / 2]);
 
     // Update all paths
     this.land.attr("d", this.path);
     this.countries.attr("d", this.path);
+
+    // Reposition legend panel + groups
+    const legendX = this.width - this.legendWidth;
+    this.legendBg
+      .attr("x", legendX)
+      .attr("width", this.legendWidth)
+      .attr("height", this.height);
+
+    this.titleText.attr("x", legendX + this.legendWidth - 12);
+
+    this.categoricalLegend.attr(
+      "transform",
+      `translate(${legendX}, ${this.catLegendY})`,
+    );
+
+    this.continuousLegend.attr(
+      "transform",
+      `translate(${legendX}, ${this.contLegendY})`,
+    );
   }
 
   toggleView(isContinuous, step) {

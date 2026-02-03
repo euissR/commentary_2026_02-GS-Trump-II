@@ -242,6 +242,10 @@ export class FMSRegionChart {
       .enter()
       .append("rect")
       .attr("class", "fms-bar")
+      .attr("data-region", function () {
+        return d3.select(this.parentNode).datum().key;
+      })
+      .attr("data-date", (d) => d.data.date)
       .attr("x", (d) => this.xScale(d.data.date))
       .attr("y", (d) => this.yScale(d[1]))
       .attr("width", this.xScale.bandwidth())
@@ -278,13 +282,36 @@ export class FMSRegionChart {
 
     this.tooltip
       .style("opacity", 1)
-      .html(`<strong>${region}</strong><br/>${value.toFixed(3)}`)
+      .html(`<strong>${region}</strong><br/>${value.toFixed(1)}`)
       .style("left", event.pageX + 10 + "px")
       .style("top", event.pageY - 10 + "px");
   }
 
   hideTooltip() {
     this.tooltip.style("opacity", 0);
+  }
+
+  highlightRegion(step) {
+    const targets = {
+      1: { regions: ["Europe"], dates: [2025] },
+      2: { regions: ["Europe"], dates: [2023, 2024, 2025] },
+    };
+
+    const target = targets[step];
+
+    this.chartGroup
+      .selectAll(".fms-bar")
+      .transition()
+      .duration(500)
+      .style("opacity", function () {
+        if (!target) return 1; // no target → full opacity
+
+        const region = d3.select(this).attr("data-region");
+        const date = +d3.select(this).attr("data-date");
+        const isMatch =
+          target.regions.includes(region) && target.dates.includes(date);
+        return isMatch ? 1 : 0.5;
+      });
   }
 
   resize() {

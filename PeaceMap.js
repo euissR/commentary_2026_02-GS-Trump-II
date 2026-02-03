@@ -9,7 +9,7 @@ export class PeaceMap {
     // Get container dimensions
     const containerRect = container.getBoundingClientRect();
     this.width = containerRect.width;
-    this.height = containerRect.width;
+    this.height = containerRect.width * 0.9;
 
     this.currentStep = 0; // Track current step
 
@@ -167,7 +167,7 @@ export class PeaceMap {
 
   setupLegend() {
     const legendX = this.width * 0.66;
-    const legendY = this.height * 0.75;
+    const legendY = this.height * 0.7;
 
     this.legend = this.svg
       .append("g")

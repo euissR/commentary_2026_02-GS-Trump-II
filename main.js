@@ -391,6 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
         entry.target.classList.add("active");
 
         console.log("FMS region active step:", step);
+        fmsRegionChart.highlightRegion(step);
       });
     },
     { threshold: 0.5 },

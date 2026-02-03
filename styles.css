@@ -42,6 +42,8 @@
   font-size: 18px;
   text-anchor: end;
   font-weight: bold;
+  top: 2em;
+  right: 2em;
 }
 
 /* Scroll content - positioned on top */
@@ -78,7 +80,8 @@
 .sticky-container {
   position: sticky;
   top: 0;
-  width: 100vw;
+  /* width: 100vw; */
+  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -252,6 +255,13 @@
   .highlight-teal3 {
      color: #fff;
     background-color: #1d3956;
+    padding: 0 4px;
+    border-radius: 2px;
+  }
+  
+  .highlight-teal-europe {
+     color: #fff;
+    background-color: #33163A;
     padding: 0 4px;
     border-radius: 2px;
   }
