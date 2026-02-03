@@ -1,17 +1,15 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import * as topojson from "https://cdn.jsdelivr.net/npm/topojson-client@3/+esm";
 import { CONFIG } from "./config.js";
-import { getEditorialRect } from "./layout.js";
 
 export class DotMapPlot {
   constructor(container) {
     this.container = container;
 
-    // ⬇️ measure the sticky full-width container instead of the column
-    const rect = getEditorialRect(container);
-
-    this.width = rect.width;
-    this.height = window.innerHeight * 0.5;
+    // Get container dimensions, constrained to viewport
+    const containerRect = container.getBoundingClientRect();
+    this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
+    this.height = Math.min(this.width, window.innerHeight * 0.95);
 
     // Dot plot dimensions (for the stacked week view)
     this.dotWidth = this.width * 0.9;
@@ -31,16 +29,13 @@ export class DotMapPlot {
     this.init();
 
     window.addEventListener("resize", () => {
-      const rect = getEditorialRect(container);
-
-      this.width = rect.width;
-      this.height = window.innerHeight * 0.5;
-
+      const containerRect = container.getBoundingClientRect();
+      this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
+      this.height = Math.min(this.width, window.innerHeight * 0.95);
       this.dotWidth = this.width * 0.9;
       this.dotHeight = this.width * 0.6;
       this.dotOffsetX = (this.width - this.dotWidth) / 2;
       this.dotOffsetY = (this.height - this.dotHeight) / 2;
-
       this.resize();
     });
   }

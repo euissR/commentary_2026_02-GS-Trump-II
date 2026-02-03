@@ -1,10 +1,24 @@
 // layout.js
-export function getEditorialRect(container) {
-  const el =
-    container.closest(".field--name-body") || // Drupal prod
-    container.closest("[class^='container-']") || // embedded viz wrappers
-    container.parentElement || // local dev fallback
+export function getLayoutConfig(container) {
+  const host =
+    container.closest(".field--name-body") ||
+    container.closest("[class^='container-']") ||
+    container.parentElement ||
     container;
 
-  return el.getBoundingClientRect();
+  const rect = host.getBoundingClientRect();
+
+  const widthMode = container.dataset.width || "full";
+  const widthFactor = widthMode === "half" ? 0.5 : 1;
+
+  return {
+    width: rect.width * widthFactor,
+    height: rect.height,
+  };
+}
+
+// 🔒 backwards compatibility
+export function getEditorialRect(container) {
+  const { width, height } = getLayoutConfig(container);
+  return { width, height };
 }

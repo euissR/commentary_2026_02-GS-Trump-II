@@ -1,23 +1,20 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import * as topojson from "https://cdn.jsdelivr.net/npm/topojson-client@3/+esm";
 import { CONFIG } from "./config.js";
-import { getEditorialRect } from "./layout.js";
 
 export class ChoroplethMap {
   constructor(container) {
     this.container = container;
 
-    // ⬇️ measure the sticky full-width container instead of the column
-    const rect = getEditorialRect(container);
-
-    this.width = rect.width;
-    this.height = window.innerHeight * 0.5;
+    // Get container dimensions
+    const containerRect = container.getBoundingClientRect();
+    this.width = containerRect.width;
 
     // Right column for title + legend
     this.legendWidth = 220;
 
     // Map height
-    this.mapHeight = rect.width * 0.55;
+    this.mapHeight = containerRect.width * 0.55;
     this.height = this.mapHeight;
 
     this.currentView = "categorical"; // Track current fill type
@@ -25,9 +22,11 @@ export class ChoroplethMap {
     this.init();
 
     window.addEventListener("resize", () => {
-      const rect = getEditorialRect(container);
-      this.width = rect.width;
-      this.height = window.innerHeight * 0.5;
+      const containerRect = container.getBoundingClientRect();
+      this.width = containerRect.width;
+      this.legendWidth = 220;
+      this.mapHeight = containerRect.width * 0.55;
+      this.height = this.mapHeight;
       this.resize();
     });
   }

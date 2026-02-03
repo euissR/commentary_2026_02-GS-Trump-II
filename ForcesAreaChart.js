@@ -1,31 +1,23 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import { CONFIG } from "./config.js";
-import { getEditorialRect } from "./layout.js";
 
 export class ForcesAreaChart {
   constructor(container) {
     this.container = container;
 
     // Get container dimensions - 50% width
-    const rect = getEditorialRect(container);
+    const containerRect = container.getBoundingClientRect();
+    this.width = containerRect.width * 0.5; // 50% width
+    this.height = window.innerHeight * 0.8;
 
-    this.width = rect.width * 0.5;
-    this.height = window.innerHeight * 0.5;
-
-    this.margin = {
-      top: 50,
-      right: 160,
-      bottom: 80,
-      left: 0,
-    };
+    this.margin = { top: 60, right: 200, bottom: 60, left: 80 };
 
     this.init();
 
     window.addEventListener("resize", () => {
-      const rect = getEditorialRect(container);
-
-      this.width = rect.width * 0.5;
-      this.height = window.innerHeight * 0.5;
+      const containerRect = container.getBoundingClientRect();
+      this.width = containerRect.width * 0.5;
+      this.height = window.innerHeight * 0.8;
       this.resize();
     });
   }
@@ -41,10 +33,9 @@ export class ForcesAreaChart {
     // Add title
     this.titleText = this.svg
       .append("text")
-      .attr("class", "viz-title-narrow")
-      .attr("x", this.margin.left)
-      .attr("y", 24)
-      .attr("text-anchor", "start")
+      .attr("class", "viz-title")
+      .attr("x", this.width)
+      .attr("y", 20) // Distance from top of SVG
       .text("US personnel in Europe over time");
   }
 
@@ -95,7 +86,7 @@ export class ForcesAreaChart {
 
   setupScales() {
     // const maxDate = d3.max(this.dates, (layer) => d3.max(layer, (d) => d[1]));
-    const maxDate = d3.max(this.dates);
+    const maxDate = d3.extent(this.dates);
 
     // X scale (time)
     this.xScale = d3
@@ -135,6 +126,9 @@ export class ForcesAreaChart {
     // Create main chart group
     this.chartGroup = this.svg.append("g");
 
+    // Setup legend
+    // this.setupLegend();
+
     // Setup axes
     this.setupAxes();
 
@@ -142,6 +136,39 @@ export class ForcesAreaChart {
     this.drawAreas();
     // Draw area labels
     this.drawAreaLabels();
+  }
+
+  setupLegend() {
+    const legendGroup = this.svg
+      .append("g")
+      .attr("class", "legend")
+      .attr(
+        "transform",
+        `translate(${this.width - this.margin.right + 20}, ${this.margin.top})`,
+      );
+
+    this.categories.forEach((category, i) => {
+      const group = legendGroup
+        .append("g")
+        .attr("transform", `translate(0, ${i * 22})`);
+
+      // Circle
+      group
+        .append("circle")
+        .attr("cx", 6)
+        .attr("cy", 8)
+        .attr("r", 6)
+        .attr("fill", this.colorScale(category));
+
+      // Text
+      group
+        .append("text")
+        .attr("x", 18)
+        .attr("y", 12)
+        .style("font-size", "11px")
+        .style("fill", "#333")
+        .text(category);
+    });
   }
 
   setupAxes() {
@@ -295,6 +322,14 @@ export class ForcesAreaChart {
       .call(d3.axisBottom(this.xScale).ticks(6));
 
     this.yAxisGroup.call(d3.axisLeft(this.yScale).ticks(6));
+
+    // Update legend position
+    this.svg
+      .select(".legend")
+      .attr(
+        "transform",
+        `translate(${this.width - this.margin.right + 20}, ${this.margin.top})`,
+      );
 
     // Update area paths
     const area = d3

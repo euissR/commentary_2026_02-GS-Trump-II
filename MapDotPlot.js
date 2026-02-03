@@ -1,17 +1,15 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import * as topojson from "https://cdn.jsdelivr.net/npm/topojson-client@3/+esm";
 import { CONFIG } from "./config.js";
-import { getEditorialRect } from "./layout.js";
 
 export class MapDotPlot {
   constructor(container) {
     this.container = container;
 
     // Get container dimensions, constrained to viewport
-    const rect = getEditorialRect(container);
-
-    this.width = rect.width;
-    this.height = window.innerHeight * 0.5;
+    const containerRect = container.getBoundingClientRect();
+    this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
+    this.height = Math.min(this.width, window.innerHeight * 0.95);
 
     this.margin = { top: 200, right: 300, bottom: 0, left: 0 };
 
@@ -32,16 +30,13 @@ export class MapDotPlot {
     this.init();
 
     window.addEventListener("resize", () => {
-      const rect = getEditorialRect(container);
-
-      this.width = rect.width;
-      this.height = window.innerHeight * 0.5;
-
-      this.dotWidth = this.width * 0.9;
-      this.dotHeight = this.width * 0.6;
-      this.dotOffsetX = (this.width - this.dotWidth) / 2;
-      this.dotOffsetY = (this.height - this.dotHeight) / 2;
-
+      const containerRect = container.getBoundingClientRect();
+      this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
+      this.height = Math.min(this.width, window.innerHeight * 0.95);
+      this.scatterWidth = this.width * 0.9;
+      this.scatterHeight = this.height * 0.8;
+      this.scatterOffsetX = (this.width - this.scatterWidth) / 2;
+      this.scatterOffsetY = (this.height - this.scatterHeight) / 2;
       this.resize();
     });
 

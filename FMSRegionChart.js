@@ -1,31 +1,23 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import { CONFIG } from "./config.js";
-import { getEditorialRect } from "./layout.js";
 
 export class FMSRegionChart {
   constructor(container) {
     this.container = container;
 
     // Get container dimensions - 50% width
-    const rect = getEditorialRect(container);
+    const containerRect = container.getBoundingClientRect();
+    this.width = containerRect.width * 0.5; // 50% width
+    this.height = window.innerHeight * 0.8;
 
-    this.width = rect.width * 0.5;
-    this.height = window.innerHeight * 0.5;
-
-    this.margin = {
-      top: 90,
-      right: 0,
-      bottom: 120,
-      left: 0,
-    };
+    this.margin = { top: 200, right: 0, bottom: 200, left: 80 };
 
     this.init();
 
     window.addEventListener("resize", () => {
-      const rect = getEditorialRect(container);
-
-      this.width = rect.width * 0.5;
-      this.height = window.innerHeight * 0.5;
+      const containerRect = container.getBoundingClientRect();
+      this.width = containerRect.width * 0.5;
+      this.height = window.innerHeight * 0.8;
       this.resize();
     });
   }
@@ -41,10 +33,9 @@ export class FMSRegionChart {
     // Add title
     this.titleText = this.svg
       .append("text")
-      .attr("class", "viz-title-narrow")
-      .attr("x", this.margin.left)
-      .attr("y", 24)
-      .attr("text-anchor", "start")
+      .attr("class", "viz-title")
+      .attr("x", this.width)
+      .attr("y", 20) // Distance from top of SVG
       .text("US foreign military sales");
   }
 
@@ -165,7 +156,12 @@ export class FMSRegionChart {
     const legendGroup = this.svg
       .append("g")
       .attr("class", "legend")
-      .attr("transform", `translate(${this.margin.left}, 40)`);
+      .attr(
+        "transform",
+        `translate(${this.margin.left + 20}, ${
+          this.margin.top - rowHeight * 3
+        })`,
+      );
 
     this.regions.forEach((region, i) => {
       const col = i % itemsPerRow;

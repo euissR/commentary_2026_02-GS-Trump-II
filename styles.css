@@ -19,23 +19,6 @@
   margin-bottom: 0; /* Space after scroll sections */
 }
 
-/* .container-dotmap {
-  margin-bottom: 100px;
-}
-
-.container-peace {
-  margin-top: 100px;
-  margin-bottom: 100px;
-}
-
-.container-choropleth {
-  margin-top: 100px;
-}
-
-.container-choropleth {
-  margin-top: 100px;
-} */
-
 /* Title of all visuals */
 .viz-title,
 .viz-title-narrow {
