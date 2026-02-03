@@ -10,10 +10,10 @@ export class ForcesAreaChart {
     const rect = body.getBoundingClientRect();
 
     this.width = rect.width * 0.5;
-    this.height = window.innerHeight * 0.5;
+    this.height = window.innerHeight * 0.66;
 
     this.margin = {
-      top: 90,
+      top: 50,
       right: 160,
       bottom: 80,
       left: 80,
@@ -136,9 +136,6 @@ export class ForcesAreaChart {
     // Create main chart group
     this.chartGroup = this.svg.append("g");
 
-    // Setup legend
-    // this.setupLegend();
-
     // Setup axes
     this.setupAxes();
 
@@ -146,39 +143,6 @@ export class ForcesAreaChart {
     this.drawAreas();
     // Draw area labels
     this.drawAreaLabels();
-  }
-
-  setupLegend() {
-    const legendGroup = this.svg
-      .append("g")
-      .attr("class", "legend")
-      .attr(
-        "transform",
-        `translate(${this.width - this.margin.right + 20}, ${this.margin.top})`,
-      );
-
-    this.categories.forEach((category, i) => {
-      const group = legendGroup
-        .append("g")
-        .attr("transform", `translate(0, ${i * 22})`);
-
-      // Circle
-      group
-        .append("circle")
-        .attr("cx", 6)
-        .attr("cy", 8)
-        .attr("r", 6)
-        .attr("fill", this.colorScale(category));
-
-      // Text
-      group
-        .append("text")
-        .attr("x", 18)
-        .attr("y", 12)
-        .style("font-size", "11px")
-        .style("fill", "#333")
-        .text(category);
-    });
   }
 
   setupAxes() {
@@ -332,14 +296,6 @@ export class ForcesAreaChart {
       .call(d3.axisBottom(this.xScale).ticks(6));
 
     this.yAxisGroup.call(d3.axisLeft(this.yScale).ticks(6));
-
-    // Update legend position
-    this.svg
-      .select(".legend")
-      .attr(
-        "transform",
-        `translate(${this.width - this.margin.right + 20}, ${this.margin.top})`,
-      );
 
     // Update area paths
     const area = d3

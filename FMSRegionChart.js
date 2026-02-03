@@ -10,7 +10,7 @@ export class FMSRegionChart {
     const rect = body.getBoundingClientRect();
 
     this.width = rect.width * 0.5;
-    this.height = window.innerHeight * 0.5;
+    this.height = window.innerHeight * 0.66;
 
     this.margin = {
       top: 90,
