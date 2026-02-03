@@ -7,16 +7,18 @@ export class PeaceMap {
     this.container = container;
 
     // Get container dimensions
+    const containerRect = container.getBoundingClientRect(); // ADD THIS LINE
     this.width = Math.round(container.clientWidth);
     this.height = containerRect.width * 0.9;
 
-    this.currentStep = 0; // Track current step
+    this.currentStep = 0;
 
     this.init();
 
     window.addEventListener("resize", () => {
-      this.width = Math.round(container.clientWidth);
-      this.height = containerRect.width;
+      const containerRect = this.container.getBoundingClientRect(); // FIX THIS LINE
+      this.width = Math.round(this.container.clientWidth);
+      this.height = containerRect.width * 0.9; // USE containerRect HERE
       this.resize();
     });
   }

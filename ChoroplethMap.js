@@ -7,6 +7,7 @@ export class ChoroplethMap {
     this.container = container;
 
     // Get container dimensions
+    const containerRect = container.getBoundingClientRect(); // ADD THIS LINE
     this.width = Math.round(container.clientWidth);
 
     // Right column for title + legend
@@ -16,11 +17,12 @@ export class ChoroplethMap {
     this.mapHeight = containerRect.width * 0.55;
     this.height = this.mapHeight;
 
-    this.currentView = "categorical"; // Track current fill type
+    this.currentView = "categorical";
 
     this.init();
 
     window.addEventListener("resize", () => {
+      const containerRect = this.container.getBoundingClientRect(); // FIX THIS LINE
       this.width = Math.round(this.container.clientWidth);
       this.legendWidth = 220;
       this.mapHeight = containerRect.width * 0.55;
