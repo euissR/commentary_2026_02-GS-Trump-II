@@ -152,7 +152,7 @@ export class TradeChart {
       .attr("class", "legend")
       .attr(
         "transform",
-        `translate(${this.isMobile ? 12 : this.width - 12}, ${this.isMobile ? this.margin.bottom + 20 : this.height * 0.33})`,
+        `translate(${this.isMobile ? 12 : 12 - this.margin.left}, ${this.isMobile ? this.margin.bottom + 20 : this.height * 0.33})`,
       );
 
     this.categories.forEach((category, i) => {

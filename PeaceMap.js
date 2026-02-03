@@ -153,7 +153,11 @@ export class PeaceMap {
     this.legend = this.svg.append("g").attr("class", "legend");
 
     if (this.isMobile) {
-      this.legend.attr("transform", `translate(20, 20)`);
+      const legendY = this.height * 0.75;
+      this.legend.attr(
+        "transform",
+        `translate(${this.width / 2 - 100}, ${legendY})`,
+      );
     } else {
       this.legend.attr(
         "transform",
