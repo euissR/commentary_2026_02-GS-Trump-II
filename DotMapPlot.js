@@ -8,7 +8,7 @@ export class DotMapPlot {
 
     // Get container dimensions, constrained to viewport
     const containerRect = container.getBoundingClientRect();
-    this.width = Math.min(containerRect.width, window.innerWidth);
+    this.width = Math.floor(containerRect.width);
     this.height = Math.min(this.width, window.innerHeight * 0.9);
 
     // Dot plot dimensions (for the stacked week view)
