@@ -60,7 +60,7 @@
   padding-left: 20px;
   z-index: 3;
   pointer-events: none;
-    padding-bottom: 80vh; /* Keep sticky stuck until last card reaches ~10vh from top */
+  padding-bottom: 20vh; /* Keep sticky stuck until last card reaches ~10vh from top */
 }
 
 .scroll-content-dotmap a,
