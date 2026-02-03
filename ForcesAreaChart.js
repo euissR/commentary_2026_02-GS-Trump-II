@@ -40,6 +40,10 @@ export class ForcesAreaChart {
       .attr("class", "viz-title")
       .attr("x", this.margin.left)
       .attr("y", 20) // Distance from top of SVG
+      .attr(
+        "transform",
+        `translate(${this.width - this.margin.right + 20}, ${this.margin.top / 2})`,
+      )
       .text("US personnel in Europe over time");
   }
 

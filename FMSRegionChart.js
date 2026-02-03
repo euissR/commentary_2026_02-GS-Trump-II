@@ -12,7 +12,7 @@ export class FMSRegionChart {
     this.width = rect.width * 0.5;
     this.height = Math.min(this.width * 0.9, window.innerHeight * 0.8);
 
-    this.margin = { top: 200, right: 0, bottom: 200, left: 80 };
+    this.margin = { top: 50, right: 0, bottom: 200, left: 80 };
 
     this.init();
 
@@ -40,6 +40,10 @@ export class FMSRegionChart {
       .attr("class", "viz-title")
       .attr("x", this.margin.left)
       .attr("y", 20) // Distance from top of SVG
+      .attr(
+        "transform",
+        `translate(${this.margin.left + 20}, ${this.margin.top / 2})`,
+      )
       .text("US foreign military sales");
   }
 
