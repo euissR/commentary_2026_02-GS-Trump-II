@@ -161,8 +161,8 @@ export class FMSCategoryScatter {
 
   setupLegend() {
     const legendX = this.width - this.legendWidth;
-    const titleY = this.margin.top - 80;
-    this.legendY = this.margin.top - 60;
+    const titleY = this.margin.top - 100;
+    this.legendY = this.margin.top - 90;
 
     this.titleText = this.svg
       .append("text")
