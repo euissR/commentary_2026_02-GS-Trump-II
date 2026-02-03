@@ -8,10 +8,14 @@ export class ForcesAreaChart {
 
     // Get container dimensions - 50% width, right-aligned
     const containerRect = container.getBoundingClientRect();
-    this.width = Math.round(containerRect.width * 0.5);
+    this.width = this.isMobile
+      ? window.innerWidth * 0.9
+      : Math.round(containerRect.width * 0.5);
     this.height = window.innerHeight * 0.66;
 
-    this.margin = { top: 60, right: 150, bottom: 60, left: 80 };
+    this.margin = this.isMobile
+      ? { top: 60, right: 40, bottom: 60, left: 60 }
+      : { top: 60, right: 150, bottom: 60, left: 80 };
 
     this.init();
 
@@ -173,6 +177,12 @@ export class ForcesAreaChart {
 
   drawAreaLabels() {
     const maxDate = new Date(d3.max(this.dates).getTime());
+    const labelColumn = this.isMobile ? 120 : 0;
+
+    this.xScale.range([
+      this.margin.left,
+      this.width - this.margin.right - labelColumn,
+    ]);
 
     this.labelsGroup = this.chartGroup
       .selectAll(".area-label")
@@ -186,7 +196,7 @@ export class ForcesAreaChart {
       .style("font-weight", "600")
       .attr("fill", (d) => this.colorScale(d.key))
       .style("pointer-events", "none")
-      .attr("x", this.xScale(maxDate))
+      .attr("x", this.width - this.margin.right + 10)
       .attr("y", (layer) => {
         const bisect = d3.bisector((d) => d.data.date).left;
         const i = bisect(layer, maxDate);
@@ -238,7 +248,14 @@ export class ForcesAreaChart {
 
   resize() {
     this.isMobile = window.innerWidth <= 768;
-    this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
+    this.width = this.isMobile
+      ? window.innerWidth * 0.9
+      : Math.round(this.container.clientWidth * 0.5);
+    // this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
+
+    this.margin = this.isMobile
+      ? { top: 60, right: 40, bottom: 60, left: 60 }
+      : { top: 60, right: 150, bottom: 60, left: 80 };
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([this.height - this.margin.bottom, this.margin.top]);

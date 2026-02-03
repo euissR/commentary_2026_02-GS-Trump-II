@@ -8,10 +8,14 @@ export class FMSRegionChart {
 
     // Get container dimensions - 50% width, 66% height, right-aligned
     const containerRect = container.getBoundingClientRect();
-    this.width = Math.round(containerRect.width * 0.5);
+    this.width = this.isMobile
+      ? window.innerWidth * 0.9
+      : Math.round(containerRect.width * 0.5);
     this.height = window.innerHeight * 0.66;
 
-    this.margin = { top: 100, right: 20, bottom: 60, left: 80 };
+    this.margin = this.isMobile
+      ? { top: 80, right: 20, bottom: 60, left: 60 }
+      : { top: 100, right: 20, bottom: 60, left: 80 };
 
     this.init();
 
@@ -121,9 +125,9 @@ export class FMSRegionChart {
       .select(this.container)
       .append("svg")
       .attr("viewBox", `0 0 ${this.width} ${this.height}`)
-      .style("width", this.isMobile ? "90%" : "50%")
+      .style("width", this.isMobile ? "100%" : "50%")
       .style("height", "66vh")
-      .style("margin-left", "auto");
+      .style("margin-left", this.isMobile ? "0" : "auto");
   }
 
   setupElements() {
@@ -290,6 +294,14 @@ export class FMSRegionChart {
   resize() {
     this.isMobile = window.innerWidth <= 768;
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
+
+    this.width = this.isMobile
+      ? window.innerWidth * 0.9
+      : Math.round(this.container.clientWidth * 0.5);
+
+    this.margin = this.isMobile
+      ? { top: 80, right: 20, bottom: 60, left: 60 }
+      : { top: 100, right: 20, bottom: 60, left: 80 };
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
     this.yScale.range([this.height - this.margin.bottom, this.margin.top]);

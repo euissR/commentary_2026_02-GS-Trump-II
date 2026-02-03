@@ -162,7 +162,7 @@ export class DotMapPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 10 : 40) // Distance from top of screen
+      .attr("y", this.isMobile ? 20 : 40) // Distance from top of screen
       // Two-line title
       .text(null)
       .append("tspan")
