@@ -142,7 +142,7 @@ export class TradeChart {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 15 : 20)
+      .attr("y", this.isMobile ? 20 : 20)
       .text("US-EU trade balance over time");
   }
 

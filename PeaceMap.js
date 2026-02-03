@@ -145,7 +145,7 @@ export class PeaceMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 15 : 40)
+      .attr("y", this.isMobile ? 20 : 40)
       .text("The wars Trump claims to have solved");
   }
 

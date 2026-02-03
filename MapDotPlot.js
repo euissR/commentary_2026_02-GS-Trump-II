@@ -13,7 +13,7 @@ export class MapDotPlot {
     this.height = Math.min(this.width, window.innerHeight * 0.9);
 
     this.margin = this.isMobile
-      ? { top: 20, right: 250, bottom: 0, left: 10 }
+      ? { top: 80, right: 150, bottom: 0, left: 10 }
       : { top: 300, right: 300, bottom: 0, left: 0 };
 
     this.scatterWidth = this.width * 0.9;
@@ -146,7 +146,7 @@ export class MapDotPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 10 : this.margin.top - 50)
+      .attr("y", this.isMobile ? 20 : this.margin.top - 50)
       // Distance from top of chart
       .text("US trade deals under Trump 2.0");
   }
