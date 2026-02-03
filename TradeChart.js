@@ -161,7 +161,7 @@ export class TradeChart {
         .attr("transform", `translate(0, ${i * 22})`);
       group
         .append("circle")
-        .attr("cx", 6)
+        .attr("cx", 10)
         .attr("cy", 8)
         .attr("r", 6)
         .attr("fill", this.colorScale(category));
@@ -169,17 +169,17 @@ export class TradeChart {
       // special handling for long category name on mobile
       const text = group
         .append("text")
-        .attr("x", -5)
+        .attr("x", 24)
         .attr("y", 12)
         .style("font-size", "12px")
         .style("fill", "#595959")
-        .attr("text-anchor", "end");
+        .attr("text-anchor", "start");
 
       if (category === "Net EU imports from the US") {
         text.append("tspan").text("Net EU imports");
         text
           .append("tspan")
-          .attr("x", -5)
+          .attr("x", 24)
           .attr("dy", "1.1em")
           .text("from the US");
       } else {
@@ -344,7 +344,7 @@ export class TradeChart {
     if (this.isMobile) {
       this.width = this.container.clientWidth * 0.9;
       this.height = window.innerHeight * 0.5;
-      this.margin = { top: 40, right: 20, bottom: 160, left: 80 };
+      this.margin = { top: 20, right: 20, bottom: 220, left: 80 };
       this.titleText.attr("y", this.isMobile ? 0 : 20);
     } else {
       this.width = this.container.clientWidth;
