@@ -13,10 +13,10 @@
 .container-forces-area {
   position: relative;
   max-width: 1200px;
-  /* margin: 0 auto; */
+  margin: 0 auto;
   z-index: 1;
   min-height: 100vh;
-  margin-bottom: 0; /* Space after scroll sections */
+  /* margin-bottom: 0; Space after scroll sections */
 }
 
 /* Title of all visuals */
@@ -72,12 +72,10 @@
   position: sticky;
   top: 0;
   width: 100%;
-  margin-left: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
 }
 
 /* Visualizations */
@@ -89,15 +87,12 @@
 #visualization-fms-region,
 #visualization-fms-category,
 #visualization-forces-area {
-  width: 100vw; /* for dev */
+  width: 100%;
   height: 100%;
-  margin-left: calc(-50vw + 50%); /* for dev */
-  max-height: 100vh;
-  max-width: 1200px;
+  max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible;
 }
 
 /* for prod */
