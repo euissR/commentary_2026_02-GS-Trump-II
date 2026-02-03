@@ -16,7 +16,7 @@ export class FMSRegionChart {
       top: 90,
       right: 0,
       bottom: 120,
-      left: 80,
+      left: 0,
     };
 
     this.init();

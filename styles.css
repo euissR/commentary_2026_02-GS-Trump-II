@@ -130,7 +130,7 @@
    ============================================ */
 
 .card {
-  width: 80%;
+  width: 100%;
   left: 0;
   margin-bottom: 80vh;
   padding: 20px;
@@ -321,6 +321,8 @@
   }
 
   .card {
+    width: 80%;
+    left: 10%;
     margin-bottom: 60vh;
   }
 
@@ -337,6 +339,8 @@
   }
 
   .card {
+    width: 80%;
+    left: 10%;
     margin-bottom: 50vh;
     padding: 15px;
   }

@@ -16,7 +16,7 @@ export class ForcesAreaChart {
       top: 50,
       right: 160,
       bottom: 80,
-      left: 80,
+      left: 0,
     };
 
     this.init();
@@ -96,7 +96,7 @@ export class ForcesAreaChart {
 
   setupScales() {
     // const maxDate = d3.max(this.dates, (layer) => d3.max(layer, (d) => d[1]));
-    const maxDate = d3.extent(this.dates);
+    const maxDate = d3.max(this.dates);
 
     // X scale (time)
     this.xScale = d3
@@ -209,7 +209,7 @@ export class ForcesAreaChart {
         2,
     );
 
-    const maxDate = new Date(this.dates[this.dates.length - 1].getTime());
+    const maxDate = new Date(d3.max(this.dates).getTime());
 
     this.labelsGroup = this.chartGroup
       .selectAll(".area-label")
