@@ -293,6 +293,7 @@ export class FMSCategoryScatter {
   }
 
   resize() {
+    this.isMobile = window.innerWidth <= 768;
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
     // to prevent scaling down of svg to fit container
     // this.svg.attr("width", this.width).attr("height", this.height);

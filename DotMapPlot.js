@@ -620,6 +620,7 @@ export class DotMapPlot {
   }
 
   resize() {
+    this.isMobile = window.innerWidth <= 768;
     // Update SVG size
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 

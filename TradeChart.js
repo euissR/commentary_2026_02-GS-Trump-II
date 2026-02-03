@@ -330,6 +330,7 @@ export class TradeChart {
   }
 
   resize() {
+    this.isMobile = window.innerWidth <= 768;
     if (this.isMobile) {
       this.width = this.container.clientWidth * 0.9;
       this.height = window.innerHeight * 0.5;

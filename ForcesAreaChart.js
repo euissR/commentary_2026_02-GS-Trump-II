@@ -237,6 +237,7 @@ export class ForcesAreaChart {
   }
 
   resize() {
+    this.isMobile = window.innerWidth <= 768;
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
