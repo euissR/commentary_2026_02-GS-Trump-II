@@ -10,7 +10,7 @@ export class ForcesAreaChart {
     this.width = Math.round(containerRect.width * 0.5);
     this.height = window.innerHeight * 0.66;
 
-    this.margin = { top: 60, right: 120, bottom: 60, left: 80 };
+    this.margin = { top: 60, right: 150, bottom: 60, left: 80 };
 
     this.init();
 
