@@ -198,6 +198,11 @@ export class MapDotPlot {
       .attr("transform", `translate(0, ${this.margin.top})`)
       .call(d3.axisTop(this.xScale));
 
+    this.yAxisGroup = this.axesGroup
+      .append("g")
+      .attr("class", "y-axis")
+      .call(d3.axisLeft(this.yScale));
+
     this.xAxisGroup
       .selectAll("text")
       .attr("transform", "rotate(-45)")
