@@ -206,13 +206,6 @@ export class MapDotPlot {
       .style("font-size", "11px")
       .style("fill", "#666");
 
-    if (this.isMobile) {
-      this.yAxisGroup
-        .selectAll("text")
-        .attr("x", this.xScale.range()[0] + 6)
-        .style("text-anchor", "start");
-    }
-
     this.axesGroup.selectAll(".domain").remove();
     this.axesGroup.selectAll(".tick line").remove();
 
@@ -222,6 +215,13 @@ export class MapDotPlot {
       .style("text-anchor", "start")
       .style("font-size", "11px")
       .style("fill", "#666");
+
+    if (this.isMobile) {
+      this.yAxisGroup
+        .selectAll("text")
+        .attr("x", this.xScale.range()[0] + 6)
+        .style("text-anchor", "start");
+    }
 
     this.gridlinesGroup = this.axesGroup.append("g").attr("class", "gridlines");
 
