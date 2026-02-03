@@ -13,11 +13,11 @@ export class TradeChart {
 
     if (this.isMobile) {
       this.width = this.container.clientWidth * 0.9;
-      this.height = window.innerHeight * 0.65;
+      this.height = window.innerHeight * 0.8;
     }
 
     this.margin = this.isMobile
-      ? { top: 60, right: 20, bottom: 150, left: 80 }
+      ? { top: 20, right: 10, bottom: 150, left: 40 }
       : { top: 100, right: 180, bottom: 100, left: 80 };
 
     this.currentStep = 0;
@@ -142,7 +142,7 @@ export class TradeChart {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 0 : 20)
+      .attr("y", this.isMobile ? 15 : 20)
       .text("US-EU trade balance over time");
   }
 
@@ -152,7 +152,7 @@ export class TradeChart {
       .attr("class", "legend")
       .attr(
         "transform",
-        `translate(${this.isMobile ? this.margin.left + 12 : this.width - 12}, ${this.isMobile ? this.margin.bottom + 12 : this.height * 0.33})`,
+        `translate(${this.isMobile ? this.margin.left + 12 : this.width - 12}, ${this.isMobile ? this.margin.bottom : this.height * 0.33})`,
       );
 
     this.categories.forEach((category, i) => {

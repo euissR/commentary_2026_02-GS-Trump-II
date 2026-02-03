@@ -69,7 +69,7 @@ export class ChoroplethMap {
       .domain([
         "Reciprocal",
         "Exempt",
-        'Reciprocal and Limitations on "free speech"',
+        'Reciprocal and limitations on "free speech"',
         "Fentanyl crisis",
       ])
       .range(["#309ebe", "#C6C6C6", "#1d3956", "#df3144"]);
@@ -157,8 +157,10 @@ export class ChoroplethMap {
       { label: "Reciprocal", color: "#309ebe" },
       { label: "Exempt", color: "#C6C6C6" },
       { label: "Fentanyl crisis", color: "#df3144" },
-      { label: "Reciprocal + free speech", color: "#376882" },
-      { label: "Reciprocal + Russian oil", color: "#1d3956" },
+      {
+        label: "Reciprocal and limitations on 'free speech'",
+        color: "#1d3956",
+      },
     ];
 
     let xOffset = 0;
