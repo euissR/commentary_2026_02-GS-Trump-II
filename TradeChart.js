@@ -5,10 +5,12 @@ export class TradeChart {
   constructor(container) {
     this.container = container;
 
-    // Get container dimensions
-    const containerRect = container.getBoundingClientRect();
-    this.width = containerRect.width;
-    this.height = window.innerHeight * 0.8; // 80vh
+    // ⬇️ measure the sticky full-width container instead of the column
+    const sticky = container.closest(".sticky-container");
+    const rect = sticky.getBoundingClientRect();
+
+    this.width = Math.min(rect.width, window.innerWidth);
+    this.height = Math.min(this.width, window.innerHeight * 0.95);
 
     this.margin = { top: 100, right: 180, bottom: 100, left: 80 };
 
@@ -17,9 +19,11 @@ export class TradeChart {
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = containerRect.width;
-      this.height = window.innerHeight;
+      const sticky = container.closest(".sticky-container");
+      const rect = sticky.getBoundingClientRect();
+
+      this.width = Math.min(rect.width, window.innerWidth);
+      this.height = Math.min(this.width, window.innerHeight * 0.95);
       this.resize();
     });
   }

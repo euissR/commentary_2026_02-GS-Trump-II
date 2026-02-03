@@ -30,8 +30,9 @@ export class MapDotPlot {
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
+      const sticky = container.closest(".sticky-container");
+      const rect = sticky.getBoundingClientRect();
+      this.width = Math.min(rect.width, window.innerWidth * 0.95);
       this.height = Math.min(this.width, window.innerHeight * 0.95);
       this.scatterWidth = this.width * 0.9;
       this.scatterHeight = this.height * 0.8;

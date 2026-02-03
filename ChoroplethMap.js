@@ -6,15 +6,18 @@ export class ChoroplethMap {
   constructor(container) {
     this.container = container;
 
-    // Get container dimensions
-    const containerRect = container.getBoundingClientRect();
-    this.width = containerRect.width;
+    // ⬇️ measure the sticky full-width container instead of the column
+    const sticky = container.closest(".sticky-container");
+    const rect = sticky.getBoundingClientRect();
+
+    this.width = Math.min(rect.width, window.innerWidth);
+    this.height = Math.min(this.width, window.innerHeight * 0.95);
 
     // Right column for title + legend
     this.legendWidth = 220;
 
     // Map height
-    this.mapHeight = containerRect.width * 0.55;
+    this.mapHeight = rect.width * 0.55;
     this.height = this.mapHeight;
 
     this.currentView = "categorical"; // Track current fill type
@@ -22,11 +25,11 @@ export class ChoroplethMap {
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = containerRect.width;
-      this.legendWidth = 220;
-      this.mapHeight = containerRect.width * 0.55;
-      this.height = this.mapHeight;
+      const sticky = container.closest(".sticky-container");
+      const rect = sticky.getBoundingClientRect();
+
+      this.width = Math.min(rect.width, window.innerWidth);
+      this.height = Math.min(this.width, window.innerHeight * 0.95);
       this.resize();
     });
   }

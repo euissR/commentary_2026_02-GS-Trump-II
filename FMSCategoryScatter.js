@@ -5,10 +5,12 @@ export class FMSCategoryScatter {
   constructor(container) {
     this.container = container;
 
-    // Get container dimensions - full width
-    const containerRect = container.getBoundingClientRect();
-    this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
-    this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
+    // ⬇️ measure the sticky full-width container instead of the column
+    const sticky = container.closest(".sticky-container");
+    const rect = sticky.getBoundingClientRect();
+
+    this.width = Math.min(rect.width, window.innerWidth);
+    this.height = Math.min(this.width, window.innerHeight * 0.95);
 
     this.legendWidth = 220;
     this.margin = { top: 200, right: 180, bottom: 20, left: 0 };
@@ -16,9 +18,11 @@ export class FMSCategoryScatter {
     this.init();
 
     window.addEventListener("resize", () => {
-      const containerRect = container.getBoundingClientRect();
-      this.width = Math.min(containerRect.width, window.innerWidth * 0.95);
-      this.height = Math.min(this.width * 0.8, window.innerHeight * 0.95);
+      const sticky = container.closest(".sticky-container");
+      const rect = sticky.getBoundingClientRect();
+
+      this.width = Math.min(rect.width, window.innerWidth);
+      this.height = Math.min(this.width, window.innerHeight * 0.95);
       this.resize();
     });
 
