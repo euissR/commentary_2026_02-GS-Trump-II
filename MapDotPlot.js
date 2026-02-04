@@ -146,8 +146,7 @@ export class MapDotPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 25 : this.margin.top)
-      // Distance from top of chart
+      .attr("y", this.isMobile ? 25 : this.margin.top - this.margin.top / 2)
       .text("US trade deals under Trump 2.0");
   }
 
