@@ -147,6 +147,7 @@ export class MapDotPlot {
       .attr("class", "viz-title")
       .attr("x", this.width)
       .attr("y", this.isMobile ? 25 : this.margin.top - this.margin.top / 2)
+      // Distance from top of chart
       .text("US trade deals under Trump 2.0");
   }
 
@@ -395,6 +396,7 @@ export class MapDotPlot {
 
     if (isScatter) {
       this.dots
+        .style("pointer-events", "auto")
         .transition()
         .duration(1000)
         .attr("cx", (d) => this.xScale(d.properties.country))
@@ -407,6 +409,7 @@ export class MapDotPlot {
       this.axesGroup.transition().duration(1000).style("opacity", 1);
     } else {
       this.dots
+        .style("pointer-events", "none")
         .transition()
         .duration(1000)
         .attr(
@@ -444,6 +447,12 @@ export class MapDotPlot {
   setTransitionProgress(isScatter, progress) {
     progress = Math.max(0, Math.min(1, progress));
     this.isScatterView = isScatter;
+
+    // Enable pointer-events on dots when mostly in scatter view
+    this.dots.style(
+      "pointer-events",
+      isScatter && progress > 0.8 ? "auto" : "none",
+    );
 
     if (isScatter) {
       this.dots
