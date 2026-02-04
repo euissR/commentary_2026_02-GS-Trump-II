@@ -13,7 +13,7 @@ export class FMSCategoryScatter {
     this.legendWidth = 220;
     this.margin = this.isMobile
       ? { top: 80, right: 20, bottom: 20, left: 10 }
-      : { top: 100, right: this.legendWidth, bottom: 20, left: 0 };
+      : { top: 150, right: this.legendWidth, bottom: 20, left: 0 };
 
     // this.margin = { top: 100, right: this.legendWidth, bottom: 20, left: 0 };
 
