@@ -198,7 +198,7 @@ export class MapDotPlot {
     this.xAxisGroup = this.axesGroup
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${this.margin.top})`)
+      .attr("transform", `translate(0, ${this.scatterOffsetY + 50})`)
       .call(d3.axisTop(this.xScale));
 
     this.yAxisGroup = this.axesGroup
@@ -241,7 +241,7 @@ export class MapDotPlot {
       .attr("class", "grid-vertical")
       .attr("x1", (d) => this.xScale(d))
       .attr("x2", (d) => this.xScale(d))
-      .attr("y1", this.margin.top)
+      .attr("y1", this.scatterOffsetY + 50)
       .attr("y2", this.scatterOffsetY + this.scatterHeight)
       .attr("stroke", "#c6c6c6")
       .attr("stroke-width", 0.5);
@@ -340,7 +340,7 @@ export class MapDotPlot {
     this.countriesGroup.selectAll(".trade-country").attr("d", this.path);
 
     this.xAxisGroup
-      .attr("transform", `translate(0, ${this.margin.top})`)
+      .attr("transform", `translate(0, ${this.scatterOffsetY + 50})`)
       .call(d3.axisTop(this.xScale));
     this.xAxisGroup
       .selectAll("text")
@@ -365,7 +365,7 @@ export class MapDotPlot {
       .selectAll(".grid-vertical")
       .attr("x1", (d) => this.xScale(d))
       .attr("x2", (d) => this.xScale(d))
-      .attr("y1", this.margin.top)
+      .attr("y1", this.scatterOffsetY + 50)
       .attr("y2", this.scatterOffsetY + this.scatterHeight);
 
     this.gridlinesGroup
