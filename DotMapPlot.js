@@ -15,7 +15,7 @@ export class DotMapPlot {
 
     // Dot plot dimensions (for the stacked week view)
     this.dotWidth = this.width;
-    this.dotHeight = this.width * 0.8;
+    this.dotHeight = this.height * 0.8;
     this.dotOffsetX = (this.width - this.dotWidth) / 2;
     this.dotOffsetY = (this.height - this.dotHeight) / 2;
 
@@ -33,9 +33,9 @@ export class DotMapPlot {
     window.addEventListener("resize", () => {
       const containerRect = container.getBoundingClientRect();
       this.width = Math.round(container.clientWidth);
-      this.height = Math.round(this.width * 0.9);
-      this.dotWidth = this.width * 0.9;
-      this.dotHeight = this.width * 0.6;
+      this.height = Math.round(this.height * 0.8);
+      this.dotWidth = this.width;
+      this.dotHeight = this.height * 0.8;
       this.dotOffsetX = (this.width - this.dotWidth) / 2;
       this.dotOffsetY = (this.height - this.dotHeight) / 2;
       this.resize();

@@ -139,7 +139,7 @@ export class ChoroplethMap {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? legendY - 60 : legendY - 50)
+      .attr("y", this.isMobile ? legendY - 60 : legendY - 60)
       .attr("text-anchor", "end")
       .text("Countries targeted by Trump tariffs");
 
@@ -149,7 +149,7 @@ export class ChoroplethMap {
       .attr("class", "categorical-legend")
       .attr(
         "transform",
-        `translate(${this.isMobile ? this.width : this.width - 20}, ${this.isMobile ? legendY - 40 : legendY - 30})`,
+        `translate(${this.isMobile ? this.width : this.width - 20}, ${this.isMobile ? legendY - 40 : legendY - 40})`,
       )
       .style("opacity", 1);
 
@@ -272,7 +272,10 @@ export class ChoroplethMap {
 
     // Stack categorical legend vertically above map on mobile
     if (this.isMobile) {
-      this.categoricalLegend.attr("transform", `translate(10, 50)`);
+      this.categoricalLegend.attr(
+        "transform",
+        `translate(${this.width}, ${legendY - 40})`,
+      );
 
       this.categoricalLegend
         .selectAll(".cat-legend-item")
@@ -322,17 +325,17 @@ export class ChoroplethMap {
     if (this.isMobile) {
       this.categoricalLegend.attr(
         "transform",
-        `translate(10, 30)`, // left-aligned, 20px higher
+        `translate(${this.width}, ${legendY - 40})`,
       );
     } else {
       this.categoricalLegend.attr(
         "transform",
-        `translate(${this.width - 20}, 50)`,
+        `translate(${this.width - 20}, ${legendY - 40})`,
       );
     }
     this.continuousLegend.attr(
       "transform",
-      `translate(${this.width - 250}, 50)`,
+      `translate(${this.width - 250}, ${this.isMobile ? legendY - 50 : legendY - 30})`,
     );
   }
 
