@@ -17,7 +17,7 @@ export class MapDotPlot {
       : { top: 300, right: 300, bottom: 0, left: 0 };
 
     this.scatterWidth = this.width * 0.9;
-    this.scatterHeight = this.height * 0.75;
+    this.scatterHeight = this.height * 0.9;
     this.scatterOffsetX = (this.width - this.scatterWidth) / 2;
     this.scatterOffsetY = (this.height - this.scatterHeight) / 2;
 
@@ -34,7 +34,7 @@ export class MapDotPlot {
       this.width = Math.floor(containerRect.width);
       this.height = Math.floor(containerRect.height * 0.8);
       this.scatterWidth = this.width * 0.9;
-      this.scatterHeight = this.height * 0.8;
+      this.scatterHeight = this.height * 0.9;
       this.scatterOffsetX = (this.width - this.scatterWidth) / 2;
       this.scatterOffsetY = (this.height - this.scatterHeight) / 2;
       this.resize();
