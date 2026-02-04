@@ -10,7 +10,7 @@ export class MapDotPlot {
     // Get container dimensions - matching DotMapPlot pattern
     const containerRect = container.getBoundingClientRect();
     this.width = Math.floor(containerRect.width);
-    this.height = Math.min(this.width, window.innerHeight * 0.9);
+    this.height = Math.floor(containerRect.height * 0.8);
 
     this.margin = this.isMobile
       ? { top: 80, right: 150, bottom: 0, left: 10 }
@@ -32,7 +32,7 @@ export class MapDotPlot {
     window.addEventListener("resize", () => {
       const containerRect = this.container.getBoundingClientRect();
       this.width = Math.floor(containerRect.width);
-      this.height = Math.min(this.width, window.innerHeight * 0.9);
+      this.height = Math.floor(containerRect.height * 0.8);
       this.scatterWidth = this.width * 0.9;
       this.scatterHeight = this.height * 0.8;
       this.scatterOffsetX = (this.width - this.scatterWidth) / 2;
@@ -146,7 +146,7 @@ export class MapDotPlot {
       .append("text")
       .attr("class", "viz-title")
       .attr("x", this.width)
-      .attr("y", this.isMobile ? 25 : this.margin.top - this.margin.top / 2)
+      .attr("y", this.isMobile ? 25 : this.margin.top - this.margin.top * 0.75)
       // Distance from top of chart
       .text("US trade deals under Trump 2.0");
   }
