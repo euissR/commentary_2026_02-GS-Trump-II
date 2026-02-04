@@ -117,7 +117,10 @@ export class MapDotPlot {
     this.yScale = d3
       .scalePoint()
       .domain(this.names)
-      .range([this.margin.top, this.scatterOffsetY + this.scatterHeight])
+      .range([
+        this.scatterOffsetY + 50,
+        this.scatterOffsetY + this.scatterHeight,
+      ])
       .padding(0.5);
 
     this.colorScale = d3
