@@ -10,12 +10,12 @@ export class FMSCategoryScatter {
     const containerRect = container.getBoundingClientRect();
     this.width = Math.floor(containerRect.width);
     this.height = this.isMobile ? window.innerHeight * 0.8 : this.width;
+    this.legendWidth = 220;
     this.margin = this.isMobile
       ? { top: 80, right: 20, bottom: 20, left: 10 }
-      : { top: 200, right: this.legendWidth, bottom: 20, left: 0 };
+      : { top: 100, right: this.legendWidth, bottom: 20, left: 0 };
 
-    this.legendWidth = 220;
-    this.margin = { top: 200, right: this.legendWidth, bottom: 20, left: 0 };
+    // this.margin = { top: 100, right: this.legendWidth, bottom: 20, left: 0 };
 
     this.init();
 
@@ -164,7 +164,7 @@ export class FMSCategoryScatter {
 
   setupLegend() {
     const legendX = this.width - this.legendWidth;
-    const titleY = this.margin.top - 120;
+    const titleY = this.margin.top - 60;
     this.legendY = this.margin.top - 110;
 
     this.titleText = this.svg
