@@ -69,7 +69,7 @@ export class ChoroplethMap {
       .domain([
         "Reciprocal",
         "Exempt",
-        'Reciprocal and limitations on "free speech"',
+        'Reciprocal and Limitations on "free speech"',
         "Fentanyl crisis",
       ])
       .range(["#309ebe", "#C6C6C6", "#1d3956", "#df3144"]);
