@@ -14,7 +14,12 @@ export class ForcesAreaChart {
     this.height = window.innerHeight * 0.66;
 
     this.margin = this.isMobile
-      ? { top: 60, right: 40, bottom: 60, left: 60 }
+      ? {
+          top: 60,
+          right: this.width * 0.5,
+          bottom: 60,
+          left: this.width * 0.125,
+        }
       : { top: 60, right: 200, bottom: 60, left: 80 };
 
     this.init();
@@ -33,7 +38,7 @@ export class ForcesAreaChart {
     this.setupColorScale();
     this.createSVG();
     this.setupElements();
-    this.setupTooltip();
+    // this.setupTooltip();
 
     this.titleText = this.svg
       .append("text")
@@ -129,7 +134,27 @@ export class ForcesAreaChart {
       .append("g")
       .attr("class", "x-axis")
       .attr("transform", `translate(0, ${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(this.xScale).ticks(6));
+      .call(
+        d3
+          .axisBottom(this.xScale)
+          .tickValues(this.dates)
+          .tickFormat(d3.timeFormat("%b")),
+      );
+
+    // Add year as second line
+    this.xAxisGroup.selectAll(".tick text").each(function (d) {
+      const text = d3.select(this);
+      const month = text.text();
+      const year = d3.timeFormat("%Y")(d);
+
+      text.text(null); // Clear existing text
+      text.append("tspan").attr("x", 0).attr("dy", "1em").text(month);
+      text
+        .append("tspan")
+        .attr("x", 0)
+        .attr("dy", "1.2em") // Move down for second line
+        .text(year);
+    });
 
     this.yAxisGroup = this.svg
       .append("g")
@@ -169,10 +194,10 @@ export class ForcesAreaChart {
       .attr("d", area)
       .attr("fill", (d) => this.colorScale(d.key))
       .style("opacity", 1)
-      .style("cursor", "pointer")
-      .on("mouseover", (event, d) => this.showTooltip(event, d))
-      .on("mousemove", (event, d) => this.updateTooltip(event, d))
-      .on("mouseout", () => this.hideTooltip());
+      .style("cursor", "pointer");
+    // .on("mouseover", (event, d) => this.showTooltip(event, d))
+    // .on("mousemove", (event, d) => this.updateTooltip(event, d))
+    // .on("mouseout", () => this.hideTooltip());
   }
 
   drawAreaLabels() {
@@ -233,7 +258,9 @@ export class ForcesAreaChart {
 
     this.tooltip
       .style("opacity", 1)
-      .html(`<strong>${name}</strong><br/>${value.toLocaleString()}`)
+      .html(
+        `<strong>${name}</strong><br/>${d3.timeFormat("%b %Y")(xDate)}<br/>${value.toLocaleString()}`,
+      )
       .style("left", event.pageX + 10 + "px")
       .style("top", event.pageY - 10 + "px");
   }
@@ -250,11 +277,16 @@ export class ForcesAreaChart {
     this.isMobile = window.innerWidth <= 768;
     this.width = this.isMobile
       ? window.innerWidth * 0.9
-      : Math.round(this.container.clientWidth * 0.5);
-    // this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
+      : Math.round(containerRect.width * 0.5);
+    this.height = window.innerHeight * 0.66;
 
     this.margin = this.isMobile
-      ? { top: 60, right: 40, bottom: 60, left: 60 }
+      ? {
+          top: 60,
+          right: this.width * 0.5,
+          bottom: 60,
+          left: this.width * 0.125,
+        }
       : { top: 60, right: 200, bottom: 60, left: 80 };
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);

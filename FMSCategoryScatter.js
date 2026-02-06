@@ -1,6 +1,16 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import { CONFIG } from "./config.js";
 
+/**
+ * FMSCategoryScatter - European FMS purchases scatter plot
+ *
+ * Mobile height strategy:
+ * - Container is constrained by scrollytelling layout (~40% of viewport)
+ * - Solution: On mobile, SVG uses viewport height (85%) instead of container height
+ * - SVG gets explicit pixel height to override container constraints
+ * - Result: Full screen height for readability on mobile
+ */
+
 export class FMSCategoryScatter {
   constructor(container) {
     this.isMobile = window.innerWidth <= 768;
@@ -9,10 +19,14 @@ export class FMSCategoryScatter {
     // Get container dimensions - matching DotMapPlot pattern
     const containerRect = container.getBoundingClientRect();
     this.width = Math.floor(containerRect.width);
-    this.height = this.isMobile ? window.innerHeight * 0.8 : this.width;
+    // On mobile, use viewport height to ensure legibility
+    // On desktop, use square layout
+    this.height = this.isMobile
+      ? Math.floor(window.innerHeight * 0.85)
+      : this.width;
     this.legendWidth = 220;
     this.margin = this.isMobile
-      ? { top: 80, right: 20, bottom: 20, left: 10 }
+      ? { top: 200, right: 140, bottom: 20, left: 10 }
       : { top: 220, right: this.legendWidth, bottom: 20, left: 0 };
 
     // this.margin = { top: 100, right: this.legendWidth, bottom: 20, left: 0 };
@@ -20,9 +34,18 @@ export class FMSCategoryScatter {
     this.init();
 
     window.addEventListener("resize", () => {
+      this.isMobile = window.innerWidth <= 768;
       const containerRect = this.container.getBoundingClientRect();
       this.width = Math.floor(containerRect.width);
-      this.height = this.width; // Square layout
+      // On mobile, use viewport height; on desktop use square layout
+      this.height = this.isMobile
+        ? Math.floor(window.innerHeight * 0.85)
+        : this.width;
+
+      this.margin = this.isMobile
+        ? { top: 200, right: 140, bottom: 20, left: 10 }
+        : { top: 220, right: this.legendWidth, bottom: 20, left: 0 };
+
       this.resize();
     });
 
@@ -115,7 +138,9 @@ export class FMSCategoryScatter {
       .append("svg")
       .attr("viewBox", `0 0 ${this.width} ${this.height}`)
       .style("width", "100%")
-      .style("height", "100%");
+      // On mobile, set explicit pixel height to use viewport height
+      // On desktop, use 100% to fill container
+      .style("height", this.isMobile ? `${this.height}px` : "100%");
     // to prevent scaling down of svg to fit container
     // .attr("width", this.width)
     // .attr("height", this.height);
@@ -143,7 +168,7 @@ export class FMSCategoryScatter {
       .style("text-anchor", "start")
       .attr("dx", "1em")
       .attr("dy", "-.25em")
-      .style("font-size", "12px")
+      .style("font-size", this.isMobile ? "10px" : "12px")
       .style("fill", "#666");
 
     this.yAxisGroup = this.axesGroup
@@ -158,7 +183,7 @@ export class FMSCategoryScatter {
       .selectAll(".tick text")
       .attr("x", this.width - this.margin.right)
       .style("text-anchor", "start")
-      .style("font-size", "12px")
+      .style("font-size", this.isMobile ? "10px" : "12px")
       .style("fill", "#666");
   }
 
@@ -187,7 +212,7 @@ export class FMSCategoryScatter {
       .attr(
         "transform",
         this.isMobile
-          ? `translate(${this.width - 120}, 50)`
+          ? `translate(${this.width - this.margin.right * 1.66}, 30)`
           : `translate(${legendX}, ${this.legendY})`,
       );
 
@@ -200,7 +225,7 @@ export class FMSCategoryScatter {
         .attr("x", this.legendWidth - 24)
         .attr("y", 9)
         .attr("text-anchor", "end")
-        .style("font-size", "14px")
+        .style("font-size", this.isMobile ? "10px" : "12px")
         .style("fill", "#333")
         .text(category);
 
@@ -295,6 +320,8 @@ export class FMSCategoryScatter {
   resize() {
     this.isMobile = window.innerWidth <= 768;
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
+    // Update SVG height style based on mobile state
+    this.svg.style("height", this.isMobile ? `${this.height}px` : "100%");
     // to prevent scaling down of svg to fit container
     // this.svg.attr("width", this.width).attr("height", this.height);
 
@@ -311,7 +338,7 @@ export class FMSCategoryScatter {
       .style("text-anchor", "start")
       .attr("dx", ".25em")
       .attr("dy", ".75em")
-      .style("font-size", "12px")
+      .style("font-size", this.isMobile ? "10px" : "12px")
       .style("fill", "#666");
 
     this.yAxisGroup.call(d3.axisLeft(this.yScale));
@@ -322,7 +349,7 @@ export class FMSCategoryScatter {
     this.yAxisGroup
       .selectAll(".tick text")
       .style("text-anchor", "end")
-      .style("font-size", "12px")
+      .style("font-size", this.isMobile ? "10px" : "12px")
       .style("fill", "#666");
 
     if (this.isMobile) {

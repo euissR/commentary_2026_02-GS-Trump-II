@@ -10,7 +10,7 @@ export class PeaceMap {
     // Get container dimensions - matching DotMapPlot pattern
     const containerRect = container.getBoundingClientRect();
     this.width = Math.floor(containerRect.width);
-    this.height = Math.min(this.width, window.innerHeight * 0.9);
+    this.height = Math.min(this.width, window.innerHeight);
 
     this.currentStep = 0;
 
@@ -19,7 +19,7 @@ export class PeaceMap {
     window.addEventListener("resize", () => {
       const containerRect = this.container.getBoundingClientRect();
       this.width = Math.floor(containerRect.width);
-      this.height = Math.min(this.width, window.innerHeight * 0.9);
+      this.height = Math.min(this.width, window.innerHeight);
       this.resize();
     });
   }
@@ -153,7 +153,7 @@ export class PeaceMap {
     this.legend = this.svg.append("g").attr("class", "legend");
 
     if (this.isMobile) {
-      const legendY = this.height * 0.75;
+      const legendY = this.height * 0.8;
       this.legend.attr(
         "transform",
         `translate(${this.width / 2 - 100}, ${legendY})`,

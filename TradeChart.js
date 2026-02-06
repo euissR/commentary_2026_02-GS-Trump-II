@@ -12,12 +12,12 @@ export class TradeChart {
     this.height = Math.min(this.width, window.innerHeight * 0.9);
 
     if (this.isMobile) {
-      this.width = this.container.clientWidth * 0.9;
-      this.height = window.innerHeight * 0.8;
+      this.width = this.container.clientWidth * 2;
+      this.height = window.innerHeight * 1;
     }
 
     this.margin = this.isMobile
-      ? { top: 20, right: 10, bottom: 150, left: 40 }
+      ? { top: 0, right: 10, bottom: 200, left: 40 }
       : { top: 100, right: 180, bottom: 100, left: 80 };
 
     this.currentStep = 0;
@@ -153,7 +153,7 @@ export class TradeChart {
       .attr(
         "transform",
         this.isMobile
-          ? `translate(${this.margin.left + -40}, ${this.height - this.margin.bottom + 30})`
+          ? `translate(${this.margin.left + -40}, ${this.height - this.margin.bottom + 50})`
           : `translate(${this.width - 18}, ${this.height * 0.33})`,
       );
 
@@ -171,7 +171,7 @@ export class TradeChart {
       // special handling for long category name on mobile
       const text = group
         .append("text")
-        .attr("x", this.isMobile ? 6 : -5)
+        .attr("x", this.isMobile ? 25 : -5)
         .attr("y", 12)
         .style("font-size", "14px")
         .style("fill", "#595959")

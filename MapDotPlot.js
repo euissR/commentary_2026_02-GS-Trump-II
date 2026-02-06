@@ -2,24 +2,41 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm";
 import * as topojson from "https://cdn.jsdelivr.net/npm/topojson-client@3/+esm";
 import { CONFIG } from "./config.js";
 
+/**
+ * MapDotPlot - Trade deals visualization with map-to-scatter transition
+ *
+ * Mobile height strategy:
+ * - Container is constrained by scrollytelling layout (~40% of viewport)
+ * - This is fine for map view but too small for scatter legibility
+ * - Solution: On mobile, SVG uses viewport height (85%) instead of container height
+ * - SVG gets explicit pixel height to override container constraints
+ * - Result: Map fits comfortably, scatter uses full screen for readability
+ */
+
 export class MapDotPlot {
   constructor(container) {
     this.isMobile = window.innerWidth <= 768;
     this.container = container;
 
-    // Get container dimensions - matching DotMapPlot pattern
+    // Get container dimensions
     const containerRect = container.getBoundingClientRect();
     this.width = Math.floor(containerRect.width);
-    this.height = Math.floor(containerRect.height * 0.8);
+    // On mobile, use viewport height instead of container height for scatter legibility
+    // On desktop, use 80% of container height
+    this.height = this.isMobile
+      ? Math.floor(window.innerHeight * 0.85) // Use most of viewport on mobile
+      : Math.floor(containerRect.height * 0.8);
 
     this.margin = this.isMobile
-      ? { top: 80, right: 150, bottom: 0, left: 10 }
+      ? { top: 120, right: 30, bottom: 20, left: 10 }
       : { top: 300, right: 300, bottom: 0, left: 0 };
 
     this.scatterWidth = this.width * 0.9;
     this.scatterHeight = this.height * 0.9;
     this.scatterOffsetX = (this.width - this.scatterWidth) / 2;
-    this.scatterOffsetY = (this.height - this.scatterHeight) / 2;
+    this.scatterOffsetY = this.isMobile
+      ? 0
+      : (this.height - this.scatterHeight) / 2;
 
     this.isScatterView = false;
     this.scrollAnimationActive = false;
@@ -30,13 +47,24 @@ export class MapDotPlot {
     this.init();
 
     window.addEventListener("resize", () => {
+      this.isMobile = window.innerWidth <= 768;
       const containerRect = this.container.getBoundingClientRect();
       this.width = Math.floor(containerRect.width);
-      this.height = Math.floor(containerRect.height * 0.8);
+      // On mobile, use viewport height instead of container height
+      this.height = this.isMobile
+        ? Math.floor(window.innerHeight * 0.85)
+        : Math.floor(containerRect.height * 0.8);
+
+      this.margin = this.isMobile
+        ? { top: 60, right: 150, bottom: 20, left: 10 }
+        : { top: 300, right: 300, bottom: 0, left: 0 };
+
       this.scatterWidth = this.width * 0.9;
       this.scatterHeight = this.height * 0.9;
       this.scatterOffsetX = (this.width - this.scatterWidth) / 2;
-      this.scatterOffsetY = (this.height - this.scatterHeight) / 2;
+      this.scatterOffsetY = this.isMobile
+        ? 0
+        : (this.height - this.scatterHeight) / 2;
       this.resize();
     });
 
@@ -114,13 +142,16 @@ export class MapDotPlot {
       .range([this.margin.left, this.width - this.margin.right])
       .padding(0.5);
 
+    // On mobile, use full height for scatter; on desktop use centered scatter area
+    const yStart = this.isMobile ? this.margin.top : this.scatterOffsetY + 50;
+    const yEnd = this.isMobile
+      ? this.height - this.margin.bottom
+      : this.scatterOffsetY + this.scatterHeight;
+
     this.yScale = d3
       .scalePoint()
       .domain(this.names)
-      .range([
-        this.scatterOffsetY + 50,
-        this.scatterOffsetY + this.scatterHeight,
-      ])
+      .range([yStart, yEnd])
       .padding(0.5);
 
     this.colorScale = d3
@@ -136,7 +167,9 @@ export class MapDotPlot {
       .append("svg")
       .attr("viewBox", `0 0 ${this.width} ${this.height}`)
       .style("width", "100%")
-      .style("height", "100%");
+      // On mobile, set explicit pixel height to use viewport height
+      // On desktop, use 100% to fill container
+      .style("height", this.isMobile ? `${this.height}px` : "100%");
   }
 
   setupElements() {
@@ -195,10 +228,12 @@ export class MapDotPlot {
   setupAxes() {
     this.axesGroup = this.svg.append("g").style("opacity", 0);
 
+    const xAxisY = this.isMobile ? this.margin.top : this.scatterOffsetY + 50;
+
     this.xAxisGroup = this.axesGroup
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${this.scatterOffsetY + 50})`)
+      .attr("transform", `translate(0, ${xAxisY})`)
       .call(d3.axisTop(this.xScale));
 
     this.yAxisGroup = this.axesGroup
@@ -210,8 +245,9 @@ export class MapDotPlot {
       .selectAll("text")
       .attr("transform", "rotate(-45)")
       .style("text-anchor", "start")
-      .attr("dy", "1em")
-      .style("font-size", "12px")
+      .attr("dx", this.isMobile ? ".75em" : "0em")
+      .attr("dy", this.isMobile ? ".25em" : "1em")
+      .style("font-size", this.isMobile ? "10px" : "12px")
       .style("fill", "#666");
 
     this.axesGroup.selectAll(".domain").remove();
@@ -219,9 +255,13 @@ export class MapDotPlot {
 
     this.yAxisGroup
       .selectAll(".tick text")
-      .attr("x", this.width - this.margin.right)
+      .attr(
+        "x",
+        this.isMobile ? this.margin.left : this.width - this.margin.right,
+      )
+      .attr("dy", this.isMobile ? "-1.25em" : ".25em")
       .style("text-anchor", "start")
-      .style("font-size", "12px")
+      .style("font-size", this.isMobile ? "10px" : "12px")
       .style("fill", "#666");
 
     if (this.isMobile) {
@@ -233,6 +273,13 @@ export class MapDotPlot {
 
     this.gridlinesGroup = this.axesGroup.append("g").attr("class", "gridlines");
 
+    const gridYStart = this.isMobile
+      ? this.margin.top
+      : this.scatterOffsetY + 50;
+    const gridYEnd = this.isMobile
+      ? this.height - this.margin.bottom
+      : this.scatterOffsetY + this.scatterHeight;
+
     this.gridlinesGroup
       .selectAll(".grid-vertical")
       .data(this.countries)
@@ -241,8 +288,8 @@ export class MapDotPlot {
       .attr("class", "grid-vertical")
       .attr("x1", (d) => this.xScale(d))
       .attr("x2", (d) => this.xScale(d))
-      .attr("y1", this.scatterOffsetY + 50)
-      .attr("y2", this.scatterOffsetY + this.scatterHeight)
+      .attr("y1", gridYStart)
+      .attr("y2", gridYEnd)
       .attr("stroke", "#c6c6c6")
       .attr("stroke-width", 0.5);
 
@@ -267,7 +314,7 @@ export class MapDotPlot {
       .enter()
       .append("circle")
       .attr("class", "trade-dot")
-      .attr("r", 6)
+      .attr("r", this.isMobile ? 3 : 5)
       .attr(
         "cx",
         (d) => this.projection([d.properties.lon, d.properties.lat])[0],
@@ -325,22 +372,28 @@ export class MapDotPlot {
   resize() {
     this.isMobile = window.innerWidth <= 768;
     this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
+    // Update SVG height style based on mobile state
+    this.svg.style("height", this.isMobile ? `${this.height}px` : "100%");
 
     this.projection
       .scale(this.isMobile ? this.width / 5 : this.width / 6)
       .translate([this.width / 2, this.height / 2]);
 
     this.xScale.range([this.margin.left, this.width - this.margin.right]);
-    this.yScale.range([
-      this.margin.top,
-      this.scatterOffsetY + this.scatterHeight,
-    ]);
+
+    // Update yScale with mobile-aware range
+    const yStart = this.isMobile ? this.margin.top : this.scatterOffsetY + 50;
+    const yEnd = this.isMobile
+      ? this.height - this.margin.bottom
+      : this.scatterOffsetY + this.scatterHeight;
+    this.yScale.range([yStart, yEnd]);
 
     this.land.attr("d", this.path);
     this.countriesGroup.selectAll(".trade-country").attr("d", this.path);
 
+    const xAxisY = this.isMobile ? this.margin.top : this.scatterOffsetY + 50;
     this.xAxisGroup
-      .attr("transform", `translate(0, ${this.scatterOffsetY + 50})`)
+      .attr("transform", `translate(0, ${xAxisY})`)
       .call(d3.axisTop(this.xScale));
     this.xAxisGroup
       .selectAll("text")
@@ -365,8 +418,8 @@ export class MapDotPlot {
       .selectAll(".grid-vertical")
       .attr("x1", (d) => this.xScale(d))
       .attr("x2", (d) => this.xScale(d))
-      .attr("y1", this.scatterOffsetY + 50)
-      .attr("y2", this.scatterOffsetY + this.scatterHeight);
+      .attr("y1", yStart)
+      .attr("y2", yEnd);
 
     this.gridlinesGroup
       .selectAll(".grid-horizontal")
@@ -404,10 +457,11 @@ export class MapDotPlot {
         .duration(1000)
         .attr("cx", (d) => this.xScale(d.properties.country))
         .attr("cy", (d) => this.yScale(d.properties.name))
-        .attr("r", 6)
+        .attr("r", this.isMobile ? 3 : 5)
         .attr("fill", (d) => this.colorScale(d.properties.type))
         .style("opacity", 1);
 
+      this.countriesGroup.style("pointer-events", "none");
       this.mapGroup.transition().duration(1000).style("opacity", 0);
       this.axesGroup.transition().duration(1000).style("opacity", 1);
     } else {
@@ -423,10 +477,11 @@ export class MapDotPlot {
           "cy",
           (d) => this.projection([d.properties.lon, d.properties.lat])[1],
         )
-        .attr("r", 6)
+        .attr("r", this.isMobile ? 3 : 5)
         .attr("fill", "#595959")
         .style("opacity", 1);
 
+      this.countriesGroup.style("pointer-events", "auto");
       this.mapGroup.transition().duration(1000).style("opacity", 1);
       this.axesGroup.transition().duration(1000).style("opacity", 0);
     }
@@ -436,7 +491,11 @@ export class MapDotPlot {
     const activeType = this.stepTypeMap[step];
 
     if (!activeType) {
-      this.dots.transition().duration(400).style("opacity", 1).attr("r", 6);
+      this.dots
+        .transition()
+        .duration(400)
+        .style("opacity", 1)
+        .attr("r", this.isMobile ? 3 : 5);
       return;
     }
 
@@ -444,7 +503,9 @@ export class MapDotPlot {
       .transition()
       .duration(400)
       .style("opacity", (d) => (d.properties.type === activeType ? 1 : 0.15))
-      .attr("r", (d) => (d.properties.type === activeType ? 10 : 6));
+      .attr("r", (d) =>
+        d.properties.type === activeType ? (this.isMobile ? 5 : 7) : 6,
+      );
   }
 
   setTransitionProgress(isScatter, progress) {
@@ -455,6 +516,12 @@ export class MapDotPlot {
     this.dots.style(
       "pointer-events",
       isScatter && progress > 0.8 ? "auto" : "none",
+    );
+
+    // Disable pointer-events on countries when in scatter view
+    this.countriesGroup.style(
+      "pointer-events",
+      isScatter && progress > 0.2 ? "none" : "auto",
     );
 
     if (isScatter) {

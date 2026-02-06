@@ -15,7 +15,7 @@ export class DotMapPlot {
 
     // Dot plot dimensions (for the stacked week view)
     this.dotWidth = this.width;
-    this.dotHeight = this.height * 0.8;
+    this.dotHeight = this.height * 0.75;
     this.dotOffsetX = (this.width - this.dotWidth) / 2;
     this.dotOffsetY = (this.height - this.dotHeight) / 2;
 

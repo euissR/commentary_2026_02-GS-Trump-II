@@ -260,7 +260,7 @@ export class FMSRegionChart {
     const value = d.data[region];
     this.tooltip
       .style("opacity", 1)
-      .html(`<strong>${region}</strong><br/>${value.toFixed(1)}`)
+      .html(`<strong>${region}</strong><br/>$${value.toFixed(1)} billion`)
       .style("left", event.pageX + 10 + "px")
       .style("top", event.pageY - 10 + "px");
   }

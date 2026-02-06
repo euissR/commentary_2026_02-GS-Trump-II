@@ -149,7 +149,7 @@ export class ChoroplethMap {
       .attr("class", "categorical-legend")
       .attr(
         "transform",
-        `translate(${this.isMobile ? this.width : this.width - 20}, ${this.isMobile ? legendY - 40 : legendY - 40})`,
+        `translate(${this.isMobile ? this.width - 20 : this.width - 20}, ${this.isMobile ? legendY - 40 : legendY - 40})`,
       )
       .style("opacity", 1);
 
@@ -184,9 +184,9 @@ export class ChoroplethMap {
           .attr("stroke", "#fff")
           .attr("stroke-width", 1);
         g.append("text")
-          .attr("x", 10)
+          .attr("x", this.isMobile ? -10 : 10)
           .attr("y", 8)
-          .attr("text-anchor", "start")
+          .attr("text-anchor", this.isMobile ? "end" : "start")
           .style("font-size", "14px")
           .style("fill", "#333")
           .text(item.label);
@@ -198,7 +198,7 @@ export class ChoroplethMap {
       .attr("class", "continuous-legend")
       .attr(
         "transform",
-        `translate(${this.width - 250}, ${this.isMobile ? legendY - 50 : legendY - 30})`,
+        `translate(${this.width - 250}, ${this.isMobile ? legendY - 30 : legendY - 30})`,
       )
       .style("opacity", 0);
 
