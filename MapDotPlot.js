@@ -28,7 +28,7 @@ export class MapDotPlot {
       : Math.floor(containerRect.height * 0.8);
 
     this.margin = this.isMobile
-      ? { top: 120, right: 30, bottom: 20, left: 10 }
+      ? { top: 60, right: 150, bottom: 20, left: 10 }
       : { top: 300, right: 300, bottom: 0, left: 0 };
 
     this.scatterWidth = this.width * 0.9;
@@ -399,9 +399,9 @@ export class MapDotPlot {
       .selectAll("text")
       .attr("transform", "rotate(-45)")
       .style("text-anchor", "start")
-      .attr("dx", "-0.5em")
-      .attr("dy", "-0.5em")
-      .style("font-size", "12px")
+      .attr("dx", this.isMobile ? ".75em" : "0em")
+      .attr("dy", this.isMobile ? ".25em" : "-0.5em")
+      .style("font-size", this.isMobile ? "10px" : "12px")
       .style("fill", "#666");
 
     this.yAxisGroup.call(d3.axisLeft(this.yScale));
@@ -409,9 +409,13 @@ export class MapDotPlot {
     this.axesGroup.selectAll(".tick line").remove();
     this.yAxisGroup
       .selectAll(".tick text")
-      .attr("x", this.width - this.margin.right)
+      .attr(
+        "x",
+        this.isMobile ? this.margin.left : this.width - this.margin.right,
+      )
+      .attr("dy", this.isMobile ? "-1.25em" : ".25em")
       .style("text-anchor", "start")
-      .style("font-size", "12px")
+      .style("font-size", this.isMobile ? "10px" : "12px")
       .style("fill", "#666");
 
     this.gridlinesGroup
@@ -444,7 +448,9 @@ export class MapDotPlot {
         );
     }
 
-    this.titleText.attr("x", this.width);
+    this.titleText
+      .attr("x", this.width)
+      .attr("y", this.isMobile ? 25 : this.margin.top - this.margin.top * 0.75);
   }
 
   toggleView(isScatter, step) {
